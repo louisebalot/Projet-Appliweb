@@ -1,11 +1,9 @@
--- 1. Création de la table simplifiée
-CREATE TABLE IF NOT EXISTS liste_couleurs (
+CREATE TABLE IF NOT EXISTS table_couleurs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL
 );
 
--- 2. Insertion des noms uniquement
-INSERT INTO liste_couleurs (nom) VALUES
+INSERT INTO table_couleurs (nom) VALUES
 ('Abricot'), ('Acajou'), ('Aigue-marine'), ('Alizarine'), ('Amande'), 
 ('Amarante'), ('Ambre'), ('Améthyste'), ('Anthracite'), ('Aquamarine'), 
 ('Ardoise'), ('Argent'), ('Aubergine'), ('Aurore'), ('Avocat'), 

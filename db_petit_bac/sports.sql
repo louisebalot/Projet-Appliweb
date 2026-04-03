@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS table_sports (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom_sport VARCHAR(100) NOT NULL
+    nom VARCHAR(100) NOT NULL
 );
 
-INSERT INTO table_sports (nom_sport) VALUES 
+INSERT INTO table_sports (nom) VALUES 
 ('Aéromodélisme'), ('Aéronautique'), ('Aïkido'), ('Alpinisme'), ('Apnée'), ('Athlétisme'), ('Aviron'), 
 ('Badminton'), ('Ball-trap'), ('Ballon au poing'), ('Baseball'), ('Basketball'), ('Basque de pelote'), 
 ('Battu de tambourin'), ('Biathlon'), ('Billard'), ('Bobsleigh'), ('Bodyboard'), ('Boomerang'), 
