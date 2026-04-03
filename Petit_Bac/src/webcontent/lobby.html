@@ -1,0 +1,39 @@
+<html>
+<head><title>Lobby</title></head>
+    <body>
+        <form action="Serv_Bac" method="get">
+        
+            <p>Parametre de la partie:</p>
+            <div>
+            <input type="range" id="temps" name="temps" min="0" max="5" list="temps_list"> 
+                <datalist id="temps_list">
+                <option value="0"></option>
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+                </datalist>
+            <label for="temps">Temps</label>
+            </div>
+
+            <div>
+            <input type="range" id="nb_tours" name="nb_tours" min="0" max="6" list="nb_tours_list" />
+                <datalist id="nb_tours_list">
+                <option value="0"></option>
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+                <option value="6"></option>
+                </datalist>
+            <label for="nb_tours">Nombre de tours</label>
+            </div>
+        
+        <button type="submit">Lancer la partie</button>
+        <input type="hidden" name="op" value="demarrer_partie">
+        </form>
+
+    </body>
+</html>
