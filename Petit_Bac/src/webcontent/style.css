@@ -3,10 +3,11 @@
     --fond-gradient-1: #94e4c8;
     --fond-gradient-2: #ee6796;
     
-    --couleur-box: rgba(231, 113, 154, 0.7);
+    --couleur-box: rgba(235, 147, 178, 0.7);
+    --couleur-box-form: rgba(235, 147, 178, 0.2);
     --couleur-texte: #ffffff;
     
-    --couleur-accent: #eb93b2;       /* Boutons, titre-encadré, curseurs */
+    --couleur-accent: rgba(235, 147, 178, 1);       /* Boutons, titre-encadré, curseurs */
     --couleur-accent-hover: #f1b3c9;
     --couleur-bordure: #e2799e;
     
@@ -28,6 +29,16 @@ body {
 /* --- CONTENEUR --- */
 .box { 
     background: var(--couleur-box); 
+    padding: 2rem; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+    text-align: center; 
+    color: var(--couleur-texte);
+    min-width: 450px; 
+}
+
+.box-form { 
+    background: var(--couleur-box-form); 
     padding: 2rem; 
     border-radius: 15px; 
     box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
@@ -94,6 +105,7 @@ input[type="range"] {
     cursor: pointer;
     accent-color: var(--couleur-accent);
 }
+
 
 /* --- BOUTONS --- */
 button { 
