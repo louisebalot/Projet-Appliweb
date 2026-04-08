@@ -3,6 +3,13 @@ package pack;
 import java.io.IOException;
 
 import java.sql.SQLException;
+
+import javax.ws.rs.core.UriBuilder;
+
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,11 +18,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/Serv")
 public class Serv extends HttpServlet {
-    Facade facade;
+    
+    final String path ="http://localhost:8080/facade";
+    //Facade facade;
 
     public Serv() throws ClassNotFoundException, SQLException {
-        super();
-        facade = new Facade();
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        ResteasyWebTarget target = client.target(UriBuilder.fromPath(path));
+        //facade = target.proxy(Facade.class);
     }
 
     @Override
@@ -26,33 +36,27 @@ public class Serv extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             switch(request.getParameter("op")){
-                case "ajouterPersonne":
-                    String nom = request.getParameter("nom");
-                    String prenom = request.getParameter("prenom");
-                    facade.ajoutPersonne(nom, prenom);
-                    request.getRequestDispatcher("index.html").forward(request, response);
+                case "demarrer_partie":
+                    int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
+                    int temps = Integer.parseInt(request.getParameter("temps"));
+                    //facade.demarrerPartie(nb_tours, temps);
+                    request.getRequestDispatcher("FormulaireReponse.html").forward(request, response);
                 break;
-                case "ajouterAdresse":
-                    String rue = request.getParameter("rue");
-                    String ville = request.getParameter("ville");
-                    facade.ajoutAdresse(rue, ville);
-                    request.getRequestDispatcher("index.html").forward(request, response);
+                case "ajout_surnom":
+                    String surnom = request.getParameter("surnom");
+                    //facade.ajoutNom(surnom);
+                    request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
-                case "associer":
-                    int personneId = Integer.parseInt(request.getParameter("personneId"));
-                    int adresseId = Integer.parseInt(request.getParameter("adresseId"));
-                    facade.associer(personneId, adresseId);
-                    request.getRequestDispatcher("index.html").forward(request, response);
-                break;
-                case "associerForm":
-                    request.setAttribute("personnes", facade.listePersonne());
-                    request.setAttribute("adresses", facade.listeAdresseAssocier());
-                    request.getRequestDispatcher("associer.jsp").forward(request, response);
-                break;
-                case "listerPersonne":
-                    request.setAttribute("personnes", facade.listePersonne());
-                    request.setAttribute("adresses", facade.listeAdresse());
-                    request.getRequestDispatcher("listerPersonne.jsp").forward(request, response);
+                case "Enregistrer_reponse":
+                    String Pays = request.getParameter("Pays");
+                    String Ville = request.getParameter("Ville");
+                    String Prenom = request.getParameter("Prenom");
+                    String Couleur = request.getParameter("Couleur");
+                    String Fruit = request.getParameter("Fruit");
+                    String Animal = request.getParameter("Animal");
+                    String Metier = request.getParameter("Metier");
+                    //facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier);
+                    request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
             }
     }

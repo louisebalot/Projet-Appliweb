@@ -1,11 +1,14 @@
-package pack;
+package n7.facade;
 
+@Entity
 public class Personne {
 
     private String prenom;
     private String nom;
-    private Integer id;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer id;
     
 
     public Personne(String prenom, String nom, Integer id) {

@@ -1,4 +1,4 @@
-package pack;
+package n7.facade;
 
 public class Adresse {
     private String rue;
