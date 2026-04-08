@@ -1,12 +1,6 @@
-package pack;
+package n7.facade;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-
-@Entity
 public class Vegetaux {
-    @Id
     private String nom;
     
     public Vegetaux() {

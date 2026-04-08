@@ -7,24 +7,13 @@ import javax.persistence.Id;
 @Entity
 public class Metier {
     @Id
-    private String Id;
-
     private String nom;
     
     public Metier() {
     }
 
     public Metier(String id, String nom) {
-        this.Id = id;
         this.nom = nom;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        this.Id = id;
     }
 
     public String getNom() {

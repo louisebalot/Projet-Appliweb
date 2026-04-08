@@ -7,24 +7,13 @@ import javax.persistence.Id;
 @Entity
 public class Couleurs {
     @Id
-    private String Id;
-
     private String nom;
     
     public Couleurs() {
     }
 
     public Couleurs(String id, String nom) {
-        this.Id = id;
         this.nom = nom;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        this.Id = id;
     }
 
     public String getNom() {

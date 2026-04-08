@@ -20,12 +20,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class Serv extends HttpServlet {
     
     final String path ="http://localhost:8080/facade";
-    //Facade facade;
+    Facade facade;
 
     public Serv() throws ClassNotFoundException, SQLException {
         ResteasyClient client = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = client.target(UriBuilder.fromPath(path));
-        //facade = target.proxy(Facade.class);
+        facade = target.proxy(Facade.class);
     }
 
     @Override
@@ -39,12 +39,12 @@ public class Serv extends HttpServlet {
                 case "demarrer_partie":
                     int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
                     int temps = Integer.parseInt(request.getParameter("temps"));
-                    //facade.demarrerPartie(nb_tours, temps);
+                    facade.demarrer_partie(nb_tours, temps);
                     request.getRequestDispatcher("FormulaireReponse.html").forward(request, response);
                 break;
                 case "ajout_surnom":
                     String surnom = request.getParameter("surnom");
-                    //facade.ajoutNom(surnom);
+                    facade.ajout_surnom(surnom);
                     request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
                 case "Enregistrer_reponse":
@@ -55,7 +55,7 @@ public class Serv extends HttpServlet {
                     String Fruit = request.getParameter("Fruit");
                     String Animal = request.getParameter("Animal");
                     String Metier = request.getParameter("Metier");
-                    //facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier);
+                    facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier);
                     request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
             }

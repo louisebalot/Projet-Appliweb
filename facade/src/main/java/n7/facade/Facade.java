@@ -7,6 +7,8 @@ import java.util.HashMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//import pack.Adresse;
+
 
 @RestController
 public class Facade {
@@ -15,8 +17,8 @@ public class Facade {
     // String db_user = "sa";
     // Connection con;
 
-    HashMap<Integer, Personne> personnes = new HashMap<Integer, Personne>();
-    HashMap<Integer, Adresse> adresses = new HashMap<Integer, Adresse>();
+    // HashMap<Integer, Personne> personnes = new HashMap<Integer, Personne>();
+    // HashMap<Integer, Adresse> adresses = new HashMap<Integer, Adresse>();
 
     // @Autowired
     // public Facade()  {
@@ -30,8 +32,8 @@ public class Facade {
         
     // }
  
-    @GetMapping("/ajoutPersonne")
-    public void ajoutPersonne(String nom, String prenom) {
+    @GetMapping("/démarrer_partie")
+    public void demarrer_partie(int nb_tours, int temps) {
         // String sql = "INSERT INTO Personne (nom, prenom) VALUES ('" + nom + "', '" + prenom + "')";
         // try{
         //     Statement stmt = con.createStatement();
@@ -41,13 +43,13 @@ public class Facade {
         //     e.printStackTrace();
         // }
 
-        int id = personnes.size() + 1;
-        Personne p = new Personne(prenom, nom, id);
-        personnes.put(id, p);
+        // int id = personnes.size() + 1;
+        // Personne p = new Personne(prenom, nom, id);
+        // personnes.put(id, p);
     }
 
-    @GetMapping("/ajoutAdresse")
-    public void ajoutAdresse(String rue, String ville) {
+    @GetMapping("/ajout_surnom")
+    public void ajout_surnom(String surnom) {
         // String sql = "INSERT INTO Adresse (rue, ville) VALUES ('" + rue + "', '" + ville + "')";
         // try{
         //     Statement stmt = con.createStatement();
@@ -57,13 +59,13 @@ public class Facade {
         //     e.printStackTrace();
         // }
 
-        int id = adresses.size() + 1;
-        Adresse a = new Adresse(rue, ville, id);
-        adresses.put(id, a);
+        // int id = adresses.size() + 1;
+        // Adresse a = new Adresse(rue, ville, id);
+        // adresses.put(id, a);
     }
 
-    @GetMapping("/listePersonne")
-    public Collection<Personne> listePersonne() {
+    @GetMapping("/Enregistrer_reponse")
+    public void enregistrer_reponse(String Pays, String Ville, String Prenom, String Couleur, String Fruit, String Animal, String Metier) {
         // String sql = "SELECT * FROM Personne";
         // try{
         //     Statement stmt = con.createStatement();
@@ -79,44 +81,44 @@ public class Facade {
         //     e.printStackTrace();
         // }
         // Collection<Personne> list = new ArrayList<Personne>();
-        return personnes.values();
+        // return personnes.values();
     }
 
-    @GetMapping("/listeAdresse")
-    public Collection<Adresse> listeAdresse() {
-        // String sql = "SELECT * FROM Adresse";
-        // try{
-        //     Statement stmt = con.createStatement();
-        //     ResultSet rs = stmt.executeQuery(sql);
-        //     HashMap<Integer,Adresse> adresses = new HashMap<Integer,Adresse>();
-        //     while(rs.next()){
-        //         adresses.put(rs.getInt("id"), new Adresse(rs.getString("rue"), rs.getString("ville"), rs.getInt("id"), rs.getInt("personneid")));
-        //     }
-        //     stmt.close();
-        //     Collection<Adresse> liste = adresses.values();
-        //     return liste;
-        // } catch(SQLException e){
-        //     e.printStackTrace();
-        //     return null;
-        // }
+    // @GetMapping("/listeAdresse")
+    // public Collection<Adresse> listeAdresse() {
+    //     // String sql = "SELECT * FROM Adresse";
+    //     // try{
+    //     //     Statement stmt = con.createStatement();
+    //     //     ResultSet rs = stmt.executeQuery(sql);
+    //     //     HashMap<Integer,Adresse> adresses = new HashMap<Integer,Adresse>();
+    //     //     while(rs.next()){
+    //     //         adresses.put(rs.getInt("id"), new Adresse(rs.getString("rue"), rs.getString("ville"), rs.getInt("id"), rs.getInt("personneid")));
+    //     //     }
+    //     //     stmt.close();
+    //     //     Collection<Adresse> liste = adresses.values();
+    //     //     return liste;
+    //     // } catch(SQLException e){
+    //     //     e.printStackTrace();
+    //     //     return null;
+    //     // }
 
-        return adresses.values();
-    }
+    //     return adresses.values();
+    // }
 
-    @GetMapping("/associer")
-    public void associer(int personneId, int adresseId) {
-        // String sql = "UPDATE Adresse SET personneid = " + personneId + " WHERE id = " + adresseId;
-        // try{
-        //     Statement stmt = con.createStatement();
-        //     stmt.executeUpdate(sql);
-        //     stmt.close();
-        // } catch(SQLException e){
-        //     e.printStackTrace();
-        // }
+    // @GetMapping("/associer")
+    // public void associer(int personneId, int adresseId) {
+    //     // String sql = "UPDATE Adresse SET personneid = " + personneId + " WHERE id = " + adresseId;
+    //     // try{
+    //     //     Statement stmt = con.createStatement();
+    //     //     stmt.executeUpdate(sql);
+    //     //     stmt.close();
+    //     // } catch(SQLException e){
+    //     //     e.printStackTrace();
+    //     // }
 
-        Adresse a = adresses.get(adresseId);
-        a.setPersonneId(personneId);
-        adresses.put(adresseId, a);
-    }
+    //     Adresse a = adresses.get(adresseId);
+    //     a.setPersonneId(personneId);
+    //     adresses.put(adresseId, a);
+    // }
 
 }
