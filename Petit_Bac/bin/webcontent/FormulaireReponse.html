@@ -1,32 +1,55 @@
 <html>
-<head><title>Formulaire de réponse</title></head>
+    <head>
+        <title>Formulaire de réponse</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
     <body>
-        <form action="Serv_Bac" method="get">
-        
-        <label for="Pays">Pays : </label>
-        <input type="text" id="Pays" name="Pays"><br>
+        <div class="box-form">
+            <h1>C'est tipar !</h1>
+            <h2 class="titre-encadre">Lettre : <span id="lettre">A</span></h2>
 
-        <label for="Ville">Ville : </label>
-        <input type="text" id="Ville" name="Ville"><br>
+            <form action="Serv" method="get">
+                <div class="cadre-parametres">
+                    <div class="groupe-input">
+                        <label class="label-categorie" for="Pays">Pays</label>
+                        <input type="text" id="Pays" name="Pays" autocomplete="off">
+                    </div>
 
-        <label for="Prenom">Prénom : </label>
-        <input type="text" id="Prenom" name="Prenom"><br>
+                    <div class="groupe-input">
+                        <label class="label-categorie" for="Ville">Ville</label>
+                        <input type="text" id="Ville" name="Ville" autocomplete="off">
+                    </div>
 
-        <label for="Couleur">Couleur: </label>
-        <input type="text" id="Couleur" name="Couleur"><br>
+                    <div class="groupe-input">
+                        <label class="label-categorie" for="Prenom">Prénom</label>
+                        <input type="text" id="Prenom" name="Prenom" autocomplete="off">
+                    </div>
 
-        <label for="Fruit">Fruit : </label>
-        <input type="text" id="Fruit" name="Fruit"><br>
+                    <div class="groupe-input">
+                        <label class="label-categorie" for="Couleur">Couleur</label>
+                        <input type="text" id="Couleur" name="Couleur" autocomplete="off">
+                    </div>
 
-        <label for="Animal">Animal : </label>
-        <input type="text" id="Animal" name="Animal"><br>
+                    <div class="groupe-input">
+                        <label class="label-categorie" for="Fruit">Fruit</label>
+                        <input type="text" id="Fruit" name="Fruit" autocomplete="off">
+                    </div>
 
-        <label for="Metier">Métier : </label>
-        <input type="text" id="Metier" name="Metier"><br>
+                    <div class="groupe-input">
+                        <label class="label-categorie" for="Animal">Animal</label>
+                        <input type="text" id="Animal" name="Animal" autocomplete="off">
+                    </div>
 
-        <button type="submit">FINI !!!!</button>
-        <input type="hidden" name="op" value="Enregistrer_reponse">
-        </form>
+                    <div class="groupe-input">
+                        <label class="label-categorie" for="Metier">Métier</label>
+                        <input type="text" id="Metier" name="Metier" autocomplete="off">
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-fini">FINI !!!!</button>
+                <input type="hidden" name="op" value="Enregistrer_reponse">
+            </form>
+        </div>
 
         <script>
             const socket = new WebSocket('ws://votre-serveur-adresse/Serv_Bac');

@@ -1,0 +1,143 @@
+:root {
+    /* --- COULEURS DE LA DA "PETIT CRAK" --- */
+    --fond-gradient-1: #94e4c8;
+    --fond-gradient-2: #ee6796;
+    
+    --couleur-box: rgba(235, 147, 178, 0.7);
+    --couleur-box-form: rgba(235, 147, 178, 0.2);
+    --couleur-texte: #ffffff;
+    
+    --couleur-accent: rgba(235, 147, 178, 1);       /* Boutons, titre-encadré, curseurs */
+    --couleur-accent-hover: #f1b3c9;
+    --couleur-bordure: #e2799e;
+    
+    --transition-vitesse: 0.3s;
+}
+
+/* --- BASE --- */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+    background: linear-gradient(135deg, var(--fond-gradient-1) 0%, var(--fond-gradient-2) 100%); 
+    background-attachment: fixed; 
+}
+
+/* --- CONTENEUR --- */
+.box { 
+    background: var(--couleur-box); 
+    padding: 2rem; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+    text-align: center; 
+    color: var(--couleur-texte);
+    min-width: 450px; 
+}
+
+.box-form { 
+    background: var(--couleur-box-form); 
+    padding: 2rem; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+    text-align: center; 
+    color: var(--couleur-texte);
+    min-width: 450px; 
+}
+
+/* --- TITRES ET CADRES --- */
+.titre-encadre {
+    display: inline-block;
+    background-color: var(--couleur-accent);
+    color: #333;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cadre-parametres {
+    border: 2px solid rgba(255, 255, 255, 0.4); 
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1); 
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- FORMULAIRES --- */
+input[type="text"] { 
+    padding: 10px; 
+    margin: 10px 0; 
+    border: 1px solid var(--couleur-bordure); 
+    border-radius: 8px; 
+    outline: none;
+    width: 80%;
+}
+
+input[type="range"] {
+    width: 80%;
+    cursor: pointer;
+    accent-color: var(--couleur-accent);
+}
+
+.groupe-input {
+    display: flex;
+    align-items: center; /* Centre verticalement le texte et le slider */
+    justify-content: space-between; /* Pousse le texte à gauche et le slider à droite */
+    gap: 15px; /* Espace minimum entre le texte et le slider */
+}
+
+.groupe-input label {
+    white-space: nowrap; /* Empêche le texte de revenir à la ligne */
+    text-align: left;
+    flex: 1; /* Prend l'espace nécessaire à gauche */
+}
+
+.groupe-input input[type="range"] {
+    flex: 2; /* Le slider prend plus de place que le texte */
+    cursor: pointer;
+    accent-color: var(--couleur-accent);
+}
+
+
+/* --- BOUTONS --- */
+button { 
+    padding: 10px 25px; 
+    cursor: pointer; 
+    background-color: var(--couleur-accent); 
+    color: rgb(7, 7, 7); 
+    border: none; 
+    border-radius: 8px; 
+    font-weight: bold;
+    transition: var(--transition-vitesse);
+}
+
+button:hover {
+    background-color: var(--couleur-accent-hover);
+    transform: scale(1.05);
+}
+
+/* --- LISTES (Lobby) --- */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.2);
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background var(--transition-vitesse);
+}
+
+li:hover {
+    background: rgba(255, 255, 255, 0.3);
+}

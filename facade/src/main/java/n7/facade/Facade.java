@@ -84,6 +84,12 @@ public class Facade {
         // return personnes.values();
     }
 
+    @GetMapping("/redemarrer_partie")
+    public void redemarrer_partie(int nb_tours, int temps) {
+        // Implementation for restarting the game
+    }
+
+
     // @GetMapping("/listeAdresse")
     // public Collection<Adresse> listeAdresse() {
     //     // String sql = "SELECT * FROM Adresse";

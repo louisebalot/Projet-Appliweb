@@ -25,4 +25,9 @@ public interface Facade {
     @Path("/Enregistrer_reponse")
     @Produces("application/json")
     void enregistrerReponse(@QueryParam("Pays") String Pays, @QueryParam("Ville") String Ville, @QueryParam("Prenom") String Prenom, @QueryParam("Couleur") String Couleur, @QueryParam("Fruit") String Fruit, @QueryParam("Animal") String Animal, @QueryParam("Metier") String Metier);
+
+    @GET
+    @Path("/redemarrer_partie")
+    @Consumes("application/json")
+    void redemarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
 }
