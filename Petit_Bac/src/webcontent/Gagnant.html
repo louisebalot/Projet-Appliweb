@@ -1,11 +1,26 @@
 <html>
-<head><title>Page de victoire</title></head>
+<head>
+    <title>Page de victoire</title>
+    <link rel="stylesheet" href="style.css">
+</head>
     <body>
-        <h1>Félicitations !</h1>
-        <p>Vous avez gagné la partie !</p>
+        <p id="message_victoire">Calcul des scores</p>
+
+        <script>
+            // Si l'URL est gagnant.html?vainqueur=Alice
+            const params = new URLSearchParams(window.location.search);
+            const nomGagnant = params.get('vainqueur');
+
+            if (nomGagnant) {
+                document.body.style.backgroundColor = "#d4af37"; 
+                document.getElementById('message_victoire').innerText = 
+                    "Félicitations à " + nomGagnant + " ! ";
+            }
+        </script>
+
         <form action="Serv_Bac" method="get">
         <button type="submit">Rejouer</button>
-        <input type="hidden" name="op" value="demarrer_partie">
+        <input type="hidden" name="op" value="redemarrer_partie">
         </form>
 
     </body>

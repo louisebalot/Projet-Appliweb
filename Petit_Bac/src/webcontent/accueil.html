@@ -1,10 +1,17 @@
 <html>
-<head><title>accueil</title></head>
-    <body>
+<head>
+    <title>Accueil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="box">
+        <h1>Petit Crak</h1>
         <form action="Serv" method="get">
-        Choisir un surnom : <input type="text" name="surnom"><br/>
-        <button type="submit">OK</button>
-        <input type="hidden" name="op" value="ajout_surnom">
+            <label>Choisir un surnom :</label><br/>
+            <input type="text" name="surnom" required><br/>
+            <button type="submit">Rejoindre la partie</button>
+            <input type="hidden" name="op" value="ajout_surnom">
         </form>
-    </body>
+    </div>
+</body>
 </html>

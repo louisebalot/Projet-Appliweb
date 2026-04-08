@@ -1,34 +1,38 @@
 <html>
-<head><title>Lobby</title></head>
+<head>
+    <title>Lobby</title>
+    <link rel="stylesheet" href="style.css">
+</head>
     <body>
         <form action="Serv_Bac" method="get">
         
-            <p>Paramètre de la partie:</p>
-            <div>
-            <input type="range" id="temps" name="temps" min="0" max="5" list="temps_list"> 
-                <datalist id="temps_list">
-                <option value="0"></option>
-                <option value="1"></option>
-                <option value="2"></option>
-                <option value="3"></option>
-                <option value="4"></option>
-                <option value="5"></option>
-                </datalist>
-            <label for="temps">Temps : <span id="valeur_temps">2</span> min</label>
-            </div>
+            <h2 class="titre-encadre">Paramètres de la partie</h2>
+            <div class="cadre-parametres">
 
-            <div>
-            <input type="range" id="nb_tours" name="nb_tours" min="0" max="6" list="nb_tours_list" />
-                <datalist id="nb_tours_list">
-                <option value="0"></option>
-                <option value="1"></option>
-                <option value="2"></option>
-                <option value="3"></option>
-                <option value="4"></option>
-                <option value="5"></option>
-                <option value="6"></option>
-                </datalist>
-            <label for="nb_tours">Nombre de tours</label>
+                <div class="groupe-input">
+                <input type="range" id="temps" name="temps" min="1" max="5" list="temps_list"> 
+                    <datalist id="temps_list">
+                    <option value="1"></option>
+                    <option value="2"></option>
+                    <option value="3"></option>
+                    <option value="4"></option>
+                    <option value="5"></option>
+                    </datalist>
+                <label for="temps">Temps : <span id="valeur_temps">2</span> min</label>
+                </div>
+
+                <div class="groupe-input">
+                <input type="range" id="nb_tours" name="nb_tours" min="1" max="6" list="nb_tours_list" />
+                    <datalist id="nb_tours_list">
+                    <option value="1"></option>
+                    <option value="2"></option>
+                    <option value="3"></option>
+                    <option value="4"></option>
+                    <option value="5"></option>
+                    <option value="6"></option>
+                    </datalist>
+                <label for="nb_tours">Nombre de tours: <span id="valeur_tours">2</span> tours</label>
+                </div>
             </div>
 
             <h3>Joueurs connectés :</h3>
@@ -63,9 +67,31 @@
             };
             
             const inputTemps = document.getElementById('temps');
-            inputTemps.addEventListener('input', () => {
-                document.getElementById('valeur_temps').innerText = inputTemps.value;
-            });
+            const spanTemps = document.getElementById('valeur_temps');
+
+            function updateTemps() {
+                spanTemps.innerText = inputTemps.value;
+            }
+
+            const inputTours = document.getElementById('nb_tours');
+            const spanTours = document.getElementById('valeur_tours');
+            const labelTours = document.querySelector('label[for="nb_tours"]');
+
+            function updateTours() {
+                const val = inputTours.value;
+                spanTours.innerText = val;
+                
+                if (parseInt(val) > 1) {
+                    labelTours.innerHTML = `Nombre de tours: <span id="valeur_tours">${val}</span> tours`;
+                } else {
+                    labelTours.innerHTML = `Nombre de tours: <span id="valeur_tours">${val}</span> tour`;
+                }
+            }
+            inputTemps.addEventListener('input', updateTemps);
+            inputTours.addEventListener('input', updateTours);
+
+            updateTemps();
+            updateTours();
 
             document.querySelector('form').addEventListener('submit', function(e) {
                 e.preventDefault(); 
@@ -78,7 +104,7 @@
                     temps: temps,
                     tours: tours
                 }));
-                console.log("Demande de lancement envoyée au serveur...");
+                console.log("Demande de lancement envoyée au serveur");
             });
         </script>
     </body>
