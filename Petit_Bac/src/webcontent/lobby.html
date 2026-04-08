@@ -3,7 +3,7 @@
     <body>
         <form action="Serv_Bac" method="get">
         
-            <p>Parametre de la partie:</p>
+            <p>Paramètre de la partie:</p>
             <div>
             <input type="range" id="temps" name="temps" min="0" max="5" list="temps_list"> 
                 <datalist id="temps_list">
@@ -14,7 +14,7 @@
                 <option value="4"></option>
                 <option value="5"></option>
                 </datalist>
-            <label for="temps">Temps</label>
+            <label for="temps">Temps : <span id="valeur_temps">2</span> min</label>
             </div>
 
             <div>
@@ -30,10 +30,56 @@
                 </datalist>
             <label for="nb_tours">Nombre de tours</label>
             </div>
+
+            <h3>Joueurs connectés :</h3>
+            <ul id="liste_joueurs">
+                <li>En attente de joueurs...</li>
+            </ul>
         
         <button type="submit">Lancer la partie</button>
         <input type="hidden" name="op" value="demarrer_partie">
         </form>
 
+        <script>
+            const socket = new WebSocket('ws://votre-serveur-adresse/Serv_Bac');
+
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+
+                if (data.status === "UPDATE_PLAYERS") {
+                    const ul = document.getElementById('liste_joueurs');
+                    ul.innerHTML = "";
+                    
+                    data.joueurs.forEach(surnom => {
+                        const li = document.createElement('li');
+                        li.textContent = surnom;
+                        ul.appendChild(li);
+                    });
+                }
+
+                if (data.status === "START") {
+                    window.location.href = "Serv_Bac?op=afficher_jeu"; 
+                }
+            };
+            
+            const inputTemps = document.getElementById('temps');
+            inputTemps.addEventListener('input', () => {
+                document.getElementById('valeur_temps').innerText = inputTemps.value;
+            });
+
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                
+                const temps = document.getElementById('temps').value;
+                const tours = document.getElementById('nb_tours').value;
+
+                socket.send(JSON.stringify({ 
+                    action: "LANCER_PARTIE",
+                    temps: temps,
+                    tours: tours
+                }));
+                console.log("Demande de lancement envoyée au serveur...");
+            });
+        </script>
     </body>
 </html>

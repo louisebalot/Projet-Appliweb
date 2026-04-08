@@ -9,7 +9,7 @@
         <label for="Ville">Ville : </label>
         <input type="text" id="Ville" name="Ville"><br>
 
-        <label for="prenom">Prenom : </label>
+        <label for="prenom">Prénom : </label>
         <input type="text" id="prenom" name="prenom"><br>
 
         <label for="couleur">Couleur: </label>
@@ -21,12 +21,44 @@
         <label for="animal">Animal : </label>
         <input type="text" id="animal" name="animal"><br>
 
-        <label for="metier">Metier : </label>
+        <label for="metier">Métier : </label>
         <input type="text" id="metier" name="metier"><br>
 
         <button type="submit">FINI !!!!</button>
         <input type="hidden" name="op" value="demarrer_partie">
         </form>
 
+        <script>
+            const socket = new WebSocket('ws://votre-serveur-adresse/Serv_Bac');
+
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                if (data.status === "FINI") {
+                    stopperLaPartie();
+                    envoyerReponses();
+                }
+            };
+
+            function stopperLaPartie() {
+                const inputs = document.querySelectorAll('input');
+                for (let input of inputs) {
+                    input.readOnly = true; 
+                    input.style.backgroundColor = "#e0e0e0";
+                }
+                alert("STOP ! La partie est terminée !");
+                document.querySelector('button').style.display = 'none';
+            }
+
+            function envoyerReponses() {
+                const formulaire = document.querySelector('form');
+                formulaire.submit(); 
+            }
+
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                socket.send(JSON.stringify({ action: "STOP" }));
+                console.log("Signal STOP envoyé !");
+            });
+        </script>
     </body>
 </html>
