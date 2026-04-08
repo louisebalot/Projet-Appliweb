@@ -7,7 +7,7 @@
     --couleur-box-form: rgba(235, 147, 178, 0.2);
     --couleur-texte: #ffffff;
     
-    --couleur-accent: rgba(235, 147, 178, 1);       /* Boutons, titre-encadré, curseurs */
+    --couleur-accent: #e283a4;       /* Boutons, titre-encadré, curseurs */
     --couleur-accent-hover: #f1b3c9;
     --couleur-bordure: #e2799e;
     
@@ -97,6 +97,8 @@ input[type="range"] {
 .groupe-input label {
     white-space: nowrap; /* Empêche le texte de revenir à la ligne */
     text-align: left;
+    font-weight: bold;
+    color: #ffffff;
     flex: 1; /* Prend l'espace nécessaire à gauche */
 }
 
@@ -128,6 +130,7 @@ button:hover {
 ul {
     list-style: none;
     padding: 0;
+    color: #ffffff;
 }
 
 li {
