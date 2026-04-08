@@ -12,6 +12,12 @@ import javax.ws.rs.QueryParam;
 public interface Facade {
 
     @GET
+    @Path("/genererLettre")
+    @Consumes("application/json")
+    @GetMapping("/genererLettre")
+    String genererLettre();
+
+    @GET
     @Path("/démarrer_partie")
     @Consumes("application/json")
     void demarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
@@ -25,6 +31,12 @@ public interface Facade {
     @Path("/Enregistrer_reponse")
     @Produces("application/json")
     void enregistrerReponse(@QueryParam("Pays") String Pays, @QueryParam("Ville") String Ville, @QueryParam("Prenom") String Prenom, @QueryParam("Couleur") String Couleur, @QueryParam("Fruit") String Fruit, @QueryParam("Animal") String Animal, @QueryParam("Metier") String Metier);
+    
+    @GET
+    @Path("/calculerPoints")
+    @Consumes("application/json")
+    @GetMapping("/calculerPoints")
+    int calculerPoints(@QueryParam("reponse") String reponse);
 
     @GET
     @Path("/redemarrer_partie")

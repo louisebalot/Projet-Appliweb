@@ -17,8 +17,7 @@ public class Facade {
     // String db_user = "sa";
     // Connection con;
 
-    // HashMap<Integer, Personne> personnes = new HashMap<Integer, Personne>();
-    // HashMap<Integer, Adresse> adresses = new HashMap<Integer, Adresse>();
+    // HashMap<Integer, String> joueurs = new HashMap<Integer, String>();
 
     // @Autowired
     // public Facade()  {
@@ -31,7 +30,13 @@ public class Facade {
         
         
     // }
- 
+
+    @GetMapping("/genererLettre")
+    private String genererLettre() {
+        // generer aléatoirement une lettre qu'on va envoyer au websocker ou
+        // stocker comme variable
+    }
+
     @GetMapping("/démarrer_partie")
     public void demarrer_partie(int nb_tours, int temps) {
         // String sql = "INSERT INTO Personne (nom, prenom) VALUES ('" + nom + "', '" + prenom + "')";
@@ -50,22 +55,22 @@ public class Facade {
 
     @GetMapping("/ajout_surnom")
     public void ajout_surnom(String surnom) {
-        // String sql = "INSERT INTO Adresse (rue, ville) VALUES ('" + rue + "', '" + ville + "')";
-        // try{
-        //     Statement stmt = con.createStatement();
-        //     stmt.executeUpdate(sql);
-        //     stmt.close();
-        // } catch(SQLException e){
-        //     e.printStackTrace();
-        // }
-
-        // int id = adresses.size() + 1;
-        // Adresse a = new Adresse(rue, ville, id);
-        // adresses.put(id, a);
+        // int id = joueurs.size() + 1;
+        // joueurs.put(id, surnom);
     }
 
     @GetMapping("/Enregistrer_reponse")
-    public void enregistrer_reponse(String Pays, String Ville, String Prenom, String Couleur, String Fruit, String Animal, String Metier) {
+    public void enregistrer_reponse(
+        @RequestParam String surnom,
+        @RequestParam String Pays, 
+        @RequestParam String Ville, 
+        @RequestParam String Prenom, 
+        @RequestParam String Couleur, 
+        @RequestParam String Fruit, 
+        @RequestParam String Animal, 
+        @RequestParam String Metier) {
+
+
         // String sql = "SELECT * FROM Personne";
         // try{
         //     Statement stmt = con.createStatement();
@@ -84,47 +89,15 @@ public class Facade {
         // return personnes.values();
     }
 
+    @GetMapping("/calculerPoints")
+    private int calculerPoints(String reponse) {
+        // 0 si pas dans bdd
+        // 5 si dedans et qu'un autre joueur a le meme mot
+        // 10 si mot unique et dans bdd
+    }
+
     @GetMapping("/redemarrer_partie")
     public void redemarrer_partie(int nb_tours, int temps) {
         // Implementation for restarting the game
     }
-
-
-    // @GetMapping("/listeAdresse")
-    // public Collection<Adresse> listeAdresse() {
-    //     // String sql = "SELECT * FROM Adresse";
-    //     // try{
-    //     //     Statement stmt = con.createStatement();
-    //     //     ResultSet rs = stmt.executeQuery(sql);
-    //     //     HashMap<Integer,Adresse> adresses = new HashMap<Integer,Adresse>();
-    //     //     while(rs.next()){
-    //     //         adresses.put(rs.getInt("id"), new Adresse(rs.getString("rue"), rs.getString("ville"), rs.getInt("id"), rs.getInt("personneid")));
-    //     //     }
-    //     //     stmt.close();
-    //     //     Collection<Adresse> liste = adresses.values();
-    //     //     return liste;
-    //     // } catch(SQLException e){
-    //     //     e.printStackTrace();
-    //     //     return null;
-    //     // }
-
-    //     return adresses.values();
-    // }
-
-    // @GetMapping("/associer")
-    // public void associer(int personneId, int adresseId) {
-    //     // String sql = "UPDATE Adresse SET personneid = " + personneId + " WHERE id = " + adresseId;
-    //     // try{
-    //     //     Statement stmt = con.createStatement();
-    //     //     stmt.executeUpdate(sql);
-    //     //     stmt.close();
-    //     // } catch(SQLException e){
-    //     //     e.printStackTrace();
-    //     // }
-
-    //     Adresse a = adresses.get(adresseId);
-    //     a.setPersonneId(personneId);
-    //     adresses.put(adresseId, a);
-    // }
-
 }
