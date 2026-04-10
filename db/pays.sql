@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS table_pays;
+
 CREATE TABLE table_pays (
     id VARCHAR(10) NOT NULL, 
     nom VARCHAR(100) NOT NULL, 
@@ -253,3 +255,5 @@ INSERT INTO table_pays (id, nom) VALUES ('WF', 'Wallis-et-Futuna');
 INSERT INTO table_pays (id, nom) VALUES ('YE', 'Yémen');
 INSERT INTO table_pays (id, nom) VALUES ('ZM', 'Zambie');
 INSERT INTO table_pays (id, nom) VALUES ('ZW', 'Zimbabwe');
+
+commit;
