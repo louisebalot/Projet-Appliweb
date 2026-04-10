@@ -1,41 +1,39 @@
 package n7.facade;
 
-import java.time.LocalTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.Random;
+
 import java.util.Vector;
 
-import ch.qos.logback.core.joran.sanity.Pair;
+import java.util.List;
 
 public class Partie {
-    /** Tableau des lettres disponibles */
-    private char[] lettresDisponibles = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+    public enum Categorie {
+        PAYS, VILLE, PRENOM, COULEUR, VEGETAL, ANIMAL, METIER, SPORT
+    }
+    
+    public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public String lettresDisponibles = "";
 
     /** Collection des joueurs de la partie */
-    private Collection<Joueur> joueurs;
+    private List<Joueur> joueurs;
 
     /** Admin de la partie */
     private Joueur admin;
 
     /** Liste des rounds de la partie */
-    private Set<Pair<Integer, Character>> rounds;
+    private List<Round> rounds;
 
     /** Numéro du round actuel */
-    private int currentRoundNumber;
-
-    /** Tableau des scores de chaque joueur */
-    private Set<Pair<Joueur, Integer>> scores;
+    private int numeroRoundActuel;
 
     /** Nombre de rounds à jouer */
     private int nombreRounds;
 
-    /** Temps en seconde d'un round */
+    /** Temps pour répondre. */
     private int roundTime;
 
-    /** Secondes écoulées depuis le début du round */
-    private int timeSinceRoundStart;
+    /**  */
+    private Random random = new Random();
 
     /** Ne pas utiliser */
     public Partie() {
@@ -51,33 +49,62 @@ public class Partie {
      */
     public Partie(Joueur admin, int nombreRounds, int roundTime) {
         this.joueurs = new Vector<>();
-        this.rounds = new HashSet<>();
-        this.currentRoundNumber = 0;
-        this.scores = new HashSet<>();
-        this.timeSinceRoundStart = -1;
+        this.rounds = new Vector<>();
+        this.numeroRoundActuel = 0;
 
         this.admin = admin;
         this.nombreRounds = nombreRounds;
         this.roundTime = roundTime;
+
+        // Initialiser les rounds
+        for (int i = 1; i < nombreRounds; i++) {
+
+            // Vérifier qu'il reste des lettres disponibles
+            if (lettresDisponibles.isEmpty()) {
+                lettresDisponibles = ALPHABET;
+            }
+
+            // Choisir une lettre
+            int indexLettre = random.nextInt(lettresDisponibles.length());
+            char lettreChoisie = lettresDisponibles.charAt(indexLettre);
+
+            // Supprimer la lettre des choix disponibles
+            lettresDisponibles = lettresDisponibles.substring(0, indexLettre)
+                    + lettresDisponibles.substring(indexLettre + 1);
+
+            // Créer le round
+            rounds.add(new Round(this, i, lettreChoisie, roundTime));
+        }
+    }
+
+    /**
+     * Ajoute un joueur dans une partie s'il n'est pas dedans.
+     * 
+     * @param nouveauJoueur Joueur à ajouter
+     */
+    public void ajouterJoueur(Joueur nouveauJoueur) {
+        if (!joueurs.contains(nouveauJoueur)) {
+            joueurs.add(nouveauJoueur);
+        }
     }
 
     /**
      * Passe au prochain round.
-     * 
-     * Incrémente le numéro du round puis le renvoie.
-     * 
-     * @return le numéro du round suivant
      */
-    public int nextRound() {
-        return 0;
+    public int prochainRound() {
+        return numeroRoundActuel++;
     }
 
-    // Setters and Getters
-    public Collection<Joueur> getJoueurs() {
+    public Round getRoundActuel() {
+        return rounds.get(numeroRoundActuel);
+    }
+
+    // Setters and getters
+    public List<Joueur> getJoueurs() {
         return joueurs;
     }
 
-    public void setJoueurs(Collection<Joueur> joueurs) {
+    public void setJoueurs(List<Joueur> joueurs) {
         this.joueurs = joueurs;
     }
 
@@ -88,4 +115,5 @@ public class Partie {
     public void setAdmin(Joueur admin) {
         this.admin = admin;
     }
+
 }
