@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 //import pack.Adresse;
 
-
 @RestController
 public class Facade {
 
@@ -20,15 +19,14 @@ public class Facade {
     // HashMap<Integer, String> joueurs = new HashMap<Integer, String>();
 
     // @Autowired
-    // public Facade()  {
-    //     try {
-    //         Class.forName("org.hsqldb.jdbc.JDBCDriver");
-    //         con = DriverManager.getConnection(db_url, db_user, null);
-    //     } catch (Exception e) {
-    //         e.printStackTrace();;
-    //     }
-        
-        
+    // public Facade() {
+    // try {
+    // Class.forName("org.hsqldb.jdbc.JDBCDriver");
+    // con = DriverManager.getConnection(db_url, db_user, null);
+    // } catch (Exception e) {
+    // e.printStackTrace();;
+    // }
+
     // }
 
     @GetMapping("/genererLettre")
@@ -39,13 +37,14 @@ public class Facade {
 
     @GetMapping("/démarrer_partie")
     public void demarrer_partie(int nb_tours, int temps) {
-        // String sql = "INSERT INTO Personne (nom, prenom) VALUES ('" + nom + "', '" + prenom + "')";
+        // String sql = "INSERT INTO Personne (nom, prenom) VALUES ('" + nom + "', '" +
+        // prenom + "')";
         // try{
-        //     Statement stmt = con.createStatement();
-        //     stmt.executeUpdate(sql);
-        //     stmt.close();
+        // Statement stmt = con.createStatement();
+        // stmt.executeUpdate(sql);
+        // stmt.close();
         // } catch(SQLException e){
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
 
         // int id = personnes.size() + 1;
@@ -60,30 +59,23 @@ public class Facade {
     }
 
     @GetMapping("/Enregistrer_reponse")
-    public void enregistrer_reponse(
-        @RequestParam String surnom,
-        @RequestParam String Pays, 
-        @RequestParam String Ville, 
-        @RequestParam String Prenom, 
-        @RequestParam String Couleur, 
-        @RequestParam String Fruit, 
-        @RequestParam String Animal, 
-        @RequestParam String Metier) {
-
+    public void enregistrer_reponse(String surnom, String Pays, String Ville,
+            String Prenom, String Couleur, String Fruit, String Animal, String Metier) {
 
         // String sql = "SELECT * FROM Personne";
         // try{
-        //     Statement stmt = con.createStatement();
-        //     ResultSet rs = stmt.executeQuery(sql);
-        //     HashMap<Integer,Personne> personnes = new HashMap<Integer,Personne>();
-        //     while(rs.next()){
-        //         personnes.put(rs.getInt("id"), new Personne(rs.getString("prenom"), rs.getString("nom"), rs.getInt("id")));
-        //     }
-        //     stmt.close();
-        //     Collection<Personne> liste = personnes.values();
-        //     return liste;
+        // Statement stmt = con.createStatement();
+        // ResultSet rs = stmt.executeQuery(sql);
+        // HashMap<Integer,Personne> personnes = new HashMap<Integer,Personne>();
+        // while(rs.next()){
+        // personnes.put(rs.getInt("id"), new Personne(rs.getString("prenom"),
+        // rs.getString("nom"), rs.getInt("id")));
+        // }
+        // stmt.close();
+        // Collection<Personne> liste = personnes.values();
+        // return liste;
         // } catch(SQLException e){
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
         // Collection<Personne> list = new ArrayList<Personne>();
         // return personnes.values();
