@@ -49,13 +49,13 @@ public class Partie {
      * @param nombreRounds Nombre de rounds de la partie.
      * @param roundTime    Temps en seconde pour répondre.
      */
-    public Partie(Joueur admin) {
+    public Partie(Joueur admin, int id) {
         this.joueurs = new Vector<>();
         this.rounds = new Vector<>();
         this.numeroRoundActuel = 0;
 
         this.admin = admin;
-        this.id = 0;
+        this.id = id;
     }
 
     /**

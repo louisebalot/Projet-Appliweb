@@ -26,25 +26,25 @@ public class Facade {
 
     // }
 
-    @GetMapping("/démarrer_partie")
-    public void demarrer_partie(Partie partie, int nb_tours, int temps) {
-        partie.creerRounds(nb_tours, temps);
-        
-    }
-
     @GetMapping("/creer_joueur")
-    public Joueur creer_joueur(String surnom) {
-        return new Joueur(surnom);
+    public Joueur creer_joueur(String surnom, int id) {
+        return new Joueur(surnom,id);
     }
 
     @GetMapping("/creer_partie")
-    public Partie creer_partie(Joueur joueur) {
-        Partie partie = new Partie(joueur);
+    public Partie creer_partie(Joueur joueur, int id) {
+        Partie partie = new Partie(joueur, id);
         return partie;
     }
 
     @GetMapping("/rejoindre_partie")
     public void rejoindre_partie(Joueur joueur, Partie partie) {}
+
+    @GetMapping("/démarrer_partie")
+    public void demarrer_partie(Partie partie, int nb_tours, int temps) {
+        partie.creerRounds(nb_tours, temps);
+        
+    }
 
     @GetMapping("/Enregistrer_reponse")
     public void enregistrer_reponse(String surnom, String Pays, String Ville,

@@ -22,6 +22,8 @@ public class Serv extends HttpServlet {
     final String path ="http://localhost:8080/facade";
     Facade facade;
     java.util.List<Partie> parties = new java.util.ArrayList<>();
+    java.util.List<Joueur> joueurs = new java.util.ArrayList<>();
+
 
     public Serv() throws ClassNotFoundException, SQLException {
         ResteasyClient client = new ResteasyClientBuilder().build();
@@ -40,26 +42,28 @@ public class Serv extends HttpServlet {
                 
                 case "creer_joueur":
                     String surnom = request.getParameter("surnom");
-                    Joueur joueur = facade.creer_joueur(surnom);
+                    Joueur joueur = facade.creer_joueur(surnom, joueurs.size() + 1);
+                    joueurs.add(joueur);
                     request.setAttribute("joueur", joueur);
                     request.getRequestDispatcher("CreerPartie.jsp").forward(request, response);
                 break;
                 
                 case "creer_partie":
-                    Joueur admin = request.getParameter("joueur");
-                    Partie partie = facade.creer_partie(admin);
+                    Int id_admin = Integer.parseInt(request.getParameter("joueur"));
+                    Joueur admin = joueurs.get(id_admin - 1);
+                    Partie partie = facade.creer_partie(admin, parties.size() + 1);
                     parties.add(partie);
-                    partie.setId(parties.size());
                     request.setAttribute("partie", partie);
                     request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
 
                 case "rejoindre_partie":
-                        Joueur joueur2 = request.getParameter("joueur");
-                        int id_partie = Integer.parseInt(request.getParameter("id_partie"));
-                        Partie partie2 = parties.get(id_partie - 1);
-                        partie2.ajouterJoueur(joueur2);
-                        request.getRequestDispatcher("lobby.html").forward(request, response);
+                    Int id_invite = Integer.parseInt(request.getParameter("joueur"));
+                    Joueur invite = joueurs.get(id_invite - 1);
+                    int id_partie = Integer.parseInt(request.getParameter("id_partie"));
+                    Partie partie2 = parties.get(id_partie - 1);
+                    partie2.ajouterJoueur(invite);
+                    request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
 
                 case "demarrer_partie":

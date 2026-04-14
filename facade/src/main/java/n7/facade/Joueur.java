@@ -23,10 +23,12 @@ public class Joueur {
      * Créer un joueur.
      * 
      * @param surnom Surnom du joueur.
+     * @param id Id du joueur.
      */
-    public Joueur(String surnom) {
+    public Joueur(String surnom, int id) {
         this.surnom = surnom;
-
+        this.id = id;
+        
         this.score = 0;
     }
 

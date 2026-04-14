@@ -12,14 +12,9 @@ import javax.ws.rs.QueryParam;
 public interface Facade {
 
     @GET
-    @Path("/démarrer_partie")
-    @Consumes("application/json")
-    void demarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
-
-    @GET
     @Path("/creer_joueur")
     @Consumes("application/json")
-    Joueur creer_joueur(@QueryParam("surnom") String surnom);
+    Joueur creer_joueur(@QueryParam("surnom") String surnom, @QueryParam("id") int id);
 
     @GET
     @Path("/creer_partie")
@@ -30,6 +25,11 @@ public interface Facade {
     @Path("/rejoindre_partie")
     @Consumes("application/json")
     void rejoindre_partie(@QueryParam("joueur") Joueur joueur, @QueryParam("partie") Partie partie);
+
+    @GET
+    @Path("/démarrer_partie")
+    @Consumes("application/json")
+    void demarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
 
     @GET
     @Path("/Enregistrer_reponse")

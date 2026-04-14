@@ -7,7 +7,8 @@
 <body>
     <form action="Serv" method="get">
 
-        <h1 class="titre-encadre">ID de la partie : ${maPartie.id}</h1>
+        <%Partie partie = (Partie) request.getAttribute("partie");%>
+        <h1 class="titre-encadre">ID de la partie : <%=partie.getId()%></h1>
     
         <h2 class="titre-encadre">Paramètres de la partie</h2>
         <div class="cadre-parametres">
