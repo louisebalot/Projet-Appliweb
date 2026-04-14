@@ -1,6 +1,8 @@
 package pack;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 
 public class EntreeFormulaire {
     /**
@@ -10,27 +12,55 @@ public class EntreeFormulaire {
     /**
      * Lettre choisie par le joueur.
      */
-    private char lettre;
+    private List<String> reponses;
 
+    /**
+     * Ne pas utiliser (svp).
+     */
     public EntreeFormulaire() {
-
+        this.reponses = new Vector<>(Categorie.values().length);
     }
 
-    public EntreeFormulaire(Joueur joueur, char lettre) {
-        this(joueur.getId(), lettre);
+    /**
+     * Créer une entrée de formulaire à partir d'un joueur, d'une catégorie et de sa réponse.
+     *
+     * @param joueur    Joueur lié à l'entrée
+     * @param categorie Catégorie de la réponse
+     * @param reponse   Réponse à la catégorie
+     */
+    public EntreeFormulaire(Joueur joueur, Categorie categorie, String reponse) {
+        this(joueur.getId(), categorie, reponse);
     }
 
+    /**
+     * Créer une entrée de formulaire à partir d'un joueur.
+     *
+     * @param joueur joueur
+     */
     public EntreeFormulaire(Joueur joueur) {
         this(joueur.getId());
     }
 
+    /**
+     * Créer une entrée de formulaire à partir de l'id d'un joueur.
+     *
+     * @param idJoueur id du joueur
+     */
     public EntreeFormulaire(int idJoueur) {
+        this();
         this.idJoueur = idJoueur;
     }
 
-    public EntreeFormulaire(int idJoueur, char lettre) {
+    /**
+     * Créer une entrée de formulaire à partir d'un joueur, d'une catégorie et de sa réponse.
+     *
+     * @param idJoueur  id du joueur.
+     * @param categorie catégorie à laquelle on veut répondre.
+     * @param reponse   réponse à la catégorie.
+     */
+    public EntreeFormulaire(int idJoueur, Categorie categorie, String reponse) {
         this(idJoueur);
-        this.lettre = lettre;
+        this.reponses.set(categorie.ordinal(), reponse);
     }
 
     public int getIdJoueur() {
@@ -41,12 +71,18 @@ public class EntreeFormulaire {
         this.idJoueur = idJoueur;
     }
 
-    public char getLettre() {
-        return lettre;
+    /**
+     * Obtenir la réponse à une catégorie.
+     *
+     * @param categorie catégorie qu'on veut vérifier.
+     * @return
+     */
+    public String getReponse(Categorie categorie) {
+        return reponses.get(categorie.ordinal());
     }
 
-    public void setLettre(char lettre) {
-        this.lettre = lettre;
+    public void setReponse(Categorie categorie, String reponse) {
+        this.reponses.set(categorie.ordinal(), reponse);
     }
 
     // Deux entrées sont égales si c'est le même joueur qui les a émises
@@ -61,5 +97,21 @@ public class EntreeFormulaire {
     @Override
     public int hashCode() {
         return Objects.hashCode(idJoueur);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("Formulaire du joueur " + idJoueur + ":\n");
+
+        for (Categorie cat : Categorie.values()) {
+            str.append("   ");
+            str.append(cat.name());
+            str.append(" : ");
+            String response = reponses.get(cat.ordinal());
+            if (response != null) str.append(reponses.get(cat.ordinal()));
+            str.append("\n");
+        }
+
+        return str.toString();
     }
 }

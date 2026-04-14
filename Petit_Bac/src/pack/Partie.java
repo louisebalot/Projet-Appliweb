@@ -6,6 +6,14 @@ import java.util.Vector;
 
 public class Partie {
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    /**
+     * Points attribués selon la réponse.
+     * 5 pour une reponse qui se trouve dans notre dase de donnée
+     * 10 s'il est le seul à avoir choisi ce mot
+     */
+    public static final int
+            POINTS_REPONSE_UNIQUE = 10,
+            POINTS_BONNE_REPONSE = 5;
     public String lettresDisponibles = "";
     /**
      * Collection des joueurs de la partie
@@ -109,6 +117,15 @@ public class Partie {
         this.id = id;
     }
 
+    /**
+     * Mettre à jour le tableau des scores en fonction des réponses données dans un formulaire
+     *
+     * @param form formulaire des réponses.
+     */
+    public void miseAJourScore(Formulaire form) {
+        // TODO
+    }
+
     public void creerRounds(int nombreRounds, int roundTime) {
         this.rounds = new Vector<>();
         this.nombreRounds = nombreRounds;
@@ -133,10 +150,6 @@ public class Partie {
             rounds.add(new Round(this, i, lettreChoisie, roundTime));
         }
         this.setRounds(rounds);
-    }
-
-    public enum Categorie {
-        PAYS, VILLE, PRENOM, COULEUR, VEGETAL, ANIMAL, METIER, SPORT
     }
 
 }
