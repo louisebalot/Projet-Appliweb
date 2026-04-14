@@ -1,16 +1,14 @@
 package n7.facade;
 
-import java.util.Random;
-
-import java.util.Vector;
-
 import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 public class Partie {
     public enum Categorie {
         PAYS, VILLE, PRENOM, COULEUR, VEGETAL, ANIMAL, METIER, SPORT
     }
-    
+
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public String lettresDisponibles = "";
 
@@ -45,9 +43,8 @@ public class Partie {
     /**
      * Crée une partie à partir d'un admin.
      * 
-     * @param admin        Admin de la partie
-     * @param nombreRounds Nombre de rounds de la partie.
-     * @param roundTime    Temps en seconde pour répondre.
+     * @param admin Admin de la partie
+     * @param id    ID de la partie
      */
     public Partie(Joueur admin, int id) {
         this.joueurs = new Vector<>();
@@ -107,6 +104,14 @@ public class Partie {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getNombreRounds() {
+        return nombreRounds;
+    }
+
+    public int getRoundTime() {
+        return roundTime;
     }
 
     public void creerRounds(int nombreRounds, int roundTime) {
