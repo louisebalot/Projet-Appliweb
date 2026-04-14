@@ -42,6 +42,10 @@ public class Joueur {
         this.score = 0;
     }
 
+    public void ajouterScore(int score) {
+        this.score += score;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,8 +1,11 @@
 package pack;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Vector;
+import org.jboss.marshalling.Pair;
+import pack.Animaux;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Partie {
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -123,7 +126,49 @@ public class Partie {
      * @param form formulaire des réponses.
      */
     public void miseAJourScore(Formulaire form) {
-        // TODO
+        Map<Categorie, Map<String, Integer>> TableauOccurences = getTableauOccurenceMotsParCategorie(form);
+
+        for (Joueur j : joueurs) {
+            for (Categorie cat : Categorie.values()) {
+                // Récupérer le nombre d'occurence de la réponse du joueur
+                Integer occurenceReponse = TableauOccurences.get(cat).get(form.getReponseJoueur(j, cat));
+                if (occurenceReponse != null) {
+                    // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
+                    j.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
+                }
+            }
+        }
+    }
+
+    public Map<Categorie, Map<String, Integer>> getTableauOccurenceMotsParCategorie(Formulaire form) {
+        Map<Categorie, Map<String, Integer>> tableau = new HashMap<>();
+
+        for (Categorie cat : Categorie.values()) {
+            Map<String, Integer> tableauCategorie = new HashMap<>();
+            // Pour chaque réponse donnée d'une catégorie
+            for (String reponse : form.getReponsesAUneCategorie(cat)) {
+                try {
+                    if (new Scanner(new File("../db/"+ cat.getNomFichierDb()))
+                            .useDelimiter("\\Z").next().contains(reponse)) {
+                        // TODO : TEMPORAIRE (le temps d'installer les vraies DB)
+                        // Si le mot est dans le fichier DB, on le compte
+
+                        if (!tableauCategorie.containsKey(reponse)) {
+                            tableauCategorie.put(reponse, 1);
+                        } else {
+                            tableauCategorie.put(reponse, tableauCategorie.get(reponse) + 1);
+                        }
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            tableau.put(cat, tableauCategorie);
+        }
+
+        return tableau;
     }
 
     public void creerRounds(int nombreRounds, int roundTime) {

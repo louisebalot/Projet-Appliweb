@@ -1,21 +1,20 @@
 package pack;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Vector;
+import org.jboss.marshalling.Pair;
+
+import java.util.*;
 
 /**
  * Classe d'un formulaire de réponse
  */
 public class Formulaire {
-    private Set<EntreeFormulaire> form;
+    private List<EntreeFormulaire> form;
 
     /**
      * Créer un formulaire.
      */
     public Formulaire() {
-        form = new HashSet<>();
+        form = new Vector<>();
     }
 
     /**
@@ -84,10 +83,46 @@ public class Formulaire {
         return reponses;
     }
 
+    public String getReponseJoueur(Joueur joueur, Categorie categorie) {
+        String reponse = null;
+
+        int i = 0;
+        while (reponse == null && i < form.size()) {
+            if (form.get(i).getIdJoueur() == joueur.getId()) {
+                reponse = form.get(i).getReponse(categorie);
+            }
+            i++;
+        }
+
+        return reponse;
+    }
+
+    /**
+     * Obtenir toutes les réponses d'un joueur comme une paire [Catgégorie, Réponse (String)]
+     * @param joueur Joueur
+     * @return La liste des couples Catégorie/Réponse donnée par le joueur
+     */
+    public Collection<Pair<Categorie, String>> getReponsesJoueur(Joueur joueur) {
+        Collection<Pair<Categorie, String>> reponses = new Vector<>();
+
+        // Chercher les réponses de l'utilisateur
+        int i = 0;
+        while (reponses.isEmpty() && i < form.size()) {
+            if (form.get(i).getIdJoueur() == joueur.getId()) {
+                for (Categorie cat : Categorie.values()) {
+                    reponses.add(new Pair<>(cat, form.get(i).getReponse(cat)));
+                }
+            }
+            i++;
+        }
+
+        return reponses;
+    }
+
     /**
      * Ajouter un joueur à partir de son id.
      *
-     * @param idJoueur
+     * @param idJoueur id du joueur
      */
     private void ajouterJoueur(int idJoueur) {
         form.add(new EntreeFormulaire(idJoueur));

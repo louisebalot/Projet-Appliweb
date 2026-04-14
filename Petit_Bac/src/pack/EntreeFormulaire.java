@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
 
+/**
+ * Une entrée dans un formulaire (correspond à toutes les réponses d'un joueur)
+ */
 public class EntreeFormulaire {
     /**
      * Id du joueur.
