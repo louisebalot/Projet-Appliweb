@@ -1,53 +1,53 @@
-package n7.facade;
-
-import java.util.Random;
-
-import java.util.Vector;
+package pack;
 
 import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 public class Partie {
-    public enum Categorie {
-        PAYS, VILLE, PRENOM, COULEUR, VEGETAL, ANIMAL, METIER, SPORT
-    }
-    
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public String lettresDisponibles = "";
-
-    /** Collection des joueurs de la partie */
+    /**
+     * Collection des joueurs de la partie
+     */
     private List<Joueur> joueurs;
-
-    /** Admin de la partie */
+    /**
+     * Admin de la partie
+     */
     private Joueur admin;
-
-    /** Liste des rounds de la partie */
+    /**
+     * Liste des rounds de la partie
+     */
     private List<Round> rounds;
-
-    /** Numéro du round actuel */
+    /**
+     * Numéro du round actuel
+     */
     private int numeroRoundActuel;
-
-    /** Nombre de rounds à jouer */
+    /**
+     * Nombre de rounds à jouer
+     */
     private int nombreRounds;
-
-    /** Temps pour répondre. */
+    /**
+     * Temps pour répondre.
+     */
     private int roundTime;
-
     private int id;
-
-    /**  */
+    /**
+     *
+     */
     private Random random = new Random();
 
-    /** Ne pas utiliser */
+    /**
+     * Ne pas utiliser
+     */
     public Partie() {
         // Ne pas utiliser
     }
 
     /**
      * Crée une partie à partir d'un admin.
-     * 
-     * @param admin        Admin de la partie
-     * @param nombreRounds Nombre de rounds de la partie.
-     * @param roundTime    Temps en seconde pour répondre.
+     *
+     * @param admin Admin de la partie
      */
     public Partie(Joueur admin) {
         this.joueurs = new Vector<>();
@@ -133,6 +133,10 @@ public class Partie {
             rounds.add(new Round(this, i, lettreChoisie, roundTime));
         }
         this.setRounds(rounds);
+    }
+
+    public enum Categorie {
+        PAYS, VILLE, PRENOM, COULEUR, VEGETAL, ANIMAL, METIER, SPORT
     }
 
 }

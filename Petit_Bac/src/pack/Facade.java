@@ -39,7 +39,6 @@ public interface Facade {
     @GET
     @Path("/calculerPoints")
     @Consumes("application/json")
-    @GetMapping("/calculerPoints")
     int calculerPoints(@QueryParam("reponse") String reponse);
 
     @GET

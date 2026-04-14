@@ -1,24 +1,36 @@
-package n7.facade;
+package pack;
 
 import java.time.LocalTime;
 
 public class Round {
-    /** Numero du round (sera peut-être remplacé par une ID) */
+    /**
+     * Numero du round (sera peut-être remplacé par une ID)
+     */
     private int number;
 
-    /** Lettre du round */
+    /**
+     * Lettre du round
+     */
     private char lettre;
 
-    /** Partie liée au round. */
+    /**
+     * Partie liée au round.
+     */
     private Partie partie;
 
-    /** Temps maximum du round */
+    /**
+     * Temps maximum du round
+     */
     private int tempsMaxRound;
 
-    /** Temps auquel le round à commencé */
+    /**
+     * Temps auquel le round à commencé
+     */
     private LocalTime roundStartTime;
 
-    /** Ne pas utiliser */
+    /**
+     * Ne pas utiliser
+     */
     public Round() {
         /** Ne pas utiliser */
     }
@@ -34,6 +46,6 @@ public class Round {
      * Commencer le round.
      */
     public void start() {
-        roundStartTime = LocalTime.now(); 
+        roundStartTime = LocalTime.now();
     }
 }

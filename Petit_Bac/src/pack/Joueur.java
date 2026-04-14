@@ -1,27 +1,37 @@
-package n7.facade;
+package pack;
 
 public class Joueur {
 
-    /** Id unique du joueur */
+    /**
+     * Id unique du joueur
+     */
     private int id;
 
-    /** Surnom du joueur */
+    /**
+     * Surnom du joueur
+     */
     private String surnom;
 
-    /** Partie dans laquelle le joueur est */
+    /**
+     * Partie dans laquelle le joueur est
+     */
     private Partie partie;
 
-    /** Score du joueur */
+    /**
+     * Score du joueur
+     */
     private int score;
 
-    /** Ne pas utiliser */
+    /**
+     * Ne pas utiliser
+     */
     public Joueur() {
 
     }
 
     /**
      * Créer un joueur.
-     * 
+     *
      * @param surnom Surnom du joueur.
      */
     public Joueur(String surnom) {
@@ -69,7 +79,7 @@ public class Joueur {
         if (!(o instanceof Joueur))
             return false;
         Joueur other = (Joueur) o;
-        
+
         return this.id == other.id;
     }
 }
