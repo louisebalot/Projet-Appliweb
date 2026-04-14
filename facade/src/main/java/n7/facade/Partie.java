@@ -60,7 +60,7 @@ public class Partie {
 
     /**
      * Ajoute un joueur dans une partie s'il n'est pas dedans.
-     * 
+     *
      * @param nouveauJoueur Joueur à ajouter
      */
     public void ajouterJoueur(Joueur nouveauJoueur) {

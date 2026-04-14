@@ -1,0 +1,27 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CreerPartie</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="box">
+        <h1>Créer une partie</h1>
+        <form action="Serv" method="get">
+            <%Joueur joueur = (Joueur) request.getAttribute("joueur");%>
+            <button type="submit">Créer</button>
+            <input type="hidden" name="joueur" value="<%=joueur%>">
+            <input type="hidden" name="op" value="creer_partie">
+        </form>
+        <h1>Rejoindre une partie</h1>
+        <form action="Serv" method="get">
+            <%Joueur joueur = (Joueur) request.getAttribute("joueur");%>
+            <label>Sélectionner l'ID de la partie :</label><br/>
+            <input type="hidden" name="joueur" value="<%=joueur%>">
+            <input type="text" name="IdPartie" required><br/>
+            <button type="submit">Rejoindre</button>
+            <input type="hidden" name="op" value="rejoindre_partie">
+        </form>
+    </div>
+</body>
+</html>

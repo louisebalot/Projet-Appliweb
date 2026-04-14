@@ -32,10 +32,9 @@ public class Facade {
         
     }
 
-    @GetMapping("/ajout_surnom")
-    public void ajout_surnom(String surnom) {
-        // int id = joueurs.size() + 1;
-        // joueurs.put(id, surnom);
+    @GetMapping("/creer_joueur")
+    public Joueur creer_joueur(String surnom) {
+        return new Joueur(surnom);
     }
 
     @GetMapping("/creer_partie")

@@ -17,9 +17,9 @@ public interface Facade {
     void demarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
 
     @GET
-    @Path("/ajout_surnom")
+    @Path("/creer_joueur")
     @Consumes("application/json")
-    void ajout_surnom(@QueryParam("surnom") String surnom);
+    Joueur creer_joueur(@QueryParam("surnom") String surnom);
 
     @GET
     @Path("/creer_partie")
