@@ -42,6 +42,10 @@ public class Serv extends HttpServlet {
                     //facade.demarrer_partie(nb_tours, temps);
                     request.getRequestDispatcher("FormulaireReponse.html").forward(request, response);
                 break;
+                case "creer_partie":
+                break;
+                case "rejoindre_partie":
+                break;
                 case "ajout_surnom":
                     String surnom = request.getParameter("surnom");
                     //facade.ajout_surnom(surnom);

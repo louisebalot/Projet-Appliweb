@@ -5,8 +5,8 @@ public class Joueur {
     /** Id unique du joueur */
     private int id;
 
-    /** Nom du joueur */
-    private String nom;
+    /** Surnom du joueur */
+    private String surnom;
 
     /** Partie dans laquelle le joueur est */
     private Partie partie;
@@ -22,11 +22,10 @@ public class Joueur {
     /**
      * Créer un joueur.
      * 
-     * @param nom Nom du joueur.
+     * @param surnom Surnom du joueur.
      */
-    public Joueur(String nom, Partie partie) {
-        this.nom = nom;
-        this.partie = partie;
+    public Joueur(String surnom) {
+        this.surnom = surnom;
 
         this.score = 0;
     }
@@ -39,12 +38,12 @@ public class Joueur {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getSurnom() {
+        return surnom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setSurnom(String surnom) {
+        this.surnom = surnom;
     }
 
     public Partie getPartie() {

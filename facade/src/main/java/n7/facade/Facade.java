@@ -26,27 +26,10 @@ public class Facade {
 
     // }
 
-    @GetMapping("/genererLettre")
-    private String genererLettre() {
-        // generer aléatoirement une lettre qu'on va envoyer au websocker ou
-        // stocker comme variable
-    }
-
     @GetMapping("/démarrer_partie")
-    public void demarrer_partie(int nb_tours, int temps) {
-        // String sql = "INSERT INTO Personne (nom, prenom) VALUES ('" + nom + "', '" +
-        // prenom + "')";
-        // try{
-        // Statement stmt = con.createStatement();
-        // stmt.executeUpdate(sql);
-        // stmt.close();
-        // } catch(SQLException e){
-        // e.printStackTrace();
-        // }
-
-        // int id = personnes.size() + 1;
-        // Personne p = new Personne(prenom, nom, id);
-        // personnes.put(id, p);
+    public void demarrer_partie(Partie partie, int nb_tours, int temps) {
+        partie.creerRounds(nb_tours, temps);
+        
     }
 
     @GetMapping("/ajout_surnom")
@@ -54,6 +37,15 @@ public class Facade {
         // int id = joueurs.size() + 1;
         // joueurs.put(id, surnom);
     }
+
+    @GetMapping("/creer_partie")
+    public Partie creer_partie(Joueur joueur) {
+        Partie partie = new Partie(joueur);
+        return partie;
+    }
+
+    @GetMapping("/rejoindre_partie")
+    public void rejoindre_partie(Joueur joueur, Partie partie) {}
 
     @GetMapping("/Enregistrer_reponse")
     public void enregistrer_reponse(String surnom, String Pays, String Ville,
@@ -83,6 +75,7 @@ public class Facade {
         // 0 si pas dans bdd
         // 5 si dedans et qu'un autre joueur a le meme mot
         // 10 si mot unique et dans bdd
+        return 0;
     }
 
     @GetMapping("/redemarrer_partie")

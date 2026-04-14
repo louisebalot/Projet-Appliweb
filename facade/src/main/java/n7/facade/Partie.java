@@ -32,6 +32,8 @@ public class Partie {
     /** Temps pour répondre. */
     private int roundTime;
 
+    private int id;
+
     /**  */
     private Random random = new Random();
 
@@ -47,34 +49,13 @@ public class Partie {
      * @param nombreRounds Nombre de rounds de la partie.
      * @param roundTime    Temps en seconde pour répondre.
      */
-    public Partie(Joueur admin, int nombreRounds, int roundTime) {
+    public Partie(Joueur admin) {
         this.joueurs = new Vector<>();
         this.rounds = new Vector<>();
         this.numeroRoundActuel = 0;
 
         this.admin = admin;
-        this.nombreRounds = nombreRounds;
-        this.roundTime = roundTime;
-
-        // Initialiser les rounds
-        for (int i = 1; i < nombreRounds; i++) {
-
-            // Vérifier qu'il reste des lettres disponibles
-            if (lettresDisponibles.isEmpty()) {
-                lettresDisponibles = ALPHABET;
-            }
-
-            // Choisir une lettre
-            int indexLettre = random.nextInt(lettresDisponibles.length());
-            char lettreChoisie = lettresDisponibles.charAt(indexLettre);
-
-            // Supprimer la lettre des choix disponibles
-            lettresDisponibles = lettresDisponibles.substring(0, indexLettre)
-                    + lettresDisponibles.substring(indexLettre + 1);
-
-            // Créer le round
-            rounds.add(new Round(this, i, lettreChoisie, roundTime));
-        }
+        this.id = 0;
     }
 
     /**
@@ -114,6 +95,44 @@ public class Partie {
 
     public void setAdmin(Joueur admin) {
         this.admin = admin;
+    }
+
+    public void setRounds(List<Round> rounds) {
+        this.rounds = rounds;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void creerRounds(int nombreRounds, int roundTime) {
+        this.rounds = new Vector<>();
+        this.nombreRounds = nombreRounds;
+        this.roundTime = roundTime;
+        // Initialiser les rounds
+        for (int i = 1; i < nombreRounds; i++) {
+
+            // Vérifier qu'il reste des lettres disponibles
+            if (lettresDisponibles.isEmpty()) {
+                lettresDisponibles = ALPHABET;
+            }
+
+            // Choisir une lettre
+            int indexLettre = random.nextInt(lettresDisponibles.length());
+            char lettreChoisie = lettresDisponibles.charAt(indexLettre);
+
+            // Supprimer la lettre des choix disponibles
+            lettresDisponibles = lettresDisponibles.substring(0, indexLettre)
+                    + lettresDisponibles.substring(indexLettre + 1);
+
+            // Créer le round
+            rounds.add(new Round(this, i, lettreChoisie, roundTime));
+        }
+        this.setRounds(rounds);
     }
 
 }
