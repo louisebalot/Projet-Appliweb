@@ -1,7 +1,5 @@
 package pack;
 
-import org.jboss.marshalling.Pair;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,6 +35,7 @@ public class Formulaire {
 
     /**
      * Obtenir le squelette du formulaire.
+     *
      * @return Un formulaire avec tous les joueurs sans la réponse remplie.
      */
     public Formulaire getSquelette() {
@@ -51,6 +50,7 @@ public class Formulaire {
 
     /**
      * Ajouter un joueur à partir de son id.
+     *
      * @param idJoueur
      */
     private void ajouterJoueur(int idJoueur) {

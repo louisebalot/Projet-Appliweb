@@ -1,12 +1,6 @@
 package pack;
 
-import java.util.Collection;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 
 @Path("/")
 public interface Facade {
@@ -35,7 +29,7 @@ public interface Facade {
     @Path("/Enregistrer_reponse")
     @Produces("application/json")
     void enregistrerReponse(@QueryParam("Pays") String Pays, @QueryParam("Ville") String Ville, @QueryParam("Prenom") String Prenom, @QueryParam("Couleur") String Couleur, @QueryParam("Fruit") String Fruit, @QueryParam("Animal") String Animal, @QueryParam("Metier") String Metier);
-    
+
     @GET
     @Path("/calculerPoints")
     @Consumes("application/json")
