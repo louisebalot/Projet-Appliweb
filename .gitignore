@@ -1,0 +1,23 @@
+# Fichiers de compilation Java
+*.class
+
+# Dossier de build (Tomcat/Maven)
+target/
+build/
+
+# Fichiers de configuration de l'IDE
+.settings/
+.project
+.classpath
+.idea/
+*.iml
+*.iws
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+*.war
