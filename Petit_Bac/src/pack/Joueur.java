@@ -1,5 +1,7 @@
 package pack;
 
+import java.util.Objects;
+
 public class Joueur {
 
     /**
@@ -74,12 +76,14 @@ public class Joueur {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Joueur))
-            return false;
-        Joueur other = (Joueur) o;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Joueur joueur = (Joueur) o;
+        return id == joueur.id;
+    }
 
-        return this.id == other.id;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
