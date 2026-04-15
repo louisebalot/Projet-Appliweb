@@ -52,7 +52,7 @@ public class Serv extends HttpServlet {
                 parties.add(partie);
                 request.setAttribute("partie", partie);
                 request.setAttribute("joueur", admin);
-                request.getRequestDispatcher("lobby.html").forward(request, response);
+                request.getRequestDispatcher("lobby.jsp").forward(request, response);
                 break;
 
             case "rejoindre_partie":
@@ -63,10 +63,10 @@ public class Serv extends HttpServlet {
                 partie2.ajouterJoueur(invite);
                 request.setAttribute("partie", partie2);
                 request.setAttribute("joueur",invite);
-                request.getRequestDispatcher("lobby.html").forward(request, response);
+                request.getRequestDispatcher("Attente.html").forward(request, response);
                 break;
 
-            case "demarrer_partie":
+            case "demarrer_round":
                 int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
                 int temps = Integer.parseInt(request.getParameter("temps"));
                 int id_partie2 = Integer.parseInt(request.getParameter("id_partie"));
@@ -75,8 +75,7 @@ public class Serv extends HttpServlet {
                 Joueur joueur2 = joueurs.get(id_joueur - 1);
                 request.setAttribute("partie", partie3);
                 request.setAttribute("joueur",joueur2);
-                //facade.demarrer_partie(nb_tours, temps);
-                request.getRequestDispatcher("FormulaireReponse.html").forward(request, response);
+                request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
                 break;
 
             case "Enregistrer_reponse":
@@ -98,14 +97,21 @@ public class Serv extends HttpServlet {
 
                 Joueur joueur_actuel = joueurs.get(id_joueur_actuel - 1);
 
-                                
-
                 facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier);
-                request.getRequestDispatcher("lobby.html").forward(request, response);
-                break;
+                
+                partie_actuelle.prochainRound();
+
+                if (partie_actuelle.getNumeroRoundActuel() > partie_actuelle.getNombreRounds()){
+                    request.getRequestDispatcher("Gagnant.html").forward(request, response);
+                    break; 
+
+                } else {
+                    request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
+                    break;
+                }
+
             case "redemarrer_partie":
-                //facade.redemarrer_partie(nb_tours, temps);
-                request.getRequestDispatcher("FormulaireReponse.html").forward(request, response);
+                request.getRequestDispatcher("Lobby.jsp").forward(request, response);
                 break;
         }
     }

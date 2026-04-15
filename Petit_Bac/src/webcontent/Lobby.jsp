@@ -53,7 +53,7 @@
     </form>
 
     <script>
-        const socket = new WebSocket('ws://votre-serveur-adresse/Serv_Bac');
+        const socket = new WebSocket('ws://serveur-adresse/Serv');
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
@@ -70,7 +70,7 @@
             }
 
             if (data.status === "START") {
-                window.location.href = "Serv_Bac?op=afficher_jeu"; 
+                window.location.href = "Serv?op=afficher_jeu"; 
             }
         };
         

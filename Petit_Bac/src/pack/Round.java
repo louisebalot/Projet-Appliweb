@@ -23,6 +23,46 @@ public class Round {
      */
     private int tempsMaxRound;
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public char getLettre() {
+        return lettre;
+    }
+
+    public void setLettre(char lettre) {
+        this.lettre = lettre;
+    }
+
+    public Partie getPartie() {
+        return partie;
+    }
+
+    public void setPartie(Partie partie) {
+        this.partie = partie;
+    }
+
+    public int getTempsMaxRound() {
+        return tempsMaxRound;
+    }
+
+    public void setTempsMaxRound(int tempsMaxRound) {
+        this.tempsMaxRound = tempsMaxRound;
+    }
+
+    public LocalTime getRoundStartTime() {
+        return roundStartTime;
+    }
+
+    public void setRoundStartTime(LocalTime roundStartTime) {
+        this.roundStartTime = roundStartTime;
+    }
+
     /**
      * Temps auquel le round à commencé
      */
