@@ -1,7 +1,8 @@
 
 package n7.facade;
 
-import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 //import pack.Adresse;
@@ -26,50 +27,34 @@ public class Facade {
 
     // }
 
-    @GetMapping("/creer_joueur")
+    @PostMapping("/creer_joueur")
     public Joueur creer_joueur(String surnom, int id) {
         return new Joueur(surnom,id);
     }
 
-    @GetMapping("/creer_partie")
+    @PostMapping("/creer_partie")
     public Partie creer_partie(Joueur joueur, int id) {
         Partie partie = new Partie(joueur, id);
         return partie;
     }
 
-    @GetMapping("/rejoindre_partie")
+    @PostMapping("/rejoindre_partie")
     public void rejoindre_partie(Joueur joueur, Partie partie) {}
 
-    @GetMapping("/démarrer_partie")
+    @PostMapping("/démarrer_partie")
     public void demarrer_partie(Partie partie, int nb_tours, int temps) {
         partie.creerRounds(nb_tours, temps);
         
     }
 
-    @GetMapping("/Enregistrer_reponse")
+    @PostMapping("/Enregistrer_reponse")
     public void enregistrer_reponse(String surnom, String Pays, String Ville,
             String Prenom, String Couleur, String Fruit, String Animal, String Metier) {
-
-        // String sql = "SELECT * FROM Personne";
-        // try{
-        // Statement stmt = con.createStatement();
-        // ResultSet rs = stmt.executeQuery(sql);
-        // HashMap<Integer,Personne> personnes = new HashMap<Integer,Personne>();
-        // while(rs.next()){
-        // personnes.put(rs.getInt("id"), new Personne(rs.getString("prenom"),
-        // rs.getString("nom"), rs.getInt("id")));
-        // }
-        // stmt.close();
-        // Collection<Personne> liste = personnes.values();
-        // return liste;
-        // } catch(SQLException e){
-        // e.printStackTrace();
-        // }
-        // Collection<Personne> list = new ArrayList<Personne>();
-        // return personnes.values();
+        
+        
     }
 
-    @GetMapping("/calculerPoints")
+    @PostMapping("/calculerPoints")
     private int calculerPoints(String reponse) {
         // 0 si pas dans bdd
         // 5 si dedans et qu'un autre joueur a le meme mot
@@ -77,7 +62,7 @@ public class Facade {
         return 0;
     }
 
-    @GetMapping("/redemarrer_partie")
+    @PostMapping("/redemarrer_partie")
     public void redemarrer_partie(int nb_tours, int temps) {
         // Implementation for restarting the game
     }

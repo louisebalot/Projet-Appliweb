@@ -7,7 +7,11 @@
 <body>
     <form action="Serv" method="get">
 
+        <%Joueur joueur = (Joueur) request.getAttribute("joueur");%>
+        <input type="hidden" name="joueur" value="<%=joueur.getId()%>">
+
         <%Partie partie = (Partie) request.getAttribute("partie");%>
+        <input type="hidden" name="id_partie" value="<%=partie.getId()%>">
         <h1 class="titre-encadre">ID de la partie : <%=partie.getId()%></h1>
     
         <h2 class="titre-encadre">Paramètres de la partie</h2>

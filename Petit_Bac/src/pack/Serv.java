@@ -51,6 +51,7 @@ public class Serv extends HttpServlet {
                 Partie partie = facade.creer_partie(admin);
                 parties.add(partie);
                 request.setAttribute("partie", partie);
+                request.setAttribute("joueur", admin);
                 request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
 
@@ -60,17 +61,28 @@ public class Serv extends HttpServlet {
                 int id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 Partie partie2 = parties.get(id_partie - 1);
                 partie2.ajouterJoueur(invite);
+                request.setAttribute("partie", partie2);
+                request.setAttribute("joueur",invite);
                 request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
 
             case "demarrer_partie":
                 int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
                 int temps = Integer.parseInt(request.getParameter("temps"));
+                int id_partie2 = Integer.parseInt(request.getParameter("id_partie"));
+                Partie partie3 = parties.get(id_partie2 - 1);
+                int id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                Joueur joueur2 = joueurs.get(id_joueur - 1);
+                request.setAttribute("partie", partie3);
+                request.setAttribute("joueur",joueur2);
                 //facade.demarrer_partie(nb_tours, temps);
                 request.getRequestDispatcher("FormulaireReponse.html").forward(request, response);
                 break;
 
             case "Enregistrer_reponse":
+                int id_partie_actuelle = Integer.parseInt(request.getParameter("id_partie"));
+                int id_joueur_actuel = Integer.parseInt(request.getParameter("joueur"));
+
                 String Pays = request.getParameter("Pays");
                 String Ville = request.getParameter("Ville");
                 String Prenom = request.getParameter("Prenom");
@@ -78,7 +90,17 @@ public class Serv extends HttpServlet {
                 String Fruit = request.getParameter("Fruit");
                 String Animal = request.getParameter("Animal");
                 String Metier = request.getParameter("Metier");
-                //facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier);
+
+                Partie partie_actuelle = parties.get(id_partie_actuelle - 1);
+
+                Formulaire formulaireReponse = new Formulaire();
+                formulaireReponse.ajouterJoueurs(partie.getJoueurs());
+
+                Joueur joueur_actuel = joueurs.get(id_joueur_actuel - 1);
+
+                                
+
+                facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier);
                 request.getRequestDispatcher("lobby.html").forward(request, response);
                 break;
             case "redemarrer_partie":
