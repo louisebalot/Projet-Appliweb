@@ -62,7 +62,7 @@
     </div>
 
     <script>
-        const socket = new WebSocket('ws://votre-serveur-adresse/Serv_Bac');
+        const socket = new WebSocket('ws://serveur-adresse/Serv');
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);

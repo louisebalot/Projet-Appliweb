@@ -21,11 +21,19 @@ public class Serv extends HttpServlet {
     java.util.List<Partie> parties = new java.util.ArrayList<>();
     java.util.List<Joueur> joueurs = new java.util.ArrayList<>();
 
+    public Serv() {
+        super();
+    }
 
-    public Serv() throws ClassNotFoundException, SQLException {
-        ResteasyClient client = new ResteasyClientBuilder().build();
-        ResteasyWebTarget target = client.target(UriBuilder.fromPath(path));
-        facade = target.proxy(Facade.class);
+    @Override
+    public void init() throws ServletException {
+        try {
+            ResteasyClient client = new ResteasyClientBuilder().build();
+            ResteasyWebTarget target = client.target(UriBuilder.fromPath(path));
+            facade = target.proxy(Facade.class);
+        } catch (Exception e) {
+            throw new ServletException("Erreur lors de la connexion à la Facade REST", e);
+        }
     }
 
     @Override
@@ -52,7 +60,7 @@ public class Serv extends HttpServlet {
                 parties.add(partie);
                 request.setAttribute("partie", partie);
                 request.setAttribute("joueur", admin);
-                request.getRequestDispatcher("lobby.jsp").forward(request, response);
+                request.getRequestDispatcher("Lobby.jsp").forward(request, response);
                 break;
 
             case "rejoindre_partie":
@@ -98,7 +106,7 @@ public class Serv extends HttpServlet {
                 Joueur joueur_actuel = joueurs.get(id_joueur_actuel - 1);
 
                 facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier);
-                
+
                 partie_actuelle.prochainRound();
 
                 if (partie_actuelle.getNumeroRoundActuel() > partie_actuelle.getNombreRounds()){

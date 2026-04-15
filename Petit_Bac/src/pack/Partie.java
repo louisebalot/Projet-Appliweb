@@ -100,6 +100,22 @@ public class Partie {
         this.joueurs = joueurs;
     }
 
+    public int getNumeroRoundActuel() {
+        return numeroRoundActuel;
+    }
+
+    public void setNumeroRoundActuel(int numeroRoundActuel) {
+        this.numeroRoundActuel = numeroRoundActuel;
+    }
+
+    public int getNombreRounds() {
+        return nombreRounds;
+    }
+
+    public void setNombreRounds(int nombreRounds) {
+        this.nombreRounds = nombreRounds;
+    }
+
     public Joueur getAdmin() {
         return admin;
     }

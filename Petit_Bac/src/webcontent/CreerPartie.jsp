@@ -1,3 +1,4 @@
+<%@ page import="pack.Joueur" %>
 <html>
 <head>
     <meta charset="UTF-8">
