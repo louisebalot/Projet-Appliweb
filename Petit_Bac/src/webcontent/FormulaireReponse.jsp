@@ -9,14 +9,17 @@
     <meta charset="UTF-8">
 </head>
 <body>
+    <div id="countdown-overlay">
+        <h1>Préparez-vous !</h1>
+        <div id="countdown-number">3</div>
+    </div>
+
     <div class="box-form">
         <h1>C'est tipar !</h1>
         <h2 class="titre-encadre">Lettre : <span id="lettre"><%= partie.getLettre() %></span></h2>
 
         <form action="Serv" method="get">
-            <%Partie partie = (Partie) request.getAttribute("partie");%>
             <input type="hidden" name="id_partie" value="<%=partie.getId()%>">
-            <%Joueur joueur = (Joueur) request.getAttribute("joueur");%>
             <input type="hidden" name="joueur" value="<%=joueur.getId()%>">
             <div class="cadre-parametres">
                 <div class="groupe-input">
@@ -66,7 +69,29 @@
     </div>
 
     <script>
-        const socket = new WebSocket('ws://serveur-adresse/Serv');
+        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/Serv');
+
+        const overlay = document.getElementById('countdown-overlay');
+        const displayDecompte = document.getElementById('countdown-number');
+        let decompteInitial = 3;
+
+        const intervalInitial = setInterval(() => {
+            decompteInitial--;
+
+            if (decompteInitial > 0) {
+                displayDecompte.innerText = decompteInitial;
+            } else if (decompteInitial === 0) {
+            } else {
+                clearInterval(intervalInitial);
+                
+                overlay.classList.add('hidden'); 
+                
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    //demarrerLeChronoDeLaPartie();
+                }, 500);
+            }
+        }, 1000);
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);

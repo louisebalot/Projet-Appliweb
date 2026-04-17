@@ -91,7 +91,7 @@ public class Serv extends HttpServlet {
                 int temps = Integer.parseInt(request.getParameter("temps"));
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 partie = parties.get(id_partie - 1);
-                id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                id_joueur = Integer.parseInt(request.getParameter("id_joueur"));
                 joueur = joueurs.get(id_joueur - 1);
                 facade.setParametres(partie, temps, nb_tours);
                 request.setAttribute("partie", partie);

@@ -8,7 +8,7 @@
     <form action="Serv" method="get">
 
         <%Joueur joueur = (Joueur) request.getAttribute("joueur");%>
-        <input type="hidden" name="joueur" value="<%=joueur.getId()%>">
+        <input type="hidden" name="id_joueur" value="<%=joueur.getId()%>">
 
         <%Partie partie = (Partie) request.getAttribute("partie");%>
         <input type="hidden" name="id_partie" value="<%=partie.getId()%>">
@@ -72,44 +72,11 @@
         
         const inputTemps = document.getElementById('temps');
         const spanTemps = document.getElementById('valeur_temps');
-
-        function updateTemps() {
-            spanTemps.innerText = inputTemps.value;
-        }
+        inputTemps.addEventListener('input', () => spanTemps.innerText = inputTemps.value);
 
         const inputTours = document.getElementById('nb_tours');
         const spanTours = document.getElementById('valeur_tours');
-        const labelTours = document.querySelector('label[for="nb_tours"]');
-
-        function updateTours() {
-            const val = inputTours.value;
-            spanTours.innerText = val;
-            
-            if (parseInt(val) > 1) {
-                labelTours.innerHTML = `Nombre de tours: <span id="valeur_tours">${val}</span> tours`;
-            } else {
-                labelTours.innerHTML = `Nombre de tours: <span id="valeur_tours">${val}</span> tour`;
-            }
-        }
-        inputTemps.addEventListener('input', updateTemps);
-        inputTours.addEventListener('input', updateTours);
-
-        updateTemps();
-        updateTours();
-
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
-            const temps = document.getElementById('temps').value;
-            const tours = document.getElementById('nb_tours').value;
-
-            socket.send(JSON.stringify({ 
-                action: "LANCER_PARTIE",
-                temps: temps,
-                tours: tours
-            }));
-            console.log("Demande de lancement envoyée au serveur");
-        });
+        inputTours.addEventListener('input', () => spanTours.innerText = inputTours.value);
     </script>
 </body>
 </html>

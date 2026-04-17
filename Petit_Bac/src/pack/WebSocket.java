@@ -9,29 +9,44 @@ import java.util.HashSet;
 @ServerEndpoint("/Serv")
 public class GameWebSocket {
 
-    private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());
+    private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
 
     @OnOpen
     public void onOpen(Session session) {
-        clients.add(session);
+        sessions.add(session);
+        System.out.println("Nouvelle connexion : " + session.getId());
     }
 
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
-        System.out.println("Message reçu : " + message);
+        System.out.println("JSON reçu : " + message);
         
-        // Si le message contient "LANCER_PARTIE", on prévient tous les joueurs
         if (message.contains("LANCER_PARTIE")) {
-            for (Session s : sessions) {
-                if (s.isOpen()) {
-                    s.getBasicRemote().sendText("{\"status\": \"START\"}");
-                }
-            }
+            broadcast("{\"status\": \"START\"}");
+        } 
+        else if (message.contains("STOP")) {
+            broadcast("{\"status\": \"FINI\"}");
         }
     }
 
     @OnClose
     public void onClose(Session session) {
-        clients.remove(session); 
+        sessions.remove(session); 
+        System.out.println("Connexion fermée : " + session.getId());
+    }
+
+    @OnError
+    public void onError(Session session, Throwable throwable) {
+        sessions.remove(session);
+    }    
+
+    private void broadcast(String text) {
+        synchronized (sessions) {
+            for (Session s : sessions) {
+                if (s.isOpen()) {
+                    s.getAsyncRemote().sendText(text);
+                }
+            }
+        }
     }
 }
