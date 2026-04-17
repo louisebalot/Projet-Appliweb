@@ -2,7 +2,14 @@ package pack;
 
 import java.time.LocalTime;
 
+import static java.lang.Integer.max;
+
 public class Round {
+    /**
+     * Nombre de secondes dans une journée.
+     */
+    private static final int SECONDES_DANS_UN_JOUR = 24 * 60 * 60;
+
     /**
      * Numero du round (sera peut-être remplacé par une ID)
      */
@@ -22,6 +29,24 @@ public class Round {
      * Temps maximum du round
      */
     private int tempsMaxRound;
+    /**
+     * Temps auquel le round à commencé
+     */
+    private LocalTime roundStartTime;
+
+    /**
+     * Ne pas utiliser
+     */
+    public Round() {
+        /** Ne pas utiliser */
+    }
+
+    public Round(Partie partie, int number, char lettre, int tempsMaxRound) {
+        this.partie = partie;
+        this.number = number;
+        this.lettre = lettre;
+        this.tempsMaxRound = tempsMaxRound;
+    }
 
     public int getNumber() {
         return number;
@@ -64,28 +89,29 @@ public class Round {
     }
 
     /**
-     * Temps auquel le round à commencé
-     */
-    private LocalTime roundStartTime;
-
-    /**
-     * Ne pas utiliser
-     */
-    public Round() {
-        /** Ne pas utiliser */
-    }
-
-    public Round(Partie partie, int number, char lettre, int tempsMaxRound) {
-        this.partie = partie;
-        this.number = number;
-        this.lettre = lettre;
-        this.tempsMaxRound = tempsMaxRound;
-    }
-
-    /**
      * Commencer le round.
      */
     public void start() {
         roundStartTime = LocalTime.now();
+    }
+
+    /**
+     * Obtenir le nombre de secondes restantes du round.
+     * <p>
+     * valeur entre {@code 0} et {@code tempsMaxRound} inclus
+     *
+     * @return le nombre de secondes restantes pour jouer le round
+     */
+    public int getSecondesRestantes() {
+        int tempsActuel = LocalTime.now().toSecondOfDay();
+        int tempsDebutRound = roundStartTime.toSecondOfDay();
+
+        // Détecter si le round à débuté le jour d'avant
+        if (tempsActuel < tempsDebutRound) {
+            tempsDebutRound -= SECONDES_DANS_UN_JOUR;
+        }
+
+        // Retourner la différence entre le temps maximum du round et le temps écoulé
+        return max(0, tempsMaxRound - (tempsActuel - tempsDebutRound));
     }
 }

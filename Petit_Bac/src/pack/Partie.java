@@ -1,8 +1,5 @@
 package pack;
 
-import org.jboss.marshalling.Pair;
-import pack.Animaux;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -137,7 +134,7 @@ public class Partie {
     }
 
     /**
-     * Mettre à jour le tableau des scores en fonction des réponses données dans un formulaire
+     * Mettre à jour le tableau des scores en fonction des réponses données dans un formulaire.
      *
      * @param form formulaire des réponses.
      */
@@ -156,6 +153,28 @@ public class Partie {
         }
     }
 
+    /**
+     * Obtenir L'occurence de chaque mot pour chaque catégorie.
+     *
+     * <p>
+     *     Exemple pour 2 joueurs et 2 catégories {@code VILLE} et {@code VEGETAL} :
+     * </p>
+     *
+     * <p>
+     *     Réponses joueur 1 :
+     *        {@code VILLE} : Limoges, {@code VEGETAL} : Carotte <br>
+     *     Réponses joueur 2 :
+     *        {@code VILLE} : Tours,   {@code VEGETAL} : Carotte <br>
+     * </p>
+     *
+     *     Alors pour la catégorie {@code VILLE} on a "Limoges" avec une occurrence de {@code 1} et "Tours"
+     *     avec une occurrence de {@code 1}. <br>
+     *     Pour la catgégorie {@code VEGETAL} on a "Carotte" avec une occurrence de {@code 2}
+     *
+     *
+     * @param form formulaire dont on veut les occurences des mots selon leur catégorie
+     * @return Le tableau d'occurrence de chaque mot selon la catégorie
+     */
     public Map<Categorie, Map<String, Integer>> getTableauOccurenceMotsParCategorie(Formulaire form) {
         Map<Categorie, Map<String, Integer>> tableau = new HashMap<>();
 
@@ -164,7 +183,7 @@ public class Partie {
             // Pour chaque réponse donnée d'une catégorie
             for (String reponse : form.getReponsesAUneCategorie(cat)) {
                 try {
-                    if (new Scanner(new File("../db/"+ cat.getNomFichierDb()))
+                    if (new Scanner(new File("../db/" + cat.getNomFichierDb()))
                             .useDelimiter("\\Z").next().contains(reponse)) {
                         // TODO : TEMPORAIRE (le temps d'installer les vraies DB)
                         // Si le mot est dans le fichier DB, on le compte
@@ -210,6 +229,7 @@ public class Partie {
             // Créer le round
             rounds.add(new Round(this, i, lettreChoisie, roundTime));
         }
+
         this.setRounds(rounds);
     }
 

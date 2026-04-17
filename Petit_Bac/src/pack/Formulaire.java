@@ -21,7 +21,7 @@ public class Formulaire {
      * Renvoyer un squelette de formulaire à partir d'une collection de Joueur
      *
      * @param joueurs collection de joueur
-     * @return
+     * @return formulaire avec toutes les réponses mises à {@code null}
      */
     public static Formulaire getSquelette(Collection<Joueur> joueurs) {
         Formulaire nouveauForm = new Formulaire();
@@ -71,7 +71,7 @@ public class Formulaire {
      * Obtenir toutes les réponses à une catégorie.
      *
      * @param categorie catégorie cherchée.
-     * @return
+     * @return Collection de l'ensemble des réponses à une catégorie.
      */
     public Collection<String> getReponsesAUneCategorie(Categorie categorie) {
         Collection<String> reponses = new Vector<>();
