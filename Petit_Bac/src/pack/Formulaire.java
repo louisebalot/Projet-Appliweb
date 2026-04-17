@@ -83,6 +83,12 @@ public class Formulaire {
         return reponses;
     }
 
+    /**
+     * Obtenir la réponse d'un joueur à une catégorie donnée.
+     * @param joueur joueur
+     * @param categorie catégorie
+     * @return réponse du joueur à la catégorie
+     */
     public String getReponseJoueur(Joueur joueur, Categorie categorie) {
         String reponse = null;
 
@@ -98,7 +104,7 @@ public class Formulaire {
     }
 
     /**
-     * Obtenir toutes les réponses d'un joueur comme une paire [Catgégorie, Réponse (String)]
+     * Obtenir toutes les réponses d'un joueur comme une paire [Catégorie, Réponse (String)]
      * @param joueur Joueur
      * @return La liste des couples Catégorie/Réponse donnée par le joueur
      */
