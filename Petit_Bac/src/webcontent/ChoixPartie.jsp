@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>CreerPartie</title>
+    <title>ChoixPartie</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
         <form action="Serv" method="get">
             <label>Sélectionner l'ID de la partie :</label><br/>
             <input type="hidden" name="joueur" value="<%=joueur.getId()%>">
-            <input type="text" name="IdPartie" required><br/>
+            <input type="text" name="id_partie" required><br/>
             <button type="submit">Rejoindre</button>
             <input type="hidden" name="op" value="rejoindre_partie">
         </form>

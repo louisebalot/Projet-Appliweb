@@ -1,3 +1,7 @@
+<%
+    Partie partie = (Partie) request.getAttribute("partie");
+    Joueur joueur = (Joueur) request.getAttribute("joueur");
+%>
 <html>
 <head>
     <title>Formulaire de réponse</title>
@@ -7,7 +11,7 @@
 <body>
     <div class="box-form">
         <h1>C'est tipar !</h1>
-        <h2 class="titre-encadre">Lettre : <span id="lettre">A</span></h2>
+        <h2 class="titre-encadre">Lettre : <span id="lettre"><%= partie.getLettre() %></span></h2>
 
         <form action="Serv" method="get">
             <%Partie partie = (Partie) request.getAttribute("partie");%>

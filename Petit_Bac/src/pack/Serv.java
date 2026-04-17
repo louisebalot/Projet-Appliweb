@@ -43,20 +43,32 @@ public class Serv extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String surnom;
+        int id_joueur;
+        Joueur joueur;
+        int id_admin;
+        Joueur admin;
+        int id_invite;
+        Joueur invite;
+        int id_partie;
+        Partie partie;
+
         switch (request.getParameter("op")) {
 
             case "creer_joueur":
-                String surnom = request.getParameter("surnom");
-                Joueur joueur = facade.creer_joueur(surnom, joueurs.size() + 1);
+                surnom = request.getParameter("surnom");
+                joueur = facade.creer_joueur(surnom, joueurs.size() + 1);
                 joueurs.add(joueur);
                 request.setAttribute("joueur", joueur);
-                request.getRequestDispatcher("CreerPartie.jsp").forward(request, response);
+                request.getRequestDispatcher("ChoixPartie.jsp").forward(request, response);
                 break;
 
             case "creer_partie":
-                int id_admin = Integer.parseInt(request.getParameter("joueur"));
-                Joueur admin = joueurs.get(id_admin - 1);
-                Partie partie = facade.creer_partie(admin);
+                id_admin = Integer.parseInt(request.getParameter("joueur"));
+                admin = joueurs.get(id_admin - 1);
+                id_partie = parties.size() + 1;
+                partie = facade.creer_partie(admin, id_partie);
                 parties.add(partie);
                 request.setAttribute("partie", partie);
                 request.setAttribute("joueur", admin);
@@ -64,25 +76,36 @@ public class Serv extends HttpServlet {
                 break;
 
             case "rejoindre_partie":
-                int id_invite = Integer.parseInt(request.getParameter("joueur"));
-                Joueur invite = joueurs.get(id_invite - 1);
-                int id_partie = Integer.parseInt(request.getParameter("id_partie"));
-                Partie partie2 = parties.get(id_partie - 1);
-                partie2.ajouterJoueur(invite);
-                request.setAttribute("partie", partie2);
+                id_invite = Integer.parseInt(request.getParameter("joueur"));
+                invite = joueurs.get(id_invite - 1);
+                id_partie = Integer.parseInt(request.getParameter("id_partie"));
+                partie = parties.get(id_partie - 1);
+                partie.ajouterJoueur(invite);
+                request.setAttribute("partie", partie);
                 request.setAttribute("joueur",invite);
-                request.getRequestDispatcher("Attente.html").forward(request, response);
+                request.getRequestDispatcher("AttenteInvite.jsp").forward(request, response);
+                break;
+
+            case "valider_params":
+                int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
+                int temps = Integer.parseInt(request.getParameter("temps"));
+                id_partie = Integer.parseInt(request.getParameter("id_partie"));
+                partie = parties.get(id_partie - 1);
+                id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                joueur = joueurs.get(id_joueur - 1);
+                facade.setParametres(partie, temps, nb_tours);
+                request.setAttribute("partie", partie);
+                request.setAttribute("joueur",joueur);
+                request.getRequestDispatcher("AttenteAdmin.jsp").forward(request, response);
                 break;
 
             case "demarrer_round":
-                int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
-                int temps = Integer.parseInt(request.getParameter("temps"));
-                int id_partie2 = Integer.parseInt(request.getParameter("id_partie"));
-                Partie partie3 = parties.get(id_partie2 - 1);
-                int id_joueur = Integer.parseInt(request.getParameter("joueur"));
-                Joueur joueur2 = joueurs.get(id_joueur - 1);
-                request.setAttribute("partie", partie3);
-                request.setAttribute("joueur",joueur2);
+                id_partie = Integer.parseInt(request.getParameter("id_partie"));
+                partie = parties.get(id_partie - 1);
+                id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                joueur = joueurs.get(id_joueur - 1);
+                request.setAttribute("partie", partie);
+                request.setAttribute("joueur",joueur);
                 request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
                 break;
 
@@ -101,7 +124,7 @@ public class Serv extends HttpServlet {
                 Partie partie_actuelle = parties.get(id_partie_actuelle - 1);
 
                 Formulaire formulaireReponse = new Formulaire();
-                formulaireReponse.ajouterJoueurs(partie.getJoueurs());
+                formulaireReponse.ajouterJoueurs(partie_actuelle.getJoueurs());
 
                 Joueur joueur_actuel = joueurs.get(id_joueur_actuel - 1);
 

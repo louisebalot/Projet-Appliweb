@@ -38,6 +38,12 @@ public class Facade {
         return partie;
     }
 
+    @PostMapping("/setParametres")
+    public void setParametres(Partie partie, int temps, int nb_tours){
+        partie.setroundTime(temps);
+        partie.setnombreRounds(nb_tours);
+    }
+
     @PostMapping("/rejoindre_partie")
     public void rejoindre_partie(Joueur joueur, Partie partie) {}
 

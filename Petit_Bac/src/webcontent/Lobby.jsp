@@ -47,13 +47,13 @@
         <ul id="liste_joueurs">
             <li>En attente de joueurs...</li>
         </ul>
-    
-    <button type="submit">Lancer la partie</button>
-    <input type="hidden" name="op" value="demarrer_partie">
+        
+        <button type="submit">Valider</button>
+        <input type="hidden" name="op" value="valider_params">
     </form>
 
     <script>
-        const socket = new WebSocket('ws://serveur-adresse/Serv');
+        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/Serv');
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
@@ -67,10 +67,6 @@
                     li.textContent = surnom;
                     ul.appendChild(li);
                 });
-            }
-
-            if (data.status === "START") {
-                window.location.href = "Serv?op=afficher_jeu"; 
             }
         };
         

@@ -113,6 +113,14 @@ public class Partie {
         this.nombreRounds = nombreRounds;
     }
 
+    public int getRoundTime() {
+        return roundTime;
+    }
+
+    public void setRoundTime(int roundTime) {
+        this.roundTime = roundTime;
+    }
+
     public Joueur getAdmin() {
         return admin;
     }
