@@ -90,17 +90,7 @@ public class Formulaire {
      * @return réponse du joueur à la catégorie
      */
     public String getReponseJoueur(Joueur joueur, Categorie categorie) {
-        String reponse = null;
-
-        int i = 0;
-        while (reponse == null && i < form.size()) {
-            if (form.get(i).getIdJoueur() == joueur.getId()) {
-                reponse = form.get(i).getReponse(categorie);
-            }
-            i++;
-        }
-
-        return reponse;
+        return getEntreesJoueur(joueur).getReponse(categorie);
     }
 
     /**
@@ -111,18 +101,18 @@ public class Formulaire {
     public Collection<Pair<Categorie, String>> getReponsesJoueur(Joueur joueur) {
         Collection<Pair<Categorie, String>> reponses = new Vector<>();
 
-        // Chercher les réponses de l'utilisateur
-        int i = 0;
-        while (reponses.isEmpty() && i < form.size()) {
-            if (form.get(i).getIdJoueur() == joueur.getId()) {
-                for (Categorie cat : Categorie.values()) {
-                    reponses.add(new Pair<>(cat, form.get(i).getReponse(cat)));
-                }
-            }
-            i++;
+
+        EntreeFormulaire reponsesJoueur = getEntreesJoueur(joueur);
+
+        for (Categorie cat : Categorie.values()) {
+            reponses.add(new Pair<>(cat, reponsesJoueur.getReponse(cat)));
         }
 
         return reponses;
+    }
+
+    public void setReponseJoueur(Joueur joueur, Categorie categorie, String reponse) {
+        getEntreesJoueur(joueur).setReponse(categorie, reponse);
     }
 
     /**
@@ -134,4 +124,20 @@ public class Formulaire {
         form.add(new EntreeFormulaire(idJoueur));
     }
 
+    private EntreeFormulaire getEntreesJoueur(Joueur joueur) {
+        EntreeFormulaire entree = null;
+
+        int i = 0;
+        while (i < form.size() && entree == null) {
+            if (form.get(i).getIdJoueur() == joueur.getId()) {
+                entree = form.get(i);
+            }
+            i++;
+        }
+
+        if (entree == null) throw new JoueurNonTrouveException("Le joueur " + joueur.getSurnom()
+                + " {id=" + joueur.getId() + "} n'existe pas dans le formulaire");
+
+        return entree;
+    }
 }

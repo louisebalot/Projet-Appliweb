@@ -22,6 +22,9 @@ public class EntreeFormulaire {
      */
     public EntreeFormulaire() {
         this.reponses = new Vector<>(Categorie.values().length);
+        for (int i = 0; i < Categorie.values().length; i++) {
+            reponses.add(null);
+        }
     }
 
     /**
