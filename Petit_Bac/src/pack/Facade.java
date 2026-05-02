@@ -18,7 +18,8 @@ public interface Facade {
     @POST
     @Path("/setParametres")
     @Consumes("application/json")
-    void setParametres(@QueryParam("partie") Partie partie, @QueryParam("temps") int temps, @QueryParam("nb_tours") int nb_tours);
+    void setParametres(@QueryParam("partie") Partie partie, @QueryParam("temps") int temps,
+                       @QueryParam("nb_tours") int nb_tours);
 
     @POST
     @Path("/rejoindre_partie")
@@ -28,7 +29,10 @@ public interface Facade {
     @POST
     @Path("/Enregistrer_reponse")
     @Consumes("application/json")
-    void enregistrerReponse(@QueryParam("Pays") String Pays, @QueryParam("Ville") String Ville, @QueryParam("Prenom") String Prenom, @QueryParam("Couleur") String Couleur, @QueryParam("Fruit") String Fruit, @QueryParam("Animal") String Animal, @QueryParam("Metier") String Metier);
+    void enregistrerReponse(@QueryParam("pays") String pays, @QueryParam("ville") String ville,
+                            @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
+                            @QueryParam("fruit") String fruit, @QueryParam("animal") String animal,
+                            @QueryParam("metier") String metier);
 
     @POST
     @Path("/Calculer_points")
