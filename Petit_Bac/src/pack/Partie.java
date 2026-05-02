@@ -4,7 +4,6 @@ import pack.outils.StringNormalizer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.Normalizer;
 import java.util.*;
 
 public class Partie {
@@ -170,7 +169,7 @@ public class Partie {
 
     /**
      * Obtenir L'occurence de chaque mot pour chaque catégorie.
-     *
+     * <p>
      * Les mots sont normalisés selon la fonction {@link pack.outils.StringNormalizer#normaliserString(String)}
      *
      * <p>
@@ -228,8 +227,9 @@ public class Partie {
      * Fait un appel à la "base de donnée" pour savoir si la réponse est bien présente à l'intérieur.
      * La vérification ne prend pas la case ni les accents en compte.
      * </p>
+     *
      * @param categorie catégorie de la réponse
-     * @param reponse réponse à vérifier
+     * @param reponse   réponse à vérifier
      * @return vrai si la réponse est valide, faux sinon
      */
     public boolean reponseEstValide(Categorie categorie, String reponse) {
