@@ -241,7 +241,7 @@ public class Partie {
         try {
             // Illisible mais permet de savoir si le mot cherché est dans le fichier
             res &= StringNormalizer.normaliserString(new Scanner(new File("../db/" + categorie.getNomFichierDb()))
-                    .useDelimiter("\\Z").next()).contains("'" + upperReponse.toUpperCase());
+                    .useDelimiter("\\Z").next()).contains("'" + upperReponse.toUpperCase() + "'");
         } catch (FileNotFoundException e) {
             res = false;
             e.printStackTrace();

@@ -149,5 +149,6 @@ class PartieTest {
         partie.getRoundActuel().setLettre("I");
 
         assertTrue(partie.reponseEstValide(Categorie.PAYS, "Îles Mariannes du Nord"));
+        assertFalse(partie.reponseEstValide(Categorie.PAYS, "Îles Maria"));
     }
 }
