@@ -1,7 +1,10 @@
 package pack;
 
+import pack.outils.StringNormalizer;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.Normalizer;
 import java.util.*;
 
 public class Partie {
@@ -58,7 +61,10 @@ public class Partie {
      * @param admin Admin de la partie
      */
     public Partie(Joueur admin) {
+
+
         this.joueurs = new Vector<>();
+        this.joueurs.add(admin);
         this.rounds = new Vector<>();
         this.numeroRoundActuel = 0;
 
@@ -147,14 +153,15 @@ public class Partie {
      * @param form formulaire des réponses.
      */
     public void miseAJourScore(Formulaire form) {
-        Map<Categorie, Map<String, Integer>> TableauOccurences = getTableauOccurenceMotsParCategorie(form);
+        Map<Categorie, Map<String, Integer>> tableauOccurences = getTableauOccurenceMotsParCategorie(form);
 
         for (Joueur j : joueurs) {
             for (Categorie cat : Categorie.values()) {
                 // Récupérer le nombre d'occurence de la réponse du joueur
-                Integer occurenceReponse = TableauOccurences.get(cat).get(form.getReponseJoueur(j, cat));
-                if (occurenceReponse != null) {
+                String reponse = form.getReponseJoueur(j, cat);
+                if (reponse != null && reponseEstValide(cat, reponse)) {
                     // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
+                    int occurenceReponse = tableauOccurences.get(cat).get(reponse.toUpperCase());
                     j.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
                 }
             }
@@ -164,21 +171,22 @@ public class Partie {
     /**
      * Obtenir L'occurence de chaque mot pour chaque catégorie.
      *
+     * Les mots sont normalisés selon la fonction {@link pack.outils.StringNormalizer#normaliserString(String)}
+     *
      * <p>
-     *     Exemple pour 2 joueurs et 2 catégories {@code VILLE} et {@code VEGETAL} :
+     * Exemple pour 2 joueurs et 2 catégories {@code VILLE} et {@code VEGETAL} :
      * </p>
      *
      * <p>
-     *     Réponses joueur 1 :
-     *        {@code VILLE} : Limoges, {@code VEGETAL} : Carotte <br>
-     *     Réponses joueur 2 :
-     *        {@code VILLE} : Tours,   {@code VEGETAL} : Carotte <br>
+     * Réponses joueur 1 :
+     * {@code VILLE} : Limoges, {@code VEGETAL} : Carotte <br>
+     * Réponses joueur 2 :
+     * {@code VILLE} : Tours,   {@code VEGETAL} : Carotte <br>
      * </p>
-     *
-     *     Alors pour la catégorie {@code VILLE} on a "Limoges" avec une occurrence de {@code 1} et "Tours"
-     *     avec une occurrence de {@code 1}. <br>
-     *     Pour la catgégorie {@code VEGETAL} on a "Carotte" avec une occurrence de {@code 2}
-     *
+     * <p>
+     * Alors pour la catégorie {@code VILLE} on a "LIMOGES" avec une occurrence de {@code 1} et "TOURS"
+     * avec une occurrence de {@code 1}. <br>
+     * Pour la catégorie {@code VEGETAL} on a "CAROTTE" avec une occurrence de {@code 2}
      *
      * @param form formulaire dont on veut les occurences des mots selon leur catégorie
      * @return Le tableau d'occurrence de chaque mot selon la catégorie
@@ -190,21 +198,20 @@ public class Partie {
             Map<String, Integer> tableauCategorie = new HashMap<>();
             // Pour chaque réponse donnée d'une catégorie
             for (String reponse : form.getReponsesAUneCategorie(cat)) {
-                try {
-                    if (new Scanner(new File("../db/" + cat.getNomFichierDb()))
-                            .useDelimiter("\\Z").next().contains(reponse)) {
-                        // TODO : TEMPORAIRE (le temps d'installer les vraies DB)
-                        // Si le mot est dans le fichier DB, on le compte
 
-                        if (!tableauCategorie.containsKey(reponse)) {
-                            tableauCategorie.put(reponse, 1);
-                        } else {
-                            tableauCategorie.put(reponse, tableauCategorie.get(reponse) + 1);
-                        }
+                if (reponse != null) {
+                    // new Scanner(new File("../db/" + cat.getNomFichierDb()))
+                    //                            .useDelimiter("\\Z").next().contains(reponse)
+                    // TODO : TEMPORAIRE (le temps d'installer les vraies DB)
+                    // Si le mot est dans le fichier DB, on le compte
+                    reponse = StringNormalizer.normaliserString(reponse);
+                    if (!tableauCategorie.containsKey(reponse)) {
+                        tableauCategorie.put(reponse, 1);
+                    } else {
+                        tableauCategorie.put(reponse, tableauCategorie.get(reponse) + 1);
                     }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 }
+
 
             }
 
@@ -214,12 +221,41 @@ public class Partie {
         return tableau;
     }
 
+    /**
+     * Indique si la réponse est valide.
+     *
+     * <p>
+     * Fait un appel à la "base de donnée" pour savoir si la réponse est bien présente à l'intérieur.
+     * La vérification ne prend pas la case ni les accents en compte.
+     * </p>
+     * @param categorie catégorie de la réponse
+     * @param reponse réponse à vérifier
+     * @return vrai si la réponse est valide, faux sinon
+     */
+    public boolean reponseEstValide(Categorie categorie, String reponse) {
+        if (reponse == null) return false;
+
+        String upperReponse = StringNormalizer.normaliserString(reponse);
+        // Vérifier que la première lettre soit la bonne
+        boolean res = upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre());
+        try {
+            // Illisible mais permet de savoir si le mot cherché est dans le fichier
+            res &= StringNormalizer.normaliserString(new Scanner(new File("../db/" + categorie.getNomFichierDb()))
+                    .useDelimiter("\\Z").next()).contains("'" + upperReponse.toUpperCase());
+        } catch (FileNotFoundException e) {
+            res = false;
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
     public void creerRounds(int nombreRounds, int roundTime) {
         this.rounds = new Vector<>();
         this.nombreRounds = nombreRounds;
         this.roundTime = roundTime;
         // Initialiser les rounds
-        for (int i = 1; i < nombreRounds; i++) {
+        for (int i = 1; i <= nombreRounds; i++) {
 
             // Vérifier qu'il reste des lettres disponibles
             if (lettresDisponibles.isEmpty()) {
@@ -228,7 +264,7 @@ public class Partie {
 
             // Choisir une lettre
             int indexLettre = random.nextInt(lettresDisponibles.length());
-            char lettreChoisie = lettresDisponibles.charAt(indexLettre);
+            String lettreChoisie = Character.toString(lettresDisponibles.charAt(indexLettre));
 
             // Supprimer la lettre des choix disponibles
             lettresDisponibles = lettresDisponibles.substring(0, indexLettre)
@@ -240,5 +276,4 @@ public class Partie {
 
         this.setRounds(rounds);
     }
-
 }

@@ -18,7 +18,7 @@ public class Round {
     /**
      * Lettre du round
      */
-    private char lettre;
+    private String lettre;
 
     /**
      * Partie liée au round.
@@ -41,7 +41,7 @@ public class Round {
         /** Ne pas utiliser */
     }
 
-    public Round(Partie partie, int number, char lettre, int tempsMaxRound) {
+    public Round(Partie partie, int number, String lettre, int tempsMaxRound) {
         this.partie = partie;
         this.number = number;
         this.lettre = lettre;
@@ -56,11 +56,11 @@ public class Round {
         this.number = number;
     }
 
-    public char getLettre() {
+    public String getLettre() {
         return lettre;
     }
 
-    public void setLettre(char lettre) {
+    public void setLettre(String lettre) {
         this.lettre = lettre;
     }
 
