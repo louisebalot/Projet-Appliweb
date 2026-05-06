@@ -104,6 +104,8 @@ public class Serv extends HttpServlet {
                 partie = parties.get(id_partie - 1);
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 joueur = joueurs.get(id_joueur - 1);
+                Round round = partie.getRoundActuel();
+                request.setAttribute("round", round);
                 request.setAttribute("partie", partie);
                 request.setAttribute("joueur",joueur);
                 request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);

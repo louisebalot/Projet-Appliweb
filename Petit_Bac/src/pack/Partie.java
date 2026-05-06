@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Partie {
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     /**
@@ -99,6 +101,7 @@ public class Partie {
         return numeroRoundActuel++;
     }
 
+    @JsonIgnore
     public Round getRoundActuel() {
         return rounds.get(numeroRoundActuel);
     }
