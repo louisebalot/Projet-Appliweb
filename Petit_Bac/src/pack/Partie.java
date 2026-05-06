@@ -264,7 +264,7 @@ public class Partie {
     }
 
     public void creerRounds(int nombreRounds, int roundTime) {
-        this.rounds = new Vector<>();
+        List<Round> listeRound = new Vector<>();
         this.nombreRounds = nombreRounds;
         this.roundTime = roundTime;
         // Initialiser les rounds
@@ -284,9 +284,9 @@ public class Partie {
                     + lettresDisponibles.substring(indexLettre + 1);
 
             // Créer le round
-            rounds.add(new Round(this, i, lettreChoisie, roundTime));
+            listeRound.add(new Round(this, i, lettreChoisie, roundTime));
         }
 
-        this.setRounds(rounds);
+        this.setRounds(listeRound);
     }
 }

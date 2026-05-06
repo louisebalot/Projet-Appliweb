@@ -36,6 +36,11 @@ public interface Facade {
                             @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
                             @QueryParam("fruit") String fruit, @QueryParam("animal") String animal,
                             @QueryParam("metier") String metier);
+    
+    @POST
+    @Path("/next_round")
+    @Consumes("application/json")
+    void nextRound(@QueryParam("partie") Partie partie);
 
     @POST
     @Path("/Calculer_points")

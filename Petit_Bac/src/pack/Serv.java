@@ -53,6 +53,7 @@ public class Serv extends HttpServlet {
         Joueur invite;
         int id_partie;
         Partie partie;
+        Round round;
 
         switch (request.getParameter("op")) {
 
@@ -104,7 +105,7 @@ public class Serv extends HttpServlet {
                 partie = parties.get(id_partie - 1);
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 joueur = joueurs.get(id_joueur - 1);
-                Round round = partie.getRoundActuel();
+                round = partie.getRoundActuel();
                 request.setAttribute("round", round);
                 request.setAttribute("partie", partie);
                 request.setAttribute("joueur",joueur);
@@ -139,6 +140,7 @@ public class Serv extends HttpServlet {
                     break; 
 
                 } else {
+                    facade.nextRound(partie_actuelle);
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
                     break;
                 }

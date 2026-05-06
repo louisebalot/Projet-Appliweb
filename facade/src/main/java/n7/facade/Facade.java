@@ -42,23 +42,20 @@ public class Facade {
     public void setParametres(Partie partie, int temps, int nb_tours){
         partie.setRoundTime(temps);
         partie.setNombreRounds(nb_tours);
-        partie.creerRounds(temps, nb_tours);
+        partie.creerRounds(nb_tours, temps);
     }
 
     @PostMapping("/rejoindre_partie")
     public void rejoindre_partie(Joueur joueur, Partie partie) {}
 
-    @PostMapping("/démarrer_partie")
-    public void demarrer_partie(Partie partie, int nb_tours, int temps) {
-        partie.creerRounds(nb_tours, temps);
-        
-    }
-
     @PostMapping("/Enregistrer_reponse")
     public void enregistrer_reponse(String surnom, String Pays, String Ville,
             String Prenom, String Couleur, String Fruit, String Animal, String Metier) {
-        
-        
+    }
+
+    @PostMapping("/next_round")
+    public void nextRound(Partie partie) {
+        partie.prochainRound();
     }
 
     @PostMapping("/calculerPoints")
