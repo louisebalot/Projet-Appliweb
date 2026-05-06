@@ -1,4 +1,4 @@
-package pack;
+package pack.categories;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

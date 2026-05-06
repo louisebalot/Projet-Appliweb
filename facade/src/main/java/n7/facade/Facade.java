@@ -40,8 +40,8 @@ public class Facade {
 
     @PostMapping("/setParametres")
     public void setParametres(Partie partie, int temps, int nb_tours){
-        partie.setroundTime(temps);
-        partie.setnombreRounds(nb_tours);
+        partie.setRoundTime(temps);
+        partie.setNombreRounds(nb_tours);
     }
 
     @PostMapping("/rejoindre_partie")

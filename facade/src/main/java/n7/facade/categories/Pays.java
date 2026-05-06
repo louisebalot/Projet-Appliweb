@@ -1,7 +1,11 @@
-package n7.facade;
+package n7.facade.categories;
+
+
 
 public class Pays {
+    
     private String Id;
+
     private String nom;
     
     public Pays() {

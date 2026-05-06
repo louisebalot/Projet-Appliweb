@@ -1,6 +1,8 @@
-package n7.facade;
+package n7.facade.categories;
+
 
 public class Villes {
+    
     private String nom;
     
     public Villes() {

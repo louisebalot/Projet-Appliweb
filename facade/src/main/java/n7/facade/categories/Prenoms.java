@@ -1,6 +1,8 @@
-package n7.facade;
+package n7.facade.categories;
+
 
 public class Prenoms {
+    
     private String nom;
     
     public Prenoms() {

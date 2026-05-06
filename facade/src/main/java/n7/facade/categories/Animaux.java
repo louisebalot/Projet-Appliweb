@@ -1,6 +1,9 @@
-package n7.facade;
+package n7.facade.categories;
+
+
 
 public class Animaux {
+    
     private String nom;
     
     public Animaux() {

@@ -108,6 +108,21 @@ input[type="range"] {
     accent-color: var(--couleur-accent);
 }
 
+.loader {
+    border: 6px solid rgba(255, 255, 255, 0.3); 
+    border-top: 6px solid var(--couleur-accent); 
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite; 
+    margin: 30px auto; 
+    box-shadow: 0 0 15px rgba(226, 131, 164, 0.2); 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 /* --- BOUTONS --- */
 button { 
@@ -143,4 +158,47 @@ li {
 
 li:hover {
     background: rgba(255, 255, 255, 0.3);
+}
+
+/* --- OVERLAY DE COMPTE À REBOURS --- */
+#countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--fond-gradient-1) 0%, var(--fond-gradient-2) 100%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease; /* Pour une disparition fluide */
+}
+
+#countdown-overlay h1 {
+    font-size: 3rem;
+    color: var(--couleur-texte);
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+}
+
+#countdown-number {
+    font-size: 10rem;
+    font-weight: bold;
+    color: var(--couleur-texte);
+    text-shadow: 0 0 20px var(--couleur-accent);
+    animation: pulse-number 1s infinite;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes pulse-number {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
 }

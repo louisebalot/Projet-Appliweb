@@ -71,6 +71,16 @@ public class Partie {
         this.id = 0;
     }
 
+    public Partie(Joueur admin, int id) {
+        this.joueurs = new Vector<>();
+        this.joueurs.add(admin);
+        this.rounds = new Vector<>();
+        this.numeroRoundActuel = 0;
+
+        this.admin = admin;
+        this.id = id;
+    }
+
     /**
      * Ajoute un joueur dans une partie s'il n'est pas dedans.
      *

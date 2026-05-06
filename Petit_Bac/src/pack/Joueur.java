@@ -42,6 +42,13 @@ public class Joueur {
         this.score = 0;
     }
 
+    public Joueur(String surnom, int id) {
+        this.surnom = surnom;
+        this.id = id;
+        this.score = 0;
+    }
+
+
     public void ajouterScore(int score) {
         this.score += score;
     }

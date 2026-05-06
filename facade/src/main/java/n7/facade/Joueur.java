@@ -1,35 +1,55 @@
 package n7.facade;
 
+import java.util.Objects;
+
 public class Joueur {
 
-    /** Id unique du joueur */
+    /**
+     * Id unique du joueur
+     */
     private int id;
 
-    /** Surnom du joueur */
+    /**
+     * Surnom du joueur
+     */
     private String surnom;
 
-    /** Partie dans laquelle le joueur est */
+    /**
+     * Partie dans laquelle le joueur est
+     */
     private Partie partie;
 
-    /** Score du joueur */
+    /**
+     * Score du joueur
+     */
     private int score;
 
-    /** Ne pas utiliser */
+    /**
+     * Ne pas utiliser
+     */
     public Joueur() {
 
     }
 
     /**
      * Créer un joueur.
-     * 
+     *
      * @param surnom Surnom du joueur.
-     * @param id Id du joueur.
      */
+    public Joueur(String surnom) {
+        this.surnom = surnom;
+
+        this.score = 0;
+    }
+
     public Joueur(String surnom, int id) {
         this.surnom = surnom;
         this.id = id;
-        
         this.score = 0;
+    }
+
+    public void ajouterScore(int score) {
+        this.score += score;
     }
 
     public int getId() {
@@ -66,12 +86,14 @@ public class Joueur {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Joueur))
-            return false;
-        Joueur other = (Joueur) o;
-        
-        return this.id == other.id;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Joueur joueur = (Joueur) o;
+        return id == joueur.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
