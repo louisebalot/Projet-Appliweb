@@ -1,6 +1,6 @@
 package n7.facade;
 
-import java.time.LocalTime;
+//import java.time.LocalTime;
 
 import static java.lang.Integer.max;
 
@@ -32,7 +32,7 @@ public class Round {
     /**
      * Temps auquel le round à commencé
      */
-    private LocalTime roundStartTime;
+    //public LocalTime roundStartTime;
 
     /**
      * Ne pas utiliser
@@ -80,20 +80,21 @@ public class Round {
         this.tempsMaxRound = tempsMaxRound;
     }
 
-    public LocalTime getRoundStartTime() {
+    /*public LocalTime getRoundStartTime() {
         return roundStartTime;
     }
 
     public void setRoundStartTime(LocalTime roundStartTime) {
         this.roundStartTime = roundStartTime;
-    }
+    }*/
 
     /**
      * Commencer le round.
      */
+    /* 
     public void start() {
         roundStartTime = LocalTime.now();
-    }
+    }*/
 
     /**
      * Obtenir le nombre de secondes restantes du round.
@@ -102,7 +103,7 @@ public class Round {
      *
      * @return le nombre de secondes restantes pour jouer le round
      */
-    public int getSecondesRestantes() {
+    /*public int getSecondesRestantes() {
         int tempsActuel = LocalTime.now().toSecondOfDay();
         int tempsDebutRound = roundStartTime.toSecondOfDay();
 
@@ -113,5 +114,5 @@ public class Round {
 
         // Retourner la différence entre le temps maximum du round et le temps écoulé
         return max(0, tempsMaxRound - (tempsActuel - tempsDebutRound));
-    }
+    }*/
 }
