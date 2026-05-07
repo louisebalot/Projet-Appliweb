@@ -16,7 +16,7 @@
         <input type="hidden" name="id_partie" value="<%=partie.getId()%>">
         <h1 class="titre-encadre">ID de la partie : <%=partie.getId()%></h1>
     
-        <h2 class="titre-encadre">Paramètres de la partie</h2>
+        <h2 class="titre-encadre">Param&egrave;tres de la partie</h2>
         <div class="cadre-parametres">
 
             <div class="groupe-input">
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <h3>Joueurs connectés :</h3>
+        <h3>Joueurs connect&eacute;s :</h3>
         <ul id="liste_joueurs">
             <li>En attente de joueurs...</li>
         </ul>

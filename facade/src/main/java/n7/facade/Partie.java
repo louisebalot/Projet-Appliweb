@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 public class Partie {
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -30,6 +31,7 @@ public class Partie {
     /**
      * Liste des rounds de la partie
      */
+    @JsonManagedReference
     private List<Round> rounds;
     /**
      * Numéro du round actuel
@@ -62,8 +64,6 @@ public class Partie {
      * @param admin Admin de la partie
      */
     public Partie(Joueur admin) {
-
-
         this.joueurs = new Vector<>();
         this.joueurs.add(admin);
         this.rounds = new Vector<>();
@@ -263,10 +263,8 @@ public class Partie {
         return res;
     }
 
-    public void creerRounds(int nombreRounds, int roundTime) {
+    public void creerRounds() {
         List<Round> listeRound = new Vector<>();
-        this.nombreRounds = nombreRounds;
-        this.roundTime = roundTime;
         // Initialiser les rounds
         for (int i = 1; i <= nombreRounds; i++) {
 

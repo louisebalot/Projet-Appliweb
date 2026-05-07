@@ -13,7 +13,7 @@
 <body>
 
     <div class="box">
-        <h1>Configuration terminée</h1>
+        <h1>Configuration termin&eacute;e</h1>
         <button id="btnLancer">Lancer la partie</button>
     </div>
     <script>

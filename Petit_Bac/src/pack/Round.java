@@ -4,6 +4,8 @@ package pack;
 
 import static java.lang.Integer.max;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 public class Round {
     /**
      * Nombre de secondes dans une journée.
@@ -23,6 +25,7 @@ public class Round {
     /**
      * Partie liée au round.
      */
+    @JsonBackReference
     private Partie partie;
 
     /**

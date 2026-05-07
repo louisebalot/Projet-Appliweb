@@ -21,7 +21,7 @@ public interface Facade {
     @POST
     @Path("/setParametres")
     @Consumes("application/json")
-    void setParametres(@QueryParam("partie") Partie partie, @QueryParam("temps") int temps,
+    Partie setParametres(@QueryParam("partie") Partie partie, @QueryParam("temps") int temps,
                        @QueryParam("nb_tours") int nb_tours);
 
     @POST

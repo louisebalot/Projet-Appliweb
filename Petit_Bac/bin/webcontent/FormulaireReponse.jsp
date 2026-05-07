@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="countdown-overlay">
-        <h1>Préparez-vous !</h1>
+        <h1>Pr&eacute;parez-vous !</h1>
         <div id="countdown-number">3</div>
     </div>
 
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="groupe-input">
-                    <label class="label-categorie" for="Prenom">Prénom</label>
+                    <label class="label-categorie" for="Prenom">Pr&eacute;nom</label>
                     <input type="text" id="Prenom" name="Prenom" autocomplete="off">
                 </div>
 
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="groupe-input">
-                    <label class="label-categorie" for="Vegetal">Végétal</label>
+                    <label class="label-categorie" for="Vegetal">V&eacute;g&eacute;tal</label>
                     <input type="text" id="Vegetal" name="Vegetal" autocomplete="off">
                 </div>
 
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="groupe-input">
-                    <label class="label-categorie" for="Metier">Métier</label>
+                    <label class="label-categorie" for="Metier">M&eacute;tier</label>
                     <input type="text" id="Metier" name="Metier" autocomplete="off">
                 </div>                
                 
@@ -111,7 +111,7 @@
                 input.readOnly = true; 
                 input.style.backgroundColor = "#e0e0e0";
             }
-            alert("STOP ! La partie est terminée !");
+            alert("STOP ! Le round est fini !");
             document.querySelector('button').style.display = 'none';
         }
 

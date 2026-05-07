@@ -94,7 +94,8 @@ public class Serv extends HttpServlet {
                 partie = parties.get(id_partie - 1);
                 id_joueur = Integer.parseInt(request.getParameter("id_joueur"));
                 joueur = joueurs.get(id_joueur - 1);
-                facade.setParametres(partie, temps, nb_tours);
+                partie = facade.setParametres(partie, temps, nb_tours);
+                round = partie.getRoundActuel();
                 request.setAttribute("partie", partie);
                 request.setAttribute("joueur",joueur);
                 request.getRequestDispatcher("AttenteAdmin.jsp").forward(request, response);
