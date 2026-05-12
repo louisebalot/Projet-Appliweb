@@ -1,6 +1,9 @@
 
 package n7.facade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +50,19 @@ public class Facade {
         Partie partie = new Partie(admin, id_partie);
         parties.add(partie);
         return id_partie;
+    }
+
+    @PostMapping("/getListePseudos")
+    public List<String> getListePseudos(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+        List<Joueur> joueurs = partie.getJoueurs();
+        List<String> pseudos = new ArrayList<>();
+    
+        for (int i = 0; i < joueurs.size(); i++) {
+            Joueur j = joueurs.get(i);
+            pseudos.add(j.getSurnom());
+        }
+        return pseudos;
     }
 
     @PostMapping("/setParametres")

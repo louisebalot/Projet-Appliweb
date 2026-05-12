@@ -79,7 +79,7 @@
     </div>
 
     <script>
-        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/Serv');
+        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws');
 
         const overlay = document.getElementById('countdown-overlay');
         const displayDecompte = document.getElementById('countdown-number');

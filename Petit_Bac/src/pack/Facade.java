@@ -1,5 +1,7 @@
 package pack;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -17,6 +19,11 @@ public interface Facade {
     @Path("/creer_partie")
     @Consumes("application/json")
     int creer_partie(@QueryParam("id_admin") int id_admin);
+
+    @POST
+    @Path("/getListePseudos")
+    @Consumes("application/json")
+    List<String> getListePseudos(@QueryParam("id_partie") int id_partie);
 
     @POST
     @Path("/setParametres")

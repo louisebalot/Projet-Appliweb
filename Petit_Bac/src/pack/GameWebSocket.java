@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.Collections;
 import java.util.HashSet;
 
-@ServerEndpoint("/Serv")
+@ServerEndpoint("/ws")
 public class GameWebSocket {
 
     private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
@@ -41,8 +41,8 @@ public class GameWebSocket {
     public void onError(Session session, Throwable throwable) {
         sessions.remove(session);
     }    
-
-    private void broadcast(String text) {
+    
+    public static void broadcast(String text) {
         synchronized (sessions) {
             for (Session s : sessions) {
                 if (s.isOpen()) {
