@@ -5,33 +5,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
-
-import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/Serv")
 public class Serv extends HttpServlet {
-
-    final String path = "http://localhost:8080/facade";
-    Facade facade;
 
     public Serv() {
         super();
     }
 
+    private Facade facade;
+
     @Override
     public void init() throws ServletException {
-        try {
-            ResteasyClient client = new ResteasyClientBuilder().build();
-            ResteasyWebTarget target = client.target(UriBuilder.fromPath(path));
-            facade = target.proxy(Facade.class);
-        } catch (Exception e) {
-            throw new ServletException("Erreur lors de la connexion à la Facade REST", e);
-        }
     }
 
     @Override
@@ -44,22 +30,19 @@ public class Serv extends HttpServlet {
         
         String surnom;
         int id_joueur;
-        Joueur joueur;
         int id_admin;
-        Joueur admin;
         int id_invite;
-        Joueur invite;
         int id_partie;
-        Partie partie;
-        Round round;
         int id_round;
         String lettre;
+
+        this.facade = RestClientManager.getProxy();
 
         switch (request.getParameter("op")) {
 
             case "creer_joueur":
                 surnom = request.getParameter("surnom");
-                id_joueur = facade.creer_joueur(surnom, joueurs.size() + 1);
+                id_joueur = facade.creer_joueur(surnom);
                 request.setAttribute("joueur", id_joueur);
                 request.getRequestDispatcher("ChoixPartie.jsp").forward(request, response);
                 break;
@@ -104,6 +87,7 @@ public class Serv extends HttpServlet {
                 request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
                 break;
 
+
             case "Enregistrer_reponse":
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
@@ -117,7 +101,7 @@ public class Serv extends HttpServlet {
                 String Animal = request.getParameter("Animal");
                 String Metier = request.getParameter("Metier");
 
-                facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie_actuelle, id_joueur_actuel, id_round_actuel);
+                facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie, id_joueur, id_round);
 
                 // Calcul des points
                 facade.miseAJourScore(id_partie);

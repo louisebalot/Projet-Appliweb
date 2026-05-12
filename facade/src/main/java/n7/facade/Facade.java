@@ -1,14 +1,15 @@
 
 package n7.facade;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 //import pack.Adresse;
-
 @RestController
+@CrossOrigin(origins = "*")
 public class Facade {
 
     java.util.List<Partie> parties = new java.util.ArrayList<>();
@@ -32,8 +33,8 @@ public class Facade {
     // }
 
     @PostMapping("/creer_joueur")
-    public int creer_joueur(@RequestParam String surnom, @RequestParam int id) {
-        Joueur joueur = new Joueur(surnom, id);
+    public int creer_joueur(@RequestParam String surnom) {
+        Joueur joueur = new Joueur(surnom, joueurs.size()+1);
         joueurs.add(joueur);
         return joueurs.size(); // Return the number of players after adding the new player
     }

@@ -11,7 +11,7 @@ public interface Facade {
     @POST
     @Path("/creer_joueur")
     @Consumes("application/json")
-    int creer_joueur(@QueryParam("surnom") String surnom, @QueryParam("id") int id);
+    int creer_joueur(@QueryParam("surnom") String surnom);
 
     @POST
     @Path("/creer_partie")
