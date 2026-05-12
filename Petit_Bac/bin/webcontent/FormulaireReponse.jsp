@@ -2,18 +2,19 @@
     int partie = (Integer) request.getAttribute("partie");
     int joueur = (Integer) request.getAttribute("joueur");
     int round = (Integer) request.getAttribute("round");
+    int temps = (Integer) request.getAttribute("temps");
     String lettre = (String) request.getAttribute("lettre");
 %>
 <html>
 <head>
-    <title>Formulaire de réponse</title>
+    <title>Formulaire de r&eacute;ponse</title>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
 </head>
 <body>
     <div id="countdown-overlay">
         <h1>Pr&eacute;parez-vous !</h1>
-        <div id="countdown-number">3</div>
+        <div id="countdown-number"><%= 3 %></div>
     </div>
 
     <div class="box-form">
@@ -65,8 +66,14 @@
                     <input type="text" id="Sport" name="Sport" autocomplete="off">
                 </div>
             </div>
-
+            
             <button type="submit" id="btn-fini">FINI !!!!</button>
+            
+            <div id="countdown" >
+                <h1>Pr&eacute;parez-vous !</h1>
+                <div id="countdown-number"><%= temps %></div>
+            </div>
+            
             <input type="hidden" name="op" value="Enregistrer_reponse">
         </form>
     </div>

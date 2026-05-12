@@ -35,6 +35,7 @@ public class Serv extends HttpServlet {
         int id_partie;
         int id_round;
         String lettre;
+        int temps;
 
         this.facade = RestClientManager.getProxy();
 
@@ -66,7 +67,7 @@ public class Serv extends HttpServlet {
 
             case "valider_params":
                 int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
-                int temps = Integer.parseInt(request.getParameter("temps"));
+                temps = Integer.parseInt(request.getParameter("temps"));
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("id_joueur"));
                 id_partie = facade.setParametres(id_partie, temps, nb_tours);
@@ -79,7 +80,10 @@ public class Serv extends HttpServlet {
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 id_round = facade.demarrer_round(id_partie, id_joueur);
+                temps = facade.getTempsRound(id_partie);
+                temps *= 60;
                 lettre = facade.getLettreRound(id_partie, id_round);
+                request.setAttribute("temps", temps);
                 request.setAttribute("lettre", lettre);
                 request.setAttribute("round", id_round);
                 request.setAttribute("partie", id_partie);
@@ -104,7 +108,7 @@ public class Serv extends HttpServlet {
                 facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie, id_joueur, id_round);
 
                 // Calcul des points
-                facade.miseAJourScore(id_partie);
+                //facade.miseAJourScore(id_partie);
                 
                 // Renvoyer soit vers le prochain round, soit vers l'écran des résultats selon le nombre de rounds restants
                 if (facade.nextRound(id_partie)) {

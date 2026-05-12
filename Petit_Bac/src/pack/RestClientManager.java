@@ -7,7 +7,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 
 public class RestClientManager {
-    private static final String BASE_URL = "http://localhost:8081"; 
+    private static final String BASE_URL = "http://localhost:8080/facade"; 
     private static final Facade proxy;
 
     static {

@@ -34,9 +34,10 @@ public class Facade {
 
     @PostMapping("/creer_joueur")
     public int creer_joueur(@RequestParam String surnom) {
-        Joueur joueur = new Joueur(surnom, joueurs.size()+1);
+        int id = joueurs.size() + 1;
+        Joueur joueur = new Joueur(surnom, id);
         joueurs.add(joueur);
-        return joueurs.size(); // Return the number of players after adding the new player
+        return id; // Return the number of players after adding the new player
     }
 
     @PostMapping("/creer_partie")
@@ -67,6 +68,12 @@ public class Facade {
     @PostMapping("/demarrer_round")
     public int demarrer_round(@RequestParam int id_partie) {
         return parties.get(id_partie - 1).getNumeroRoundActuel();
+    }
+
+    @PostMapping("/getTempsRound")
+    public int getTempsRound(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+        return partie.getRoundTime();
     }
 
     @PostMapping("/getLettreRound")

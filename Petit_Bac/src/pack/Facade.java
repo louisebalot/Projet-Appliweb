@@ -68,6 +68,11 @@ public interface Facade {
      * @return lettre du round actuel
      */
     @POST
+    @Path("/getTempsRound")
+    @Consumes("application/json")
+    int getTempsRound(@QueryParam("id_partie") int id_partie);
+
+    @POST
     @Path("/getLettreRound")
     @Consumes("application/json")
     String getLettreRound(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
