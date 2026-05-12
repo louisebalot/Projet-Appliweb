@@ -66,9 +66,7 @@ public class Facade {
 
     @PostMapping("/demarrer_round")
     public int demarrer_round(@RequestParam int id_partie) {
-        Partie partie = parties.get(id_partie - 1);
-        int id_round = partie.getNumeroRoundActuel();
-        return id_round;
+        return parties.get(id_partie - 1).getNumeroRoundActuel();
     }
 
     @PostMapping("/getLettreRound")

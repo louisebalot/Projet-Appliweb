@@ -8,37 +8,83 @@ import javax.ws.rs.QueryParam;
 @Path("/")
 public interface Facade {
 
+    /**
+     * Créer un joueur à partir de son surnom (pseudo).
+     * @param surnom surnom du joueur
+     * @return id du joueur
+     */
     @POST
     @Path("/creer_joueur")
     @Consumes("application/json")
     int creer_joueur(@QueryParam("surnom") String surnom);
 
+    /**
+     * Créer une partie à partir de l'id d'un joueur.
+     * @param id_admin id de l'admin
+     * @return id de la partie
+     */
     @POST
     @Path("/creer_partie")
     @Consumes("application/json")
     int creer_partie(@QueryParam("id_admin") int id_admin);
 
+    /**
+     * Mets en place les paramètres de la partie avant son départ.
+     * @param id_partie id de la partie
+     * @param temps temps d'un round
+     * @param nb_tours nombre de rounds
+     * @return id de la partie
+     */
     @POST
     @Path("/setParametres")
     @Consumes("application/json")
     int setParametres(@QueryParam("id_partie") int id_partie, @QueryParam("temps") int temps,
                        @QueryParam("nb_tours") int nb_tours);
 
+    /**
+     * Ajoute un joueur à la partie.
+     * @param id_joueur id du joueur à ajouter
+     * @param id_partie id de la partie
+     */
     @POST
     @Path("/rejoindre_partie")
     @Consumes("application/json")
     void rejoindre_partie(@QueryParam("id_joueur") int id_joueur, @QueryParam("id_partie") int id_partie);
 
+    /**
+     * "Démarre" le round
+     * @param id_partie id de la partie
+     * @return numéro du round actuel
+     */
     @POST
     @Path("/demarrer_round")
     @Consumes("application/json")
-    int demarrer_round(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
+    int demarrer_round(@QueryParam("id_partie") int id_partie);
 
+    /**
+     * Obtenir la lettre du round actuel
+     * @param id_partie id de la partie
+     * @param id_round id du round
+     * @return lettre du round actuel
+     */
     @POST
     @Path("/getLettreRound")
     @Consumes("application/json")
     String getLettreRound(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
 
+    /**
+     * Enregistrer les réponses d'un joueur
+     * @param pays réponse de la catégorie {@code PAYS}
+     * @param ville  réponse de la catégorie {@code VILLE}
+     * @param prenom réponse de la catégorie {@code PRENOM}
+     * @param couleur réponse de la catégorie {@code COULEUR}
+     * @param fruit réponse de la catégorie {@code FRUIT}
+     * @param animal réponse de la catégorie {@code ANIMAL}
+     * @param metier réponse de la catégorie {@code METIER}
+     * @param id_partie id de la partie
+     * @param id_joueur id du joueur
+     * @param id_round id du round
+     */
     @POST
     @Path("/Enregistrer_reponse")
     @Consumes("application/json")
@@ -47,16 +93,32 @@ public interface Facade {
                             @QueryParam("Fruit") String fruit, @QueryParam("Animal") String animal,
                             @QueryParam("Metier") String metier, @QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur, @QueryParam("id_round") int id_round);
     
+    /**
+     * Passe au prochain round si possible
+     * @param id_partie id de la partie
+     * @return envoie {@code true} si il y a un prochain round, {@code false} sinon
+     */                            
     @POST
     @Path("/next_round")
     @Consumes("application/json")
     boolean nextRound(@QueryParam("id_partie") int id_partie);
 
+    /**
+     * TODO
+     * @param nb_tours
+     * @param temps
+     */
     @POST
     @Path("/Redemarrer_partie")
     @Consumes("application/json")
     void redemarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
 
+    /**
+     * Incrémente les scores des joueurs de la partie en fonction du formulaire du round.
+     * 
+     * !! Peut nécessiter que les bases de données des catégories soient lancées
+     * @param id_partie
+     */
     @POST
     @Path("/Mise_a_jour_score")
     @Consumes("application/json")
