@@ -58,12 +58,12 @@ public interface Facade {
     boolean nextRound(@QueryParam("id_partie") int id_partie);
 
     @POST
-    @Path("/Calculer_points")
-    @Consumes("application/json")
-    void calculerPoints(@QueryParam("formulaire") Formulaire formulaire, @QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
-
-    @POST
     @Path("/Redemarrer_partie")
     @Consumes("application/json")
     void redemarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
+
+    @POST
+    @Path("/Mise_a_jour_score")
+    @Consumes("application/json")
+    void miseAJourScore(@QueryParam("id_partie") int id_partie);
 }

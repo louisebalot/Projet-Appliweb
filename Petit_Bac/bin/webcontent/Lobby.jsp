@@ -28,7 +28,7 @@
                 <option value="4"></option>
                 <option value="5"></option>
                 </datalist>
-            <label for="temps">Temps : <span id="valeur_temps">2</span> min</label>
+            <label for="temps">Temps : <span id="valeur_temps">3</span> min</label>
             </div>
 
             <div class="groupe-input">
@@ -41,7 +41,7 @@
                 <option value="5"></option>
                 <option value="6"></option>
                 </datalist>
-            <label for="nb_tours">Nombre de tours: <span id="valeur_tours">2</span> tours</label>
+            <label for="nb_tours">Nombre de tours: <span id="valeur_tours">5</span> tours</label>
             </div>
         </div>
 
