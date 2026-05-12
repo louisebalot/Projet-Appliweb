@@ -58,7 +58,7 @@ public class Facade {
         Partie partie = parties.get(id_partie - 1);
         List<Joueur> joueurs = partie.getJoueurs();
         List<String> pseudos = new ArrayList<>();
-    
+
         for (int i = 0; i < joueurs.size(); i++) {
             Joueur j = joueurs.get(i);
             pseudos.add(j.getSurnom());
@@ -100,10 +100,10 @@ public class Facade {
         return round.getLettre();
     }
 
-    @PostMapping("/Enregistrer_reponse")
-    public void enregistrer_reponse(@RequestParam String Pays, @RequestParam String Ville,
-            @RequestParam String Prenom, @RequestParam String Couleur, @RequestParam String Fruit,
-            @RequestParam String Animal, @RequestParam String Metier,
+    @PostMapping("/enregistrer_reponse")
+    public void enregistrerReponse(@RequestParam String pays, @RequestParam String ville,
+            @RequestParam String prenom, @RequestParam String couleur, @RequestParam String vegetal,
+            @RequestParam String animal, @RequestParam String metier,
             @RequestParam int id_partie, @RequestParam int id_joueur, @RequestParam int id_round) {
 
         Partie partie_actuelle = parties.get(id_partie - 1);
@@ -113,13 +113,13 @@ public class Facade {
 
         Joueur joueur = joueurs.get(id_joueur - 1);
 
-        formulaireReponse.setReponseJoueur(joueur, Categorie.PAYS, Pays);
-        formulaireReponse.setReponseJoueur(joueur, Categorie.VILLE, Ville);
-        formulaireReponse.setReponseJoueur(joueur, Categorie.PRENOM, Prenom);
-        formulaireReponse.setReponseJoueur(joueur, Categorie.COULEUR, Couleur);
-        formulaireReponse.setReponseJoueur(joueur, Categorie.VEGETAL, Fruit);
-        formulaireReponse.setReponseJoueur(joueur, Categorie.ANIMAL, Animal);
-        formulaireReponse.setReponseJoueur(joueur, Categorie.METIER, Metier);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.PAYS, pays);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.VILLE, ville);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.PRENOM, prenom);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.COULEUR, couleur);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.VEGETAL, vegetal);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.ANIMAL, animal);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.METIER, metier);
     }
 
     @PostMapping("/next_round")
@@ -139,7 +139,7 @@ public class Facade {
         // Implementation for restarting the game
     }
 
-    @PostMapping("/mettreAJourPoints")
+    @PostMapping("/mise_a_jour_score")
     void miseAJourScore(@RequestParam int id_partie) {
         Partie partie = parties.get(id_partie - 1);
 
