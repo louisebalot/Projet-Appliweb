@@ -128,4 +128,14 @@ public interface Facade {
     @Path("/Mise_a_jour_score")
     @Consumes("application/json")
     void miseAJourScore(@QueryParam("id_partie") int id_partie);
+
+    /**
+     * Renvoie l'id du joueur ayant le plus grand score
+     * @param id_partie id de la partie
+     * @return id du joueur qui a le plus grand score
+     */
+    @POST
+    @Path("/get_vainqueur")
+    @Consumes("application/json")
+    int getVainqueur(@QueryParam("id_partie") int id_partie);
 }

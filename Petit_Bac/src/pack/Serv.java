@@ -121,6 +121,9 @@ public class Serv extends HttpServlet {
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
                 } else {
 
+                    int id_vainqueur = facade.getVainqueur(id_partie);
+                    request.setAttribute("id_vainqueur", id_vainqueur);
+                    request.setAttribute("partie", id_partie);
                     // TODO Il faut surement mettre à jour des paramètres mais je ne sais pas lesquels
                     request.getRequestDispatcher("Gagnant.jsp").forward(request, response);
                 }
