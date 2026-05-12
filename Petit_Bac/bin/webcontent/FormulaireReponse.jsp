@@ -14,7 +14,7 @@
 <body>
     <div id="countdown-overlay">
         <h1>Pr&eacute;parez-vous !</h1>
-        <div id="countdown-number">3</div>
+        <div id="countdown-number"><%= 3 %></div>
     </div>
 
     <div class="box-form">
@@ -66,18 +66,14 @@
                     <input type="text" id="Sport" name="Sport" autocomplete="off">
                 </div>
             </div>
-
-            <script type="text/javascript">
-                var now = new Date().getTime();
-                var elapsed = new Date().getTime() - now;
-                document.getElementById("timer").innerHtml = elapsed;
-                if (elapsed > temps*60000 /*temps en milliseconds*/) {
-                    alert (" Le temps est écoulé !");
-                    //take whatever action you want!
-                }
-            </script>
-
+            
             <button type="submit" id="btn-fini">FINI !!!!</button>
+            
+            <div id="countdown" >
+                <h1>Pr&eacute;parez-vous !</h1>
+                <div id="countdown-number"><%= temps %></div>
+            </div>
+            
             <input type="hidden" name="op" value="Enregistrer_reponse">
         </form>
     </div>

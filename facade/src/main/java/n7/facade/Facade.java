@@ -37,7 +37,7 @@ public class Facade {
         int id = joueurs.size() + 1;
         Joueur joueur = new Joueur(surnom, id);
         joueurs.add(joueur);
-        return joueurs.size(); // Return the number of players after adding the new player
+        return id; // Return the number of players after adding the new player
     }
 
     @PostMapping("/creer_partie")

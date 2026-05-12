@@ -81,6 +81,7 @@ public class Serv extends HttpServlet {
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 id_round = facade.demarrer_round(id_partie, id_joueur);
                 temps = facade.getTempsRound(id_partie);
+                temps *= 60;
                 lettre = facade.getLettreRound(id_partie, id_round);
                 request.setAttribute("temps", temps);
                 request.setAttribute("lettre", lettre);
