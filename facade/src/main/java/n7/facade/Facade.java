@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 //import pack.Adresse;
 @RestController
@@ -83,9 +84,7 @@ public class Facade {
 
     @PostMapping("/demarrer_round")
     public int demarrer_round(@RequestParam int id_partie) {
-        Partie partie = parties.get(id_partie - 1);
-        int id_round = partie.getNumeroRoundActuel();
-        return id_round;
+        return parties.get(id_partie - 1).getNumeroRoundActuel();
     }
 
     @PostMapping("/getTempsRound")
@@ -145,5 +144,22 @@ public class Facade {
         Partie partie = parties.get(id_partie - 1);
 
         partie.miseAJourScore(partie.getRoundActuel().getFormulaire());
+    }
+
+    @PostMapping("/get_vainqueur")
+    int getVainqueur(@RequestParam int id_partie) {
+        List<Joueur> joueurs = parties.get(id_partie - 1).getJoueurs();
+
+        int min_score = -1;
+        int min_id = -1;
+
+        for (Joueur j : joueurs) {
+            if (j.getScore() < min_score) {
+                min_score = j.getScore();
+                min_id = j.getId();
+            }
+        }
+
+        return min_id;
     }
 }
