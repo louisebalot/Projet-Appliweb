@@ -97,7 +97,7 @@ public class Serv extends HttpServlet {
             case "demarrer_round":
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
-                id_round = facade.demarrer_round(id_partie, id_joueur);
+                id_round = facade.demarrer_round(id_partie);
                 temps = facade.getTempsRound(id_partie);
                 temps *= 60;
                 lettre = facade.getLettreRound(id_partie, id_round);
