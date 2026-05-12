@@ -10,12 +10,6 @@ import java.io.IOException;
 @WebServlet("/Serv")
 public class Serv extends HttpServlet {
 
-<<<<<<< HEAD
-=======
-    final String path = "http://localhost:8080/facade";
-    Facade facade;
-
->>>>>>> ae1e9b17d7fe651071729e975576df4efb16c7ae
     public Serv() {
         super();
     }
@@ -107,7 +101,7 @@ public class Serv extends HttpServlet {
                 String Animal = request.getParameter("Animal");
                 String Metier = request.getParameter("Metier");
 
-                facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie_actuelle, id_joueur_actuel, id_round_actuel);
+                facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie, id_joueur, id_round);
 
                 // Calcul des points
                 facade.miseAJourScore(id_partie);
