@@ -42,10 +42,10 @@ public interface Facade {
     @POST
     @Path("/Enregistrer_reponse")
     @Consumes("application/json")
-    void enregistrerReponse(@QueryParam("pays") String pays, @QueryParam("ville") String ville,
-                            @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
-                            @QueryParam("fruit") String fruit, @QueryParam("animal") String animal,
-                            @QueryParam("metier") String metier, @QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur, @QueryParam("id_round") int id_round);
+    void enregistrerReponse(@QueryParam("Pays") String pays, @QueryParam("Ville") String ville,
+                            @QueryParam("Prenom") String prenom, @QueryParam("Couleur") String couleur,
+                            @QueryParam("Fruit") String fruit, @QueryParam("Animal") String animal,
+                            @QueryParam("Metier") String metier, @QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur, @QueryParam("id_round") int id_round);
     
     @POST
     @Path("/next_round")

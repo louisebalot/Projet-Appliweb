@@ -111,7 +111,7 @@ public class Serv extends HttpServlet {
 
                     lettre = facade.getLettreRound(id_partie, id_round);
                     request.setAttribute("lettre", lettre);
-                    request.setAttribute("round", id_round);
+                    request.setAttribute("round", id_round + 1);
                     request.setAttribute("partie", id_partie);
                     request.setAttribute("joueur", id_joueur);
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
@@ -121,22 +121,6 @@ public class Serv extends HttpServlet {
                     request.getRequestDispatcher("Gagnant.jsp").forward(request, response);
                 }
 
-                break;
-               
-            case "Calculer_points":
-                
-                break;
-            
-            case "next_round":
-                // if (partie_actuelle.getNumeroRoundActuel() > partie_actuelle.getNombreRounds()){
-                //     request.getRequestDispatcher("Gagnant.html").forward(request, response);
-                //     break; 
-
-                // } else {
-                //     facade.nextRound(partie_actuelle);
-                //     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
-                //     break;
-                // }
                 break;
             
             case "redemarrer_partie":
