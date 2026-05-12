@@ -1,15 +1,34 @@
 package n7.facade;
 
-import n7.facade.outils.StringNormalizer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Vector;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import n7.facade.outils.StringNormalizer;
+
+
 public class Partie {
+
+    String db_url = "jdbc:hsqldb:hsql://localhost/xdb";
+    String db_user = "sa";
+    Connection con;
+    
+
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     /**
      * Points attribués selon la réponse.
@@ -63,6 +82,7 @@ public class Partie {
      *
      * @param admin Admin de la partie
      */
+    @Autowired
     public Partie(Joueur admin) {
         this.joueurs = new Vector<>();
         this.joueurs.add(admin);
@@ -71,15 +91,18 @@ public class Partie {
 
         this.admin = admin;
         this.id = 0;
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            con = DriverManager.getConnection(db_url, db_user, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    @Autowired
     public Partie(Joueur admin, int id) {
-        this.joueurs = new Vector<>();
-        this.joueurs.add(admin);
-        this.rounds = new Vector<>();
-        this.numeroRoundActuel = 0;
-
-        this.admin = admin;
+        this(admin);
+        
         this.id = id;
     }
 
@@ -216,9 +239,6 @@ public class Partie {
             for (String reponse : form.getReponsesAUneCategorie(cat)) {
 
                 if (reponse != null) {
-                    // new Scanner(new File("../db/" + cat.getNomFichierDb()))
-                    //                            .useDelimiter("\\Z").next().contains(reponse)
-                    // TODO : TEMPORAIRE (le temps d'installer les vraies DB)
                     // Si le mot est dans le fichier DB, on le compte
                     reponse = StringNormalizer.normaliserString(reponse);
                     if (!tableauCategorie.containsKey(reponse)) {
@@ -255,14 +275,28 @@ public class Partie {
         String upperReponse = StringNormalizer.normaliserString(reponse);
         // Vérifier que la première lettre soit la bonne
         boolean res = upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre());
-        try {
-            // Illisible mais permet de savoir si le mot cherché est dans le fichier
-            res &= StringNormalizer.normaliserString(new Scanner(new File("../db/" + categorie.getNomFichierDb()))
-                    .useDelimiter("\\Z").next()).contains("'" + upperReponse.toUpperCase() + "'");
-        } catch (FileNotFoundException e) {
-            res = false;
+
+        String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE nom = '" + reponse + "'";
+
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                res &= rs.getInt(1) > 0;
+            }
+            stmt.close();
+        } catch(SQLException e){
             e.printStackTrace();
         }
+
+        // try {
+        //     // Illisible mais permet de savoir si le mot cherché est dans le fichier
+        //     res &= StringNormalizer.normaliserString(new Scanner(new File("../db/" + categorie.getNomFichierDb()))
+        //             .useDelimiter("\\Z").next()).contains("'" + upperReponse.toUpperCase() + "'");
+        // } catch (FileNotFoundException e) {
+        //     res = false;
+        //     e.printStackTrace();
+        // }
 
         return res;
     }

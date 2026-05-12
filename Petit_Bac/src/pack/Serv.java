@@ -10,6 +10,12 @@ import java.io.IOException;
 @WebServlet("/Serv")
 public class Serv extends HttpServlet {
 
+<<<<<<< HEAD
+=======
+    final String path = "http://localhost:8080/facade";
+    Facade facade;
+
+>>>>>>> ae1e9b17d7fe651071729e975576df4efb16c7ae
     public Serv() {
         super();
     }
@@ -89,9 +95,9 @@ public class Serv extends HttpServlet {
 
 
             case "Enregistrer_reponse":
-                int id_partie_actuelle = Integer.parseInt(request.getParameter("id_partie"));
-                int id_joueur_actuel = Integer.parseInt(request.getParameter("joueur"));
-                int id_round_actuel = Integer.parseInt(request.getParameter("round"));
+                id_partie = Integer.parseInt(request.getParameter("id_partie"));
+                id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                id_round = Integer.parseInt(request.getParameter("round"));
 
                 String Pays = request.getParameter("Pays");
                 String Ville = request.getParameter("Ville");
@@ -102,6 +108,25 @@ public class Serv extends HttpServlet {
                 String Metier = request.getParameter("Metier");
 
                 facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie_actuelle, id_joueur_actuel, id_round_actuel);
+
+                // Calcul des points
+                facade.miseAJourScore(id_partie);
+                
+                // Renvoyer soit vers le prochain round, soit vers l'écran des résultats selon le nombre de rounds restants
+                if (facade.nextRound(id_partie)) {
+
+                    lettre = facade.getLettreRound(id_partie, id_round);
+                    request.setAttribute("lettre", lettre);
+                    request.setAttribute("round", id_round);
+                    request.setAttribute("partie", id_partie);
+                    request.setAttribute("joueur", id_joueur);
+                    request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
+                } else {
+
+                    // TODO Il faut surement mettre à jour des paramètres mais je ne sais pas lesquels
+                    request.getRequestDispatcher("Gagnant.jsp").forward(request, response);
+                }
+
                 break;
                
             case "Calculer_points":
