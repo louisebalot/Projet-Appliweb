@@ -93,6 +93,12 @@ public class Facade {
         return partie.getRoundTime();
     }
 
+    @PostMapping("/getNombreRounds")
+    public int getNombreRounds(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+        return partie.getNombreRounds();
+    }
+
     @PostMapping("/getLettreRound")
     public String getLettreRound(@RequestParam int id_partie, @RequestParam int id_round) {
         Partie partie = parties.get(id_partie - 1);

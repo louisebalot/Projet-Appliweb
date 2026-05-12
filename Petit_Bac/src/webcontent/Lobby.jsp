@@ -41,7 +41,7 @@
                 <option value="5"></option>
                 <option value="6"></option>
                 </datalist>
-            <label for="nb_tours">Nombre de tours: <span id="valeur_tours">5</span> tours</label>
+            <label for="nb_tours">Nombre de tours: <span id="valeur_tours">4</span> tours</label>
             </div>
         </div>
 
