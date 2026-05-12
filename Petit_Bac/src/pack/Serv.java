@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/Serv")
 public class Serv extends HttpServlet {
@@ -18,6 +19,18 @@ public class Serv extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+    }
+
+    private String transformerEnJson(List<String> pseudos) {
+        String json = "{\"status\": \"UPDATE_PLAYERS\", \"joueurs\": [";
+        for (int i = 0; i < pseudos.size(); i++) {
+            json += "\"" + pseudos.get(i) + "\"";
+            if (i < pseudos.size() - 1) {
+                json += ",";
+            }
+        }
+        json += "]}";
+        return json;
     }
 
     @Override
@@ -60,6 +73,11 @@ public class Serv extends HttpServlet {
                 id_invite = Integer.parseInt(request.getParameter("joueur"));
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 facade.rejoindre_partie(id_invite, id_partie);
+
+                List<String> pseudos = facade.getListePseudos(id_partie); 
+                String json = transformerEnJson(pseudos); 
+                GameWebSocket.broadcast(json);
+
                 request.setAttribute("partie", id_partie);
                 request.setAttribute("joueur", id_invite);
                 request.getRequestDispatcher("AttenteInvite.jsp").forward(request, response);
@@ -79,7 +97,7 @@ public class Serv extends HttpServlet {
             case "demarrer_round":
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
-                id_round = facade.demarrer_round(id_partie, id_joueur);
+                id_round = facade.demarrer_round(id_partie);
                 temps = facade.getTempsRound(id_partie);
                 temps *= 60;
                 lettre = facade.getLettreRound(id_partie, id_round);
@@ -121,6 +139,9 @@ public class Serv extends HttpServlet {
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
                 } else {
 
+                    int id_vainqueur = facade.getVainqueur(id_partie);
+                    request.setAttribute("id_vainqueur", id_vainqueur);
+                    request.setAttribute("partie", id_partie);
                     // TODO Il faut surement mettre à jour des paramètres mais je ne sais pas lesquels
                     request.getRequestDispatcher("Gagnant.jsp").forward(request, response);
                 }

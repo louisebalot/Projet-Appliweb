@@ -1,11 +1,15 @@
 
 package n7.facade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 //import pack.Adresse;
 @RestController
@@ -49,6 +53,19 @@ public class Facade {
         return id_partie;
     }
 
+    @PostMapping("/getListePseudos")
+    public List<String> getListePseudos(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+        List<Joueur> joueurs = partie.getJoueurs();
+        List<String> pseudos = new ArrayList<>();
+    
+        for (int i = 0; i < joueurs.size(); i++) {
+            Joueur j = joueurs.get(i);
+            pseudos.add(j.getSurnom());
+        }
+        return pseudos;
+    }
+
     @PostMapping("/setParametres")
     public int setParametres(@RequestParam int id_partie, @RequestParam int temps, @RequestParam int nb_tours) {
         Partie partie = parties.get(id_partie - 1);
@@ -67,9 +84,7 @@ public class Facade {
 
     @PostMapping("/demarrer_round")
     public int demarrer_round(@RequestParam int id_partie) {
-        Partie partie = parties.get(id_partie - 1);
-        int id_round = partie.getNumeroRoundActuel();
-        return id_round;
+        return parties.get(id_partie - 1).getNumeroRoundActuel();
     }
 
     @PostMapping("/getTempsRound")
@@ -129,5 +144,22 @@ public class Facade {
         Partie partie = parties.get(id_partie - 1);
 
         partie.miseAJourScore(partie.getRoundActuel().getFormulaire());
+    }
+
+    @PostMapping("/get_vainqueur")
+    int getVainqueur(@RequestParam int id_partie) {
+        List<Joueur> joueurs = parties.get(id_partie - 1).getJoueurs();
+
+        int min_score = -1;
+        int min_id = -1;
+
+        for (Joueur j : joueurs) {
+            if (j.getScore() < min_score) {
+                min_score = j.getScore();
+                min_id = j.getId();
+            }
+        }
+
+        return min_id;
     }
 }
