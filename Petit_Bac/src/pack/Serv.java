@@ -54,12 +54,13 @@ public class Serv extends HttpServlet {
         Round round;
         int id_round;
         String lettre;
+        int temps;
 
         switch (request.getParameter("op")) {
 
             case "creer_joueur":
                 surnom = request.getParameter("surnom");
-                id_joueur = facade.creer_joueur(surnom, joueurs.size() + 1);
+                id_joueur = facade.creer_joueur(surnom);
                 request.setAttribute("joueur", id_joueur);
                 request.getRequestDispatcher("ChoixPartie.jsp").forward(request, response);
                 break;
@@ -83,7 +84,7 @@ public class Serv extends HttpServlet {
 
             case "valider_params":
                 int nb_tours = Integer.parseInt(request.getParameter("nb_tours"));
-                int temps = Integer.parseInt(request.getParameter("temps"));
+                temps = Integer.parseInt(request.getParameter("temps"));
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("id_joueur"));
                 id_partie = facade.setParametres(id_partie, temps, nb_tours);
@@ -96,7 +97,9 @@ public class Serv extends HttpServlet {
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 id_round = facade.demarrer_round(id_partie, id_joueur);
+                temps = facade.getTempsRound(id_partie);
                 lettre = facade.getLettreRound(id_partie, id_round);
+                request.setAttribute("temps", temps);
                 request.setAttribute("lettre", lettre);
                 request.setAttribute("round", id_round);
                 request.setAttribute("partie", id_partie);
@@ -117,10 +120,10 @@ public class Serv extends HttpServlet {
                 String Animal = request.getParameter("Animal");
                 String Metier = request.getParameter("Metier");
 
-                facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie_actuelle, id_joueur_actuel, id_round_actuel);
+                facade.enregistrerReponse(Pays, Ville, Prenom, Couleur, Fruit, Animal, Metier, id_partie, id_joueur, id_round);
 
                 // Calcul des points
-                facade.miseAJourScore(id_partie);
+                //facade.miseAJourScore(id_partie);
                 
                 // Renvoyer soit vers le prochain round, soit vers l'écran des résultats selon le nombre de rounds restants
                 if (facade.nextRound(id_partie)) {

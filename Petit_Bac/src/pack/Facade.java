@@ -11,7 +11,7 @@ public interface Facade {
     @POST
     @Path("/creer_joueur")
     @Consumes("application/json")
-    int creer_joueur(@QueryParam("surnom") String surnom, @QueryParam("id") int id);
+    int creer_joueur(@QueryParam("surnom") String surnom);
 
     @POST
     @Path("/creer_partie")
@@ -33,6 +33,11 @@ public interface Facade {
     @Path("/demarrer_round")
     @Consumes("application/json")
     int demarrer_round(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
+
+    @POST
+    @Path("/getTempsRound")
+    @Consumes("application/json")
+    int getTempsRound(@QueryParam("id_partie") int id_partie);
 
     @POST
     @Path("/getLettreRound")

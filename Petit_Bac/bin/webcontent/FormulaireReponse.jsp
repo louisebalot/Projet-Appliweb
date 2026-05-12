@@ -2,6 +2,7 @@
     int partie = (Integer) request.getAttribute("partie");
     int joueur = (Integer) request.getAttribute("joueur");
     int round = (Integer) request.getAttribute("round");
+    int temps = (Integer) request.getAttribute("temps");
     String lettre = (String) request.getAttribute("lettre");
 %>
 <html>
@@ -65,6 +66,16 @@
                     <input type="text" id="Sport" name="Sport" autocomplete="off">
                 </div>
             </div>
+
+            <script type="text/javascript">
+                var now = new Date().getTime();
+                var elapsed = new Date().getTime() - now;
+                document.getElementById("timer").innerHtml = elapsed;
+                if (elapsed > temps*60000 /*temps en milliseconds*/) {
+                    alert (" Le temps est écoulé !");
+                    //take whatever action you want!
+                }
+            </script>
 
             <button type="submit" id="btn-fini">FINI !!!!</button>
             <input type="hidden" name="op" value="Enregistrer_reponse">
