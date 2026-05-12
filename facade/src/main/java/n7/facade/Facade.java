@@ -99,8 +99,15 @@ public class Facade {
     }
 
     @PostMapping("/next_round")
-    public void nextRound(Partie partie) {
-        partie.prochainRound();
+    public boolean nextRound(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+
+        if (partie.getNumeroRoundActuel() < partie.getNombreRounds()) {
+            partie.prochainRound();
+            return true;
+        }
+        
+        return false;
     }
 
     @PostMapping("/calculerPoints")

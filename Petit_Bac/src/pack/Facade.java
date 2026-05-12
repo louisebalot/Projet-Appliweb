@@ -50,7 +50,7 @@ public interface Facade {
     @POST
     @Path("/next_round")
     @Consumes("application/json")
-    void nextRound(@QueryParam("partie") Partie partie);
+    boolean nextRound(@QueryParam("id_partie") int id_partie);
 
     @POST
     @Path("/Calculer_points")
