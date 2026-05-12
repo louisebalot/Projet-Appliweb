@@ -6,7 +6,7 @@
 %>
 <html>
 <head>
-    <title>Formulaire de réponse</title>
+    <title>Formulaire de r&eacute;ponse</title>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
 </head>
