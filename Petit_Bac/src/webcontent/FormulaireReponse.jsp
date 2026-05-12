@@ -69,13 +69,15 @@
             
             <button type="submit" id="btn-fini">FINI !!!!</button>
             
-            <div id="countdown" >
-                <h1>Pr&eacute;parez-vous !</h1>
-                <div id="countdown-number"><%= temps %></div>
-            </div>
+            
             
             <input type="hidden" name="op" value="Enregistrer_reponse">
         </form>
+    </div>
+
+    <div id="countdown">
+        <h1>Il reste !</h1>
+        <div id="countdown-number"><%= temps %></div>
     </div>
 
     <script>
@@ -102,6 +104,28 @@
                 }, 500);
             }
         }, 1000);
+
+        
+        // const displayDecompte2 = document.getElementById('countdown-number');
+        // let decompteInitial2 = temps;
+
+        // const intervalInitial2 = setInterval(() => {
+        //     decompteInitial2--;
+
+        //     if (decompteInitial2 > 0) {
+        //         displayDecompte2.innerText = decompteInitial2;
+        //     } else if (decompteInitial2 === 0) {
+        //     } else {
+        //         clearInterval(intervalInitial2);
+                
+        //         overlay.classList.add('hidden'); 
+                
+        //         setTimeout(() => {
+        //             overlay.style.display = 'none';
+        //             //demarrerLeChronoDeLaPartie();
+        //         }, 500);
+        //     }
+        // }, 1000);
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
