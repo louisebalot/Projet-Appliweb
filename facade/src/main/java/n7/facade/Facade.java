@@ -48,7 +48,7 @@ public class Facade {
     }
 
     @PostMapping("/setParametres")
-    public int setParametres(@RequestParam int id_partie, @RequestParam int temps, @RequestParam int nb_tours){
+    public int setParametres(@RequestParam int id_partie, @RequestParam int temps, @RequestParam int nb_tours) {
         Partie partie = parties.get(id_partie - 1);
         partie.setRoundTime(temps);
         partie.setNombreRounds(nb_tours);
@@ -79,11 +79,12 @@ public class Facade {
 
     @PostMapping("/Enregistrer_reponse")
     public void enregistrer_reponse(@RequestParam String Pays, @RequestParam String Ville,
-            @RequestParam String Prenom, @RequestParam String Couleur, @RequestParam String Fruit, @RequestParam String Animal, @RequestParam String Metier,
+            @RequestParam String Prenom, @RequestParam String Couleur, @RequestParam String Fruit,
+            @RequestParam String Animal, @RequestParam String Metier,
             @RequestParam int id_partie, @RequestParam int id_joueur, @RequestParam int id_round) {
-        
+
         Partie partie_actuelle = parties.get(id_partie - 1);
-        
+
         Formulaire formulaireReponse = partie_actuelle.getRound(id_round).getFormulaire();
         formulaireReponse.ajouterJoueur(id_joueur);
 
@@ -106,20 +107,19 @@ public class Facade {
             partie.prochainRound();
             return true;
         }
-        
-        return false;
-    }
 
-    @PostMapping("/calculerPoints")
-    private void calculerPoints(Formulaire formulaire, @RequestParam int id_partie, @RequestParam int id_round) {
-        Partie partie = parties.get(id_partie - 1);
-        Round round = partie.getRound(id_round);
-        Formulaire formulaireRound = round.getFormulaire();
-        partie.miseAJourScore(formulaireRound);
+        return false;
     }
 
     @PostMapping("/redemarrer_partie")
     public void redemarrer_partie(@RequestParam int nb_tours, @RequestParam int temps) {
         // Implementation for restarting the game
+    }
+
+    @PostMapping("/mettreAJourPoints")
+    void miseAJourScore(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+
+        partie.miseAJourScore(partie.getRoundActuel().getFormulaire());
     }
 }
