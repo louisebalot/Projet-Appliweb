@@ -127,7 +127,7 @@ public class Formulaire {
      *
      * @param idJoueur id du joueur
      */
-    private void ajouterJoueur(int idJoueur) {
+    public void ajouterJoueur(int idJoueur) {
         form.add(new EntreeFormulaire(idJoueur));
     }
 

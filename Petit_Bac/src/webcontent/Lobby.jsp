@@ -9,12 +9,12 @@
 <body>
     <form action="Serv" method="get">
 
-        <%Joueur joueur = (Joueur) request.getAttribute("joueur");%>
-        <input type="hidden" name="id_joueur" value="<%=joueur.getId()%>">
+        <%int joueur = (Integer) request.getAttribute("joueur");%>
+        <input type="hidden" name="id_joueur" value="<%=joueur%>">
 
-        <%Partie partie = (Partie) request.getAttribute("partie");%>
-        <input type="hidden" name="id_partie" value="<%=partie.getId()%>">
-        <h1 class="titre-encadre">ID de la partie : <%=partie.getId()%></h1>
+        <%int partie = (Integer) request.getAttribute("partie");%>
+        <input type="hidden" name="id_partie" value="<%=partie%>">
+        <h1 class="titre-encadre">ID de la partie : <%=partie%></h1>
     
         <h2 class="titre-encadre">Param&egrave;tres de la partie</h2>
         <div class="cadre-parametres">

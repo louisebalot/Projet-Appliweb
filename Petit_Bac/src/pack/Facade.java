@@ -11,23 +11,33 @@ public interface Facade {
     @POST
     @Path("/creer_joueur")
     @Consumes("application/json")
-    Joueur creer_joueur(@QueryParam("surnom") String surnom, @QueryParam("id") int id);
+    int creer_joueur(@QueryParam("surnom") String surnom, @QueryParam("id") int id);
 
     @POST
     @Path("/creer_partie")
     @Consumes("application/json")
-    Partie creer_partie(@QueryParam("joueur") Joueur joueur, @QueryParam("id") int id);
+    int creer_partie(@QueryParam("id_admin") int id_admin);
 
     @POST
     @Path("/setParametres")
     @Consumes("application/json")
-    Partie setParametres(@QueryParam("partie") Partie partie, @QueryParam("temps") int temps,
+    int setParametres(@QueryParam("id_partie") int id_partie, @QueryParam("temps") int temps,
                        @QueryParam("nb_tours") int nb_tours);
 
     @POST
     @Path("/rejoindre_partie")
     @Consumes("application/json")
-    void rejoindre_partie(@QueryParam("joueur") Joueur joueur, @QueryParam("partie") Partie partie);
+    void rejoindre_partie(@QueryParam("id_joueur") int id_joueur, @QueryParam("id_partie") int id_partie);
+
+    @POST
+    @Path("/demarrer_round")
+    @Consumes("application/json")
+    int demarrer_round(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
+
+    @POST
+    @Path("/getLettreRound")
+    @Consumes("application/json")
+    String getLettreRound(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
 
     @POST
     @Path("/Enregistrer_reponse")
@@ -35,7 +45,7 @@ public interface Facade {
     void enregistrerReponse(@QueryParam("pays") String pays, @QueryParam("ville") String ville,
                             @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
                             @QueryParam("fruit") String fruit, @QueryParam("animal") String animal,
-                            @QueryParam("metier") String metier);
+                            @QueryParam("metier") String metier, @QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur, @QueryParam("id_round") int id_round);
     
     @POST
     @Path("/next_round")
@@ -45,7 +55,7 @@ public interface Facade {
     @POST
     @Path("/Calculer_points")
     @Consumes("application/json")
-    int calculerPoints(@QueryParam("reponse") String reponse);
+    void calculerPoints(@QueryParam("formulaire") Formulaire formulaire, @QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
 
     @POST
     @Path("/Redemarrer_partie")

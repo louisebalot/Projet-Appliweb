@@ -64,8 +64,6 @@ public class Partie {
      * @param admin Admin de la partie
      */
     public Partie(Joueur admin) {
-
-
         this.joueurs = new Vector<>();
         this.joueurs.add(admin);
         this.rounds = new Vector<>();
@@ -106,6 +104,10 @@ public class Partie {
     @JsonIgnore
     public Round getRoundActuel() {
         return rounds.get(numeroRoundActuel);
+    }
+
+    public Round getRound(int idRound) {
+        return rounds.get(idRound);
     }
 
     // Setters and getters

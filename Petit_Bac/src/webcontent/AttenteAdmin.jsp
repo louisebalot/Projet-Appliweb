@@ -1,8 +1,6 @@
-<%@ page import="pack.Joueur" %>
-<%@ page import="pack.Partie" %>
 <%
-    Partie partie = (Partie) request.getAttribute("partie");
-    Joueur joueur = (Joueur) request.getAttribute("joueur");
+    int partie = (Integer) request.getAttribute("partie");
+    int joueur = (Integer) request.getAttribute("joueur");
 %>
 <html>
 <head>
@@ -26,7 +24,7 @@
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
             if (data.status === "START") {
-                window.location.href = "Serv?op=demarrer_round&id_partie=<%= partie.getId() %>&joueur=<%= joueur.getId() %>";
+                window.location.href = "Serv?op=demarrer_round&id_partie=<%= partie%>&joueur=<%= joueur%>";
             }
         };
     </script>

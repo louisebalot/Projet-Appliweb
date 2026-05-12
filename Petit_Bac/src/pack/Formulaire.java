@@ -1,10 +1,13 @@
 package pack;
 
-import org.jboss.marshalling.Pair;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
+
+import org.jboss.marshalling.Pair;
+
+
+
 
 /**
  * Classe d'un formulaire de réponse
@@ -124,7 +127,7 @@ public class Formulaire {
      *
      * @param idJoueur id du joueur
      */
-    private void ajouterJoueur(int idJoueur) {
+    public void ajouterJoueur(int idJoueur) {
         form.add(new EntreeFormulaire(idJoueur));
     }
 

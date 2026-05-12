@@ -106,6 +106,10 @@ public class Partie {
         return rounds.get(numeroRoundActuel);
     }
 
+    public Round getRound(int idRound) {
+        return rounds.get(idRound);
+    }
+
     // Setters and getters
     public List<Joueur> getJoueurs() {
         return joueurs;

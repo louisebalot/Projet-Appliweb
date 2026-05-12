@@ -25,6 +25,8 @@ public class Round {
      */
     private Partie partie;
 
+    private Formulaire formulaire;
+
     /**
      * Temps maximum du round
      */
@@ -46,6 +48,7 @@ public class Round {
         this.number = number;
         this.lettre = lettre;
         this.tempsMaxRound = tempsMaxRound;
+        this.formulaire = new Formulaire();
     }
 
     public int getNumber() {
@@ -54,6 +57,10 @@ public class Round {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public Formulaire getFormulaire() {
+        return formulaire;
     }
 
     public String getLettre() {

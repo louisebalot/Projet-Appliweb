@@ -1,10 +1,8 @@
-<%@ page import="pack.Joueur" %>
-<%@ page import="pack.Partie" %>
-<%@ page import="pack.Round" %>
 <%
-    Partie partie = (Partie) request.getAttribute("partie");
-    Joueur joueur = (Joueur) request.getAttribute("joueur");
-    Round round = (Round) request.getAttribute("round");
+    int partie = (Integer) request.getAttribute("partie");
+    int joueur = (Integer) request.getAttribute("joueur");
+    int round = (Integer) request.getAttribute("round");
+    String lettre = (String) request.getAttribute("lettre");
 %>
 <html>
 <head>
@@ -20,11 +18,12 @@
 
     <div class="box-form">
         <h1>C'est tipar !</h1>
-        <h2 class="titre-encadre">Lettre : <span id="lettre"><%= round.getLettre() %></span></h2>
+        <h2 class="titre-encadre">Lettre : <span id="lettre"><%= lettre %></span></h2>
 
         <form action="Serv" method="get">
-            <input type="hidden" name="id_partie" value="<%=partie.getId()%>">
-            <input type="hidden" name="joueur" value="<%=joueur.getId()%>">
+            <input type="hidden" name="id_partie" value="<%=partie%>">
+            <input type="hidden" name="joueur" value="<%=joueur%>">
+            <input type="hidden" name="round" value="<%=round%>">
             <div class="cadre-parametres">
                 <div class="groupe-input">
                     <label class="label-categorie" for="Pays">Pays</label>
@@ -59,7 +58,7 @@
                 <div class="groupe-input">
                     <label class="label-categorie" for="Metier">M&eacute;tier</label>
                     <input type="text" id="Metier" name="Metier" autocomplete="off">
-                </div>                
+                </div>
                 
                 <div class="groupe-input">
                     <label class="label-categorie" for="Sport">Sport</label>
