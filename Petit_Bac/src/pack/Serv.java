@@ -100,10 +100,12 @@ public class Serv extends HttpServlet {
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 id_round = facade.demarrer_round(id_partie);
+                nb_tours = facade.getNombreRounds(id_partie);
                 temps = facade.getTempsRound(id_partie) * 60;
                 lettre = facade.getLettreRound(id_partie, id_round);
                 request.setAttribute("temps", temps);
                 request.setAttribute("lettre", lettre);
+                request.setAttribute("nb_rounds", nb_tours);
                 request.setAttribute("round", id_round);
                 request.setAttribute("partie", id_partie);
                 request.setAttribute("joueur", id_joueur);

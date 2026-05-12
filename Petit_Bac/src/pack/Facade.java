@@ -85,6 +85,12 @@ public interface Facade {
     @Consumes("application/json")
     int getTempsRound(@QueryParam("id_partie") int id_partie);
 
+
+    @POST
+    @Path("/getNombreRounds")
+    @Consumes("application/json")
+    int getNombreRounds(@QueryParam("id_partie") int id_partie);
+
     @POST
     @Path("/getLettreRound")
     @Consumes("application/json")

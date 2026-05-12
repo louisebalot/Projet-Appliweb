@@ -3,6 +3,7 @@
     int joueur = (Integer) request.getAttribute("joueur");
     int round = (Integer) request.getAttribute("round");
     int temps = (Integer) request.getAttribute("temps");
+    int nb_rounds = (Integer) request.getAttribute("nb_rounds");
     String lettre = (String) request.getAttribute("lettre");
 %>
 <html>
@@ -18,7 +19,13 @@
     </div>
 
     <div class="box-form">
-        <h1>C'est tipar !</h1>
+        <h1>C'est tipar : Manche <%= round + 1 %> / <%= nb_rounds %>!</h1>
+
+        <div id ="countdown-partie">
+            <h1>Il reste :</h1>
+            <div id="countdown-start"><%= temps %></div>
+        </div>
+
         <h2 class="titre-encadre">Lettre : <span id="lettre"><%= lettre %></span></h2>
 
         <form action="Serv" method="get">
@@ -68,10 +75,12 @@
             </div>
             
             <button type="submit" id="btn-fini">FINI !!!!</button>
-            
-            <div id="countdown" >
-                <h1>Pr&eacute;parez-vous !</h1>
-                <div id="countdown-number"><%= temps %></div>
+
+            <div id="custom-alert" class="modal-overlay" style="display: none;">
+                <div class="modal-content">
+                    <h2 class="titre-encadre">Termin&eacute; !</h2>
+                    <p>Le round est fini.</p>
+                </div>
             </div>
             
             <input type="hidden" name="op" value="Enregistrer_reponse">
@@ -82,8 +91,11 @@
         const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws');
 
         const overlay = document.getElementById('countdown-overlay');
+        const countdownPartie = document.getElementById('countdown-partie');
         const displayDecompte = document.getElementById('countdown-number');
+        const displayCountdown = document.getElementById('countdown-start');
         let decompteInitial = 3;
+        let decomptePartie = parseInt('<%= temps %>');
 
         const intervalInitial = setInterval(() => {
             decompteInitial--;
@@ -94,31 +106,51 @@
             } else {
                 clearInterval(intervalInitial);
                 
-                overlay.classList.add('hidden'); 
+                overlay.classList.add('hidden');
                 
                 setTimeout(() => {
                     overlay.style.display = 'none';
-                    //demarrerLeChronoDeLaPartie();
+                    demarrerLeChronoDeLaPartie();
                 }, 500);
             }
         }, 1000);
+
+        function demarrerLeChronoDeLaPartie() {
+            const intervalPartie = setInterval(() => {
+                decomptePartie--;
+
+                if (decomptePartie >= 0) {
+                    displayCountdown.innerText = decomptePartie;
+                } else {
+                    clearInterval(intervalPartie);
+
+                    setTimeout(() => {
+                        stopperLaPartie();
+                        setTimeout(envoyerReponses, 3000);
+                    }, 500);
+                }
+            }, 1000);
+        }
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
             if (data.status === "FINI") {
                 stopperLaPartie();
-                envoyerReponses();
+                setTimeout(envoyerReponses, 3000);
             }
         };
 
         function stopperLaPartie() {
-            const inputs = document.querySelectorAll('input');
-            for (let input of inputs) {
-                input.readOnly = true; 
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.readOnly = true;
                 input.style.backgroundColor = "#e0e0e0";
-            }
-            alert("STOP ! Le round est fini !");
-            document.querySelector('button').style.display = 'none';
+            });
+
+            const btn = document.getElementById('btn-fini');
+            if (btn) btn.style.display = 'none';
+
+            const modale = document.getElementById('custom-alert');
+            if (modale) modale.style.display = 'flex';
         }
 
         function envoyerReponses() {
