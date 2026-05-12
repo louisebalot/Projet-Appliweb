@@ -140,6 +140,7 @@ public class Serv extends HttpServlet {
                     request.setAttribute("temps", temps);
                     request.setAttribute("lettre", lettre);
                     request.setAttribute("round", id_round + 1);
+                    request.setAttribute("nb_rounds", facade.getNombreRounds(id_partie));
                     request.setAttribute("partie", id_partie);
                     request.setAttribute("joueur", id_joueur);
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
