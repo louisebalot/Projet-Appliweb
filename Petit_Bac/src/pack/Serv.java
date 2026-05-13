@@ -1,12 +1,13 @@
 package pack;
 
+import java.io.IOException;
+import java.util.List;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/Serv")
 public class Serv extends HttpServlet {
@@ -102,7 +103,7 @@ public class Serv extends HttpServlet {
                 id_round = facade.demarrer_round(id_partie);
                 nb_tours = facade.getNombreRounds(id_partie);
                 temps = facade.getTempsRound(id_partie) * 60;
-                lettre = facade.getLettreRound(id_partie, id_round);
+                lettre = facade.getLettreRound(id_partie);
                 request.setAttribute("temps", temps);
                 request.setAttribute("lettre", lettre);
                 request.setAttribute("nb_rounds", nb_tours);
@@ -135,7 +136,7 @@ public class Serv extends HttpServlet {
                 // le nombre de rounds restants
                 if (facade.nextRound(id_partie)) {
 
-                    lettre = facade.getLettreRound(id_partie, id_round);
+                    lettre = facade.getLettreRound(id_partie);
                     temps = facade.getTempsRound(id_partie) * 60;
                     request.setAttribute("temps", temps);
                     request.setAttribute("lettre", lettre);

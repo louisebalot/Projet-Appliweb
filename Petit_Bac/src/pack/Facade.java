@@ -94,7 +94,7 @@ public interface Facade {
     @POST
     @Path("/getLettreRound")
     @Consumes("application/json")
-    String getLettreRound(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
+    String getLettreRound(@QueryParam("id_partie") int id_partie);
 
     /**
      * Enregistrer les réponses d'un joueur

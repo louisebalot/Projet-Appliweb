@@ -276,17 +276,19 @@ public class Partie {
         // Vérifier que la première lettre soit la bonne
         boolean res = upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre());
 
-        String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE nom = '" + reponse + "'";
+        if (res) {
+            String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE nom = '" + reponse + "'";
 
-        try{
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next()){
-                res &= rs.getInt(1) > 0;
+            try{
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                if(rs.next()){
+                    res &= rs.getInt(1) > 0;
+                }
+                stmt.close();
+            } catch(SQLException e){
+                e.printStackTrace();
             }
-            stmt.close();
-        } catch(SQLException e){
-            e.printStackTrace();
         }
 
         // try {

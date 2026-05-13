@@ -1,8 +1,5 @@
 package pack;
 
-import pack.outils.StringNormalizer;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,13 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import pack.outils.StringNormalizer;
 
 
 
@@ -121,7 +119,7 @@ public class Partie {
      * Passe au prochain round.
      */
     public int prochainRound() {
-        return numeroRoundActuel++;
+        return ++numeroRoundActuel;
     }
 
     @JsonIgnore
@@ -276,19 +274,21 @@ public class Partie {
         // Vérifier que la première lettre soit la bonne
         boolean res = upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre());
 
-        String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE nom = '" + reponse + "'";
+        if (res) {
+            String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE nom = '" + reponse + "'";
 
-        try{
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next()){
-                res &= rs.getInt(1) > 0;
+            try{
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                if(rs.next()){
+                    res &= rs.getInt(1) > 0;
+                }
+                stmt.close();
+            } catch(SQLException e){
+                e.printStackTrace();
             }
-            stmt.close();
-        } catch(SQLException e){
-            e.printStackTrace();
         }
-
+        
         // try {
         //     // Illisible mais permet de savoir si le mot cherché est dans le fichier
         //     res &= StringNormalizer.normaliserString(new Scanner(new File("../db/" + categorie.getNomFichierDb()))

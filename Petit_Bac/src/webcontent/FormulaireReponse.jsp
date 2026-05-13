@@ -19,7 +19,7 @@
     </div>
 
     <div class="box-form">
-        <h1>C'est tipar : Manche <%= round + 1 %> / <%= nb_rounds %>!</h1>
+        <h1>C'est tipar : Manche <%= round + 1%> / <%= nb_rounds %>!</h1>
 
         <div id ="countdown-partie">
             <h1>Il reste :</h1>

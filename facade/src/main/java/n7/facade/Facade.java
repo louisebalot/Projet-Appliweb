@@ -100,9 +100,9 @@ public class Facade {
     }
 
     @PostMapping("/getLettreRound")
-    public String getLettreRound(@RequestParam int id_partie, @RequestParam int id_round) {
+    public String getLettreRound(@RequestParam int id_partie) {
         Partie partie = parties.get(id_partie - 1);
-        Round round = partie.getRound(id_round);
+        Round round = partie.getRoundActuel();
         return round.getLettre();
     }
 
@@ -132,7 +132,7 @@ public class Facade {
     public boolean nextRound(@RequestParam int id_partie) {
         Partie partie = parties.get(id_partie - 1);
 
-        if (partie.getNumeroRoundActuel() < partie.getNombreRounds()) {
+        if (partie.getNumeroRoundActuel() < partie.getNombreRounds() - 1) {
             partie.prochainRound();
             return true;
         }
