@@ -1,3 +1,7 @@
+<%
+    int partie = (Integer) request.getAttribute("partie");
+    int id_vainqueur = (Integer) request.getAttribute("id_vainqueur");
+%>
 <html>
 <head>
     <title>Page de victoire</title>
@@ -16,7 +20,6 @@
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        const nomGagnant = params.get('vainqueur');
 
         if (nomGagnant) {
             document.getElementById('message_victoire').innerText = 
