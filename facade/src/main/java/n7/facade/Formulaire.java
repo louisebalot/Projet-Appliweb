@@ -8,7 +8,6 @@ import org.antlr.v4.runtime.misc.Pair;
 
 
 
-
 /**
  * Classe d'un formulaire de réponse
  */

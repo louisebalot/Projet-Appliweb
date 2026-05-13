@@ -119,7 +119,7 @@ public class Partie {
      * Passe au prochain round.
      */
     public int prochainRound() {
-        return ++numeroRoundActuel;
+        return numeroRoundActuel++;
     }
 
     @JsonIgnore

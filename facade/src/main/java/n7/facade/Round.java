@@ -2,8 +2,6 @@ package n7.facade;
 
 //import java.time.LocalTime;
 
-import static java.lang.Integer.max;
-
 public class Round {
     /**
      * Nombre de secondes dans une journée.
