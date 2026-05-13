@@ -131,17 +131,6 @@ public interface Facade {
     boolean nextRound(@QueryParam("id_partie") int id_partie);
 
     /**
-     * TODO
-     * 
-     * @param nb_tours
-     * @param temps
-     */
-    @POST
-    @Path("/redemarrer_partie")
-    @Consumes("application/json")
-    void redemarrer_partie(@QueryParam("nb_tours") int nb_tours, @QueryParam("temps") int temps);
-
-    /**
      * Incrémente les scores des joueurs de la partie en fonction du formulaire du
      * round.
      * 

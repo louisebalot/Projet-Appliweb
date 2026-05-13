@@ -1,3 +1,4 @@
+<% int joueur = (Integer) request.getAttribute("joueur"); %>
 <html>
 <head>
     <title>Page de victoire</title>
@@ -9,6 +10,7 @@
         <h1 id="message_victoire">Calcul des scores</h1>
         
         <form action="Serv" method="get">
+            <input type="hidden" name="joueur" value="<%=joueur%>">
             <button type="submit">REJOUER</button>
             <input type="hidden" name="op" value="redemarrer_partie">
         </form>

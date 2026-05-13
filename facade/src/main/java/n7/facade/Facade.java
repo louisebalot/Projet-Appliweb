@@ -140,11 +140,6 @@ public class Facade {
         return false;
     }
 
-    @PostMapping("/redemarrer_partie")
-    public void redemarrer_partie(@RequestParam int nb_tours, @RequestParam int temps) {
-        // Implementation for restarting the game
-    }
-
     @PostMapping("/mise_a_jour_score")
     void miseAJourScore(@RequestParam int id_partie) {
         Partie partie = parties.get(id_partie - 1);
