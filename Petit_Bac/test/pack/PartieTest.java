@@ -21,7 +21,9 @@ class PartieTest {
         partie = new Partie(j1);
         partie.ajouterJoueur(j2);
         partie.ajouterJoueur(j3);
-        partie.creerRounds(3, 10);
+        partie.setNombreRounds(3);
+        partie.setRoundTime(10);
+        partie.creerRounds();
 
         partie.getRoundActuel().setLettre("F");
 
