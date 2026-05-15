@@ -1,7 +1,5 @@
 package n7.facade;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -277,10 +274,33 @@ public class Partie {
         boolean res = upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre());
 
         if (res) {
-            String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE nom = '" + reponse + "'";
+            String remove_accents_sql = "DROP FUNCTION remove_accents CASCADE;\n" + //
+                                "CREATE FUNCTION remove_accents(texte VARCHAR(255))\n" + //
+                                "RETURNS VARCHAR(255)\n" + //
+                                "READS SQL DATA\n" + //
+                                "BEGIN ATOMIC\n" + //
+                                "    DECLARE resultat VARCHAR(255);\n" + //
+                                "    SET resultat = texte;\n" + //
+                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'à', 'a'), 'á', 'a'), 'â', 'a'), 'ã', 'a');\n" + //
+                                "    -- Remplacement des 'E'\n" + //
+                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'é', 'e'), 'è', 'e'), 'ê', 'e'), 'ë', 'e');\n" + //
+                                "    -- Remplacement des 'I'\n" + //
+                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'ì', 'i'), 'í', 'i'), 'î', 'i'), 'ï', 'i');\n" + //
+                                "    -- Remplacement des 'O'\n" + //
+                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'ò', 'o'), 'ó', 'o'), 'ô', 'o'), 'õ', 'o');\n" + //
+                                "    -- Remplacement des 'U'\n" + //
+                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'ù', 'u'), 'ú', 'u'), 'û', 'u'), 'ü', 'u');\n" + //
+                                "    -- Cas particuliers\n" + //
+                                "    SET resultat = REPLACE(resultat, 'ç', 'c');\n" + //
+                                "    SET resultat = REPLACE(resultat, 'ñ', 'n');\n" + //
+                                "\n" + //
+                                "    RETURN resultat;\n" + //
+                                "END;";
+            String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE remove_accents(lower(nom)) = remove_accents(lower('" + reponse + "'))";
 
             try{
                 Statement stmt = con.createStatement();
+                ResultSet rs_func = stmt.executeQuery(remove_accents_sql);
                 ResultSet rs = stmt.executeQuery(sql);
                 if(rs.next()){
                     res &= rs.getInt(1) > 0;

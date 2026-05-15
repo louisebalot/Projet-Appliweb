@@ -150,6 +150,7 @@ public class Serv extends HttpServlet {
                     int id_vainqueur = facade.getVainqueur(id_partie);
                     request.setAttribute("id_vainqueur", id_vainqueur);
                     request.setAttribute("partie", id_partie);
+                    request.setAttribute("joueur", id_joueur);
                     // TODO Il faut surement mettre à jour des paramètres mais je ne sais pas
                     // lesquels
                     request.getRequestDispatcher("Gagnant.jsp").forward(request, response);
@@ -158,8 +159,10 @@ public class Serv extends HttpServlet {
                 break;
 
             case "redemarrer_partie":
-                request.getRequestDispatcher("Lobby.jsp").forward(request, response);
+                id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                request.setAttribute("joueur", id_joueur);
+                request.getRequestDispatcher("ChoixPartie.jsp").forward(request, response);
                 break;
-        }
+            }
     }
 }
