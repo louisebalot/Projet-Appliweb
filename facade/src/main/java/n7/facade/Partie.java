@@ -1,30 +1,15 @@
 package n7.facade;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Vector;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import my.tools.StringNormalizer;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import n7.facade.outils.StringNormalizer;
+import java.sql.*;
+import java.util.*;
 
 
 public class Partie {
-
-    String db_url = "jdbc:hsqldb:hsql://localhost/xdb";
-    String db_user = "sa";
-    Connection con;
-    
 
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     /**
@@ -36,6 +21,9 @@ public class Partie {
             POINTS_REPONSE_UNIQUE = 10,
             POINTS_BONNE_REPONSE = 5;
     public String lettresDisponibles = "";
+    String db_url = "jdbc:hsqldb:hsql://localhost/xdb";
+    String db_user = "sa";
+    Connection con;
     /**
      * Collection des joueurs de la partie
      */
@@ -99,7 +87,7 @@ public class Partie {
     @Autowired
     public Partie(Joueur admin, int id) {
         this(admin);
-        
+
         this.id = id;
     }
 
@@ -207,7 +195,7 @@ public class Partie {
     /**
      * Obtenir L'occurence de chaque mot pour chaque catégorie.
      * <p>
-     * Les mots sont normalisés selon la fonction {@link pack.outils.StringNormalizer#normaliserString(String)}
+     * Les mots sont normalisés selon la fonction {@link StringNormalizer#normaliserString(String)}
      *
      * <p>
      * Exemple pour 2 joueurs et 2 catégories {@code VILLE} et {@code VEGETAL} :
@@ -244,10 +232,7 @@ public class Partie {
                         tableauCategorie.put(reponse, tableauCategorie.get(reponse) + 1);
                     }
                 }
-
-
             }
-
             tableau.put(cat, tableauCategorie);
         }
 
@@ -271,45 +256,33 @@ public class Partie {
 
         String upperReponse = StringNormalizer.normaliserString(reponse);
         // Vérifier que la première lettre soit la bonne
-        boolean res = upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre());
+        if (!upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre()))
+            return false;
 
-        if (res) {
-            String remove_accents_sql = "DROP FUNCTION remove_accents CASCADE;\n" + //
-                                "CREATE FUNCTION remove_accents(texte VARCHAR(255))\n" + //
-                                "RETURNS VARCHAR(255)\n" + //
-                                "READS SQL DATA\n" + //
-                                "BEGIN ATOMIC\n" + //
-                                "    DECLARE resultat VARCHAR(255);\n" + //
-                                "    SET resultat = texte;\n" + //
-                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'à', 'a'), 'á', 'a'), 'â', 'a'), 'ã', 'a');\n" + //
-                                "    -- Remplacement des 'E'\n" + //
-                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'é', 'e'), 'è', 'e'), 'ê', 'e'), 'ë', 'e');\n" + //
-                                "    -- Remplacement des 'I'\n" + //
-                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'ì', 'i'), 'í', 'i'), 'î', 'i'), 'ï', 'i');\n" + //
-                                "    -- Remplacement des 'O'\n" + //
-                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'ò', 'o'), 'ó', 'o'), 'ô', 'o'), 'õ', 'o');\n" + //
-                                "    -- Remplacement des 'U'\n" + //
-                                "    SET resultat = REPLACE(REPLACE(REPLACE(REPLACE(resultat, 'ù', 'u'), 'ú', 'u'), 'û', 'u'), 'ü', 'u');\n" + //
-                                "    -- Cas particuliers\n" + //
-                                "    SET resultat = REPLACE(resultat, 'ç', 'c');\n" + //
-                                "    SET resultat = REPLACE(resultat, 'ñ', 'n');\n" + //
-                                "\n" + //
-                                "    RETURN resultat;\n" + //
-                                "END;";
-            String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE remove_accents(lower(nom)) = remove_accents(lower('" + reponse + "'))";
+        boolean res = true;
 
-            try{
-                Statement stmt = con.createStatement();
-                ResultSet rs_func = stmt.executeQuery(remove_accents_sql);
-                ResultSet rs = stmt.executeQuery(sql);
-                if(rs.next()){
-                    res &= rs.getInt(1) > 0;
-                }
-                stmt.close();
-            } catch(SQLException e){
-                e.printStackTrace();
+        try {
+            Statement stmt = con.createStatement();
+
+            stmt.execute("DROP FUNCTION IF EXISTS REMOVE_ACCENTS CASCADE;\n" +
+                         "    CREATE FUNCTION REMOVE_ACCENTS(str VARCHAR(255))\n" +
+                         "    RETURNS VARCHAR(255)\n" +
+                         "    LANGUAGE JAVA\n" +
+                         "    DETERMINISTIC\n" +
+                         "    NO SQL\n" +
+                         "    EXTERNAL NAME 'CLASSPATH:my.tools.StringNormalizer.normaliserString'\n");
+
+            String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE REMOVE_ACCENTS(nom) = REMOVE_ACCENTS('" + reponse + "')";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                res &= rs.getInt(1) > 0;
             }
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
 
         // try {
         //     // Illisible mais permet de savoir si le mot cherché est dans le fichier

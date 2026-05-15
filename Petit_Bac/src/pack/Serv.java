@@ -1,22 +1,22 @@
 package pack;
 
-import java.io.IOException;
-import java.util.List;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+import java.util.List;
+
 @WebServlet("/Serv")
 public class Serv extends HttpServlet {
+
+    private Facade facade;
 
     public Serv() {
         super();
     }
-
-    private Facade facade;
 
     @Override
     public void init() throws ServletException {
@@ -163,6 +163,6 @@ public class Serv extends HttpServlet {
                 request.setAttribute("joueur", id_joueur);
                 request.getRequestDispatcher("ChoixPartie.jsp").forward(request, response);
                 break;
-            }
+        }
     }
 }

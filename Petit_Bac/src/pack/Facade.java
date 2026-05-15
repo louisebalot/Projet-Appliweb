@@ -1,18 +1,17 @@
 package pack;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
+import java.util.List;
 
 @Path("/")
 public interface Facade {
 
     /**
      * Créer un joueur à partir de son surnom (pseudo).
-     * 
+     *
      * @param surnom surnom du joueur
      * @return id du joueur
      */
@@ -23,7 +22,7 @@ public interface Facade {
 
     /**
      * Créer une partie à partir de l'id d'un joueur.
-     * 
+     *
      * @param id_admin id de l'admin
      * @return id de la partie
      */
@@ -32,28 +31,28 @@ public interface Facade {
     @Consumes("application/json")
     int creer_partie(@QueryParam("id_admin") int id_admin);
 
+    @POST
+    @Path("/getListePseudos")
+    @Consumes("application/json")
+    List<String> getListePseudos(@QueryParam("id_partie") int id_partie);
+
     /**
      * Mets en place les paramètres de la partie avant son départ.
-     * 
+     *
      * @param id_partie id de la partie
      * @param temps     temps d'un round
      * @param nb_tours  nombre de rounds
      * @return id de la partie
      */
     @POST
-    @Path("/getListePseudos")
-    @Consumes("application/json")
-    List<String> getListePseudos(@QueryParam("id_partie") int id_partie);
-
-    @POST
     @Path("/setParametres")
     @Consumes("application/json")
     int setParametres(@QueryParam("id_partie") int id_partie, @QueryParam("temps") int temps,
-            @QueryParam("nb_tours") int nb_tours);
+                      @QueryParam("nb_tours") int nb_tours);
 
     /**
      * Ajoute un joueur à la partie.
-     * 
+     *
      * @param id_joueur id du joueur à ajouter
      * @param id_partie id de la partie
      */
@@ -64,7 +63,7 @@ public interface Facade {
 
     /**
      * "Démarre" le round
-     * 
+     *
      * @param id_partie id de la partie
      * @return numéro du round actuel
      */
@@ -73,13 +72,6 @@ public interface Facade {
     @Consumes("application/json")
     int demarrer_round(@QueryParam("id_partie") int id_partie);
 
-    /**
-     * Obtenir la lettre du round actuel
-     * 
-     * @param id_partie id de la partie
-     * @param id_round  id du round
-     * @return lettre du round actuel
-     */
     @POST
     @Path("/getTempsRound")
     @Consumes("application/json")
@@ -91,6 +83,12 @@ public interface Facade {
     @Consumes("application/json")
     int getNombreRounds(@QueryParam("id_partie") int id_partie);
 
+    /**
+     * Obtenir la lettre du round actuel
+     *
+     * @param id_partie id de la partie
+     * @return lettre du round actuel
+     */
     @POST
     @Path("/getLettreRound")
     @Consumes("application/json")
@@ -98,12 +96,12 @@ public interface Facade {
 
     /**
      * Enregistrer les réponses d'un joueur
-     * 
+     *
      * @param pays      réponse de la catégorie {@code PAYS}
      * @param ville     réponse de la catégorie {@code VILLE}
      * @param prenom    réponse de la catégorie {@code PRENOM}
      * @param couleur   réponse de la catégorie {@code COULEUR}
-     * @param fruit     réponse de la catégorie {@code FRUIT}
+     * @param vegetal   réponse de la catégorie {@code VEGETAL}
      * @param animal    réponse de la catégorie {@code ANIMAL}
      * @param metier    réponse de la catégorie {@code METIER}
      * @param id_partie id de la partie
@@ -114,16 +112,16 @@ public interface Facade {
     @Path("/enregistrer_reponse")
     @Consumes("application/json")
     void enregistrerReponse(@QueryParam("pays") String pays, @QueryParam("ville") String ville,
-            @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
-            @QueryParam("vegetal") String vegetal, @QueryParam("animal") String animal,
-            @QueryParam("metier") String metier, @QueryParam("id_partie") int id_partie,
-            @QueryParam("id_joueur") int id_joueur, @QueryParam("id_round") int id_round);
+                            @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
+                            @QueryParam("vegetal") String vegetal, @QueryParam("animal") String animal,
+                            @QueryParam("metier") String metier, @QueryParam("id_partie") int id_partie,
+                            @QueryParam("id_joueur") int id_joueur, @QueryParam("id_round") int id_round);
 
     /**
      * Passe au prochain round si possible
-     * 
+     *
      * @param id_partie id de la partie
-     * @return envoie {@code true} si il y a un prochain round, {@code false} sinon
+     * @return envoie {@code true} s'il y a un prochain round, {@code false} sinon
      */
     @POST
     @Path("/next_round")
@@ -133,9 +131,9 @@ public interface Facade {
     /**
      * Incrémente les scores des joueurs de la partie en fonction du formulaire du
      * round.
-     * 
+     * <p>
      * !! Peut nécessiter que les bases de données des catégories soient lancées
-     * 
+     *
      * @param id_partie
      */
     @POST
@@ -145,7 +143,7 @@ public interface Facade {
 
     /**
      * Renvoie l'id du joueur ayant le plus grand score
-     * 
+     *
      * @param id_partie id de la partie
      * @return id du joueur qui a le plus grand score
      */

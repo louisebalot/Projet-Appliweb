@@ -4,14 +4,24 @@ import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
 
 import java.io.IOException;
-import java.util.Set;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 @ServerEndpoint("/ws")
 public class GameWebSocket {
 
     private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
+
+    public static void broadcast(String text) {
+        synchronized (sessions) {
+            for (Session s : sessions) {
+                if (s.isOpen()) {
+                    s.getAsyncRemote().sendText(text);
+                }
+            }
+        }
+    }
 
     @OnOpen
     public void onOpen(Session session) {
@@ -22,33 +32,22 @@ public class GameWebSocket {
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
         System.out.println("JSON reçu : " + message);
-        
+
         if (message.contains("LANCER_PARTIE")) {
             broadcast("{\"status\": \"START\"}");
-        } 
-        else if (message.contains("STOP")) {
+        } else if (message.contains("STOP")) {
             broadcast("{\"status\": \"FINI\"}");
         }
     }
 
     @OnClose
     public void onClose(Session session) {
-        sessions.remove(session); 
+        sessions.remove(session);
         System.out.println("Connexion fermée : " + session.getId());
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
         sessions.remove(session);
-    }    
-    
-    public static void broadcast(String text) {
-        synchronized (sessions) {
-            for (Session s : sessions) {
-                if (s.isOpen()) {
-                    s.getAsyncRemote().sendText(text);
-                }
-            }
-        }
     }
 }
