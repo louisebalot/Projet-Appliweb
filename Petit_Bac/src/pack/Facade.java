@@ -1,10 +1,11 @@
 package pack;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-import java.util.List;
 
 @Path("/")
 public interface Facade {
@@ -151,4 +152,14 @@ public interface Facade {
     @Path("/get_vainqueur")
     @Consumes("application/json")
     int getVainqueur(@QueryParam("id_partie") int id_partie);
+
+    @POST
+    @Path("/reset_score")
+    @Consumes("application/json")
+    void resetScore(@QueryParam("id_joueur") int id_joueur);
+
+    @POST
+    @Path("/get_score")
+    @Consumes("application/json")
+    int getScore(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
 }

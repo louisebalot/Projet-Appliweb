@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 //import pack.Adresse;
 @RestController
@@ -48,6 +47,7 @@ public class Facade {
     public int creer_partie(@RequestParam int id_admin) {
         int id_partie = parties.size() + 1;
         Joueur admin = joueurs.get(id_admin - 1);
+        admin.setIsAdmin(true);
         Partie partie = new Partie(admin, id_partie);
         parties.add(partie);
         return id_partie;
@@ -151,16 +151,33 @@ public class Facade {
     int getVainqueur(@RequestParam int id_partie) {
         List<Joueur> joueurs = parties.get(id_partie - 1).getJoueurs();
 
-        int min_score = -1;
-        int min_id = -1;
+        int max_score = -1;
+        int max_id = -1;
 
         for (Joueur j : joueurs) {
-            if (j.getScore() < min_score) {
-                min_score = j.getScore();
-                min_id = j.getId();
+            if (j.getScore() > max_score) {
+                max_score = j.getScore();
+                max_id = j.getId();
             }
         }
+        return max_id;
+    }
 
-        return min_id;
+    @PostMapping("/reset_score")
+    public void resetScore(@RequestParam int id_joueur) {
+        Joueur joueur = joueurs.get(id_joueur - 1);
+        joueur.setScore(0);
+    }
+
+    @PostMapping("/get_score")
+    public int getScore(@RequestParam int id_partie, @RequestParam int id_joueur) {
+        Partie partie = parties.get(id_partie - 1);
+        List<Joueur> joueurs2 = partie.getJoueurs();
+        for (Joueur j : joueurs2) {
+            if (j.getId() == id_joueur) {
+                return j.getScore();
+            }
+        }
+        return 200;
     }
 }
