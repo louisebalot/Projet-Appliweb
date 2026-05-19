@@ -133,6 +133,15 @@ class PartieTest {
         assertEquals(tab.get(Categorie.METIER).get("COIFFEUR"), 1);
 
         assertNull(tab.get(Categorie.ANIMAL).get("CHÈVRE"));
+
+        StringBuilder str = new StringBuilder("Tableau des occurences TEST : \n");
+        for (Categorie cat : Categorie.values()) {
+            str.append("    ").append(cat.name()).append(" :\n");
+            for (String map : tab.get(cat).keySet()) {
+                str.append("        MOT : ").append(map).append("\n        OCCURENCE : ").append(tab.get(cat).get(map)).append("\n");
+            }
+        }
+        System.out.println(str);
     }
 
     @Test

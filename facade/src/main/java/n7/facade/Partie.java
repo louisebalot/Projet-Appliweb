@@ -183,9 +183,9 @@ public class Partie {
             for (Categorie cat : Categorie.values()) {
                 // Récupérer le nombre d'occurence de la réponse du joueur
                 String reponse = form.getReponseJoueur(j, cat);
-                if (reponse != null && reponseEstValide(cat, reponse)) {
+                if (reponse != null  && reponseEstValide(cat, reponse)) {
                     // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
-                    int occurenceReponse = tableauOccurences.get(cat).get(my.tools.StringNormalizer.normaliserString(reponse));
+                    int occurenceReponse = tableauOccurences.get(cat).get(n7.facade.outils.StringNormalizer.normaliserString(reponse));
                     j.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
                 }
             }
@@ -195,7 +195,7 @@ public class Partie {
     /**
      * Obtenir L'occurence de chaque mot pour chaque catégorie.
      * <p>
-     * Les mots sont normalisés selon la fonction {@link StringNormalizer#normaliserString(String)}
+     * Les mots sont normalisés selon la fonction {@link n7.facade.outils.StringNormalizer#normaliserString(String)}
      *
      * <p>
      * Exemple pour 2 joueurs et 2 catégories {@code VILLE} et {@code VEGETAL} :
@@ -225,7 +225,7 @@ public class Partie {
 
                 if (reponse != null) {
                     // Si le mot est dans le fichier DB, on le compte
-                    reponse = StringNormalizer.normaliserString(reponse);
+                    reponse = n7.facade.outils.StringNormalizer.normaliserString(reponse);
                     if (!tableauCategorie.containsKey(reponse)) {
                         tableauCategorie.put(reponse, 1);
                     } else {
@@ -254,7 +254,7 @@ public class Partie {
     public boolean reponseEstValide(Categorie categorie, String reponse) {
         if (reponse == null) return false;
 
-        String upperReponse = StringNormalizer.normaliserString(reponse);
+        String upperReponse = n7.facade.outils.StringNormalizer.normaliserString(reponse);
         // Vérifier que la première lettre soit la bonne
         if (!upperReponse.startsWith(rounds.get(numeroRoundActuel).getLettre()))
             return false;

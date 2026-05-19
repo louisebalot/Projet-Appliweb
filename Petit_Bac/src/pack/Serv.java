@@ -38,28 +38,6 @@ public class Serv extends HttpServlet {
         return json;
     }
 
-    private String transformerEnJsonScore(int id_partie) {
-        List<Integer> joueurs = facade.getListeJoueurs(id_partie);
-        
-        StringBuilder json = new StringBuilder();
-        json.append("{\"status\": \"END_GAME\", \"scores\": [");
-        
-        for (int i = 0; i < joueurs.size(); i++) {
-            int id_joueur = joueurs.get(i);
-            String surnom = facade.getSurnom(id_partie, id_joueur);
-            int scoreJoueur = facade.getScoreJoueur(id_partie, id_joueur); 
-            
-            json.append("{\"pseudo\": \"").append(surnom).append("\", \"score\": ").append(scoreJoueur).append("}");
-            
-            if (i < joueurs.size() - 1) {
-                json.append(",");
-            }
-        }
-        
-        json.append("]}");
-        return json.toString();
-    }
-
 
 
     @Override
@@ -174,12 +152,12 @@ public class Serv extends HttpServlet {
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 id_round = Integer.parseInt(request.getParameter("round"));
 
-                boolean joueurEstAdmin = facade.isJoueurAdmin(id_joueur, id_partie); 
+                boolean joueurEstAdmin = facade.isJoueurAdmin(id_joueur, id_partie);
 
                 int codeRound;
                 if (joueurEstAdmin) {
-                    // facade.miseAJourScore(id_partie);
-                    codeRound = facade.nextRound(id_partie, id_joueur); 
+                    facade.miseAJourScore(id_partie);
+                    codeRound = facade.nextRound(id_partie, id_joueur);
 
                 } else {
                     try { Thread.sleep(400); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
