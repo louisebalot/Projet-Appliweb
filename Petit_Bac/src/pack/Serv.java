@@ -148,12 +148,12 @@ public class Serv extends HttpServlet {
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
                 id_round = Integer.parseInt(request.getParameter("round"));
 
-                boolean joueurEstAdmin = facade.isJoueurAdmin(id_joueur, id_partie); 
+                boolean joueurEstAdmin = facade.isJoueurAdmin(id_joueur, id_partie);
 
                 int codeRound;
                 if (joueurEstAdmin) {
-                    facade.miseAJourScore(id_partie);
-                    codeRound = facade.nextRound(id_partie, id_joueur); 
+                    // facade.miseAJourScore(id_partie);
+                    codeRound = facade.nextRound(id_partie, id_joueur);
 
                 } else {
                     try { Thread.sleep(400); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
