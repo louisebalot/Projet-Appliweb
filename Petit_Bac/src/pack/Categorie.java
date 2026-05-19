@@ -1,30 +1,19 @@
 package pack;
 
 public enum Categorie {
-    PAYS("pays", "table_pays"),
-    VILLE("villes", "table_villes"),
-    PRENOM("prenoms", "table_prenoms"),
-    COULEUR("couleurs", "table_couleurs"),
-    VEGETAL("vegetaux", "table_vegetaux"),
-    ANIMAL("animaux", "table_animaux"),
-    METIER("metiers", "table_metiers"),
-    SPORT("sports", "table_sports");
+    PAYS("table_pays"),
+    VILLE("table_villes"),
+    PRENOM("table_prenoms"),
+    COULEUR("table_couleurs"),
+    VEGETAL("table_vegetaux"),
+    ANIMAL("table_animaux"),
+    METIER("table_metiers"),
+    SPORT("table_sports");
 
-    private final String nomFichierDb;
     private final String nomTable;
 
-    Categorie(String nomFichierDb, String nomTable) {
-        this.nomFichierDb = nomFichierDb + ".sql";
+    Categorie(String nomTable) {
         this.nomTable = nomTable;
-    }
-
-    /**
-     * Obtenir le nom du fichier lié à la base de donnée de la catégorie.
-     *
-     * @return lom du fichier .sql de la catégorie
-     */
-    public String getNomFichierDb() {
-        return nomFichierDb;
     }
 
     public String getNomTable() {
