@@ -32,7 +32,6 @@ public class Round {
     /**
      * Temps auquel le round à commencé
      */
-    //public LocalTime roundStartTime;
 
     /**
      * Ne pas utiliser
@@ -84,4 +83,3 @@ public class Round {
     public void setTempsMaxRound(int tempsMaxRound) {
         this.tempsMaxRound = tempsMaxRound;
     }
-}
