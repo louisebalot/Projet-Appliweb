@@ -152,7 +152,7 @@ public class Serv extends HttpServlet {
 
                 int codeRound;
                 if (joueurEstAdmin) {
-                    // facade.miseAJourScore(id_partie);
+                    facade.miseAJourScore(id_partie);
                     codeRound = facade.nextRound(id_partie, id_joueur); 
 
                 } else {
