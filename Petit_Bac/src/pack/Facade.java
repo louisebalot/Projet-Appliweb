@@ -7,6 +7,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 @Path("/")
 public interface Facade {
 
@@ -197,5 +199,9 @@ public interface Facade {
     @Consumes("application/json")
     int getScoreJoueur(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
 
+    @POST
+    @Path("/getClassementTrie")
+    @Consumes("application/json")
+    List<ScoreLigne> getClassementTrie(@QueryParam("id_partie") int id_partie);
 
 }

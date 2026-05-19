@@ -261,7 +261,7 @@ public class Facade {
                 return j.getSurnom();
             }
         }
-        return "";
+        return "Salut";
     }
 
     @PostMapping("/getScoreJoueur")
@@ -276,5 +276,23 @@ public class Facade {
             }
         }
         return 0;
+    }
+
+
+    @PostMapping("/getClassementTrie")
+    public List<ScoreLigne> getClassementTrie(@RequestParam int id_partie) {
+        List<Integer> idJoueurs = this.getListeJoueurs(id_partie);
+        List<ScoreLigne> classement = new ArrayList<>();
+
+        for (int idJ : idJoueurs) {
+            String surnom = this.getSurnom(id_partie, idJ);
+            int sc = this.getScoreJoueur(id_partie, idJ);
+            classement.add(new ScoreLigne(surnom, sc));
+        }
+
+        // On trie du plus grand au plus petit score
+        classement.sort((a, b) -> Integer.compare(b.getScore(), a.getScore()));
+
+        return classement;
     }
 }

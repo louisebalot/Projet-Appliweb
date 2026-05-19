@@ -185,10 +185,20 @@ public class Serv extends HttpServlet {
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
 
                 } else if (codeRound == 2) {
-                    int id_vainqueur = facade.getVainqueur(id_partie);
+
+                    if (joueurEstAdmin) {
+                        facade.miseAJourScore(id_partie);
+                    } else {
+                        try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                    }
+
+                    List<ScoreLigne> classement = facade.getClassementTrie(id_partie);
+
+                    String pseudoVainqueur = classement.isEmpty() ? "Personne" : classement.get(0).getPseudo();
                     int score = facade.getScore(id_partie, id_joueur);
 
-                    request.setAttribute("id_vainqueur", id_vainqueur);
+                    request.setAttribute("classement", classement);
+                    request.setAttribute("pseudo_vainqueur", pseudoVainqueur);
                     request.setAttribute("score", score);
                     request.setAttribute("partie", id_partie);
                     request.setAttribute("joueur", id_joueur);
