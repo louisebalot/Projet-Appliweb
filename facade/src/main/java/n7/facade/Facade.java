@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 //import pack.Adresse;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 public class Facade {
 
-    java.util.List<Partie> parties = new java.util.ArrayList<>();
-    java.util.List<Joueur> joueurs = new java.util.ArrayList<>();
+    //java.util.List<Partie> parties = new java.util.ArrayList<>();
+    //java.util.List<Joueur> joueurs = new java.util.ArrayList<>();
+
+    List<Partie> parties = new CopyOnWriteArrayList<>();
+    List<Joueur> joueurs = new CopyOnWriteArrayList<>();
 
     private Map<String, CountDownLatch> latchs = new ConcurrentHashMap<>();
 
@@ -112,6 +116,13 @@ public class Facade {
         return partie.getRoundTime();
     }
 
+    @PostMapping("/getNumeroRoundActuel")
+    public int getNumeroRoundActuel(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+        return partie.getNumeroRoundActuel();
+    }
+
+
     @PostMapping("/getNombreRounds")
     public int getNombreRounds(@RequestParam int id_partie) {
         Partie partie = parties.get(id_partie - 1);
@@ -128,7 +139,7 @@ public class Facade {
     @PostMapping("/enregistrer_reponse")
     public void enregistrerReponse(@RequestParam String pays, @RequestParam String ville,
             @RequestParam String prenom, @RequestParam String couleur, @RequestParam String vegetal,
-            @RequestParam String animal, @RequestParam String metier,
+            @RequestParam String animal, @RequestParam String metier, @RequestParam String sport,
             @RequestParam int id_partie, @RequestParam int id_joueur, @RequestParam int id_round) {
 
         Partie partie_actuelle = parties.get(id_partie - 1);
@@ -145,6 +156,7 @@ public class Facade {
         formulaireReponse.setReponseJoueur(joueur, Categorie.VEGETAL, vegetal);
         formulaireReponse.setReponseJoueur(joueur, Categorie.ANIMAL, animal);
         formulaireReponse.setReponseJoueur(joueur, Categorie.METIER, metier);
+        formulaireReponse.setReponseJoueur(joueur, Categorie.SPORT, sport);
 
         String key = latchKey(id_partie, id_round);
         CountDownLatch latch = latchs.get(key);
@@ -177,6 +189,21 @@ public class Facade {
 
         partie.miseAJourScore(partie.getRoundActuel().getFormulaire());
     }
+
+    @PostMapping("/isPartieFinie")
+    boolean isPartieFinie(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+        return (partie.getNumeroRoundActuel() >= partie.getNombreRounds());
+    }
+    
+
+    @PostMapping("/isJoueurAdmin")
+    boolean isJoueurAdmin(@RequestParam int id_joueur, @RequestParam int id_partie){
+        Partie partie = parties.get(id_partie - 1);
+        Joueur admin = partie.getAdmin();
+        return (id_joueur == admin.getId());
+    }
+
 
     @PostMapping("/get_vainqueur")
     int getVainqueur(@RequestParam int id_partie) {

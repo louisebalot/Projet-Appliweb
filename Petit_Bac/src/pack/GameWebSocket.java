@@ -35,8 +35,12 @@ public class GameWebSocket {
 
         if (message.contains("LANCER_PARTIE")) {
             broadcast("{\"status\": \"START\"}");
+
         } else if (message.contains("STOP")) {
             broadcast("{\"status\": \"FINI\"}");
+            
+        } else if (message.contains("CONTINUER")) {
+            broadcast("{\"status\": \"NEXT_ROUND_READY\"}");
         }
     }
 
