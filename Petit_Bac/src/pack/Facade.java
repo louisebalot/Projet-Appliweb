@@ -127,7 +127,7 @@ public interface Facade {
     @POST
     @Path("/next_round")
     @Consumes("application/json")
-    boolean nextRound(@QueryParam("id_partie") int id_partie);
+    int nextRound(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
 
     /**
      * Incrémente les scores des joueurs de la partie en fonction du formulaire du
@@ -162,4 +162,9 @@ public interface Facade {
     @Path("/get_score")
     @Consumes("application/json")
     int getScore(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
+
+    @POST
+    @Path("/attendre_reponses")
+    @Consumes("application/json")
+    void attendreReponses(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
 }

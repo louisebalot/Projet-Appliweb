@@ -175,19 +175,18 @@ public class Partie {
      * Mettre à jour le tableau des scores en fonction des réponses données dans un formulaire.
      *
      * @param form formulaire des réponses.
+     * @param joueur joueur pour qui mettre à jour le score.
      */
-    public void miseAJourScore(Formulaire form) {
+    public void miseAJourScore(Formulaire form, Joueur joueur) {
         Map<Categorie, Map<String, Integer>> tableauOccurences = getTableauOccurenceMotsParCategorie(form);
 
-        for (Joueur j : joueurs) {
-            for (Categorie cat : Categorie.values()) {
-                // Récupérer le nombre d'occurence de la réponse du joueur
-                String reponse = form.getReponseJoueur(j, cat);
-                if (reponse != null && reponseEstValide(cat, reponse)) {
-                    // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
-                    int occurenceReponse = tableauOccurences.get(cat).get(reponse.toUpperCase());
-                    j.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
-                }
+        for (Categorie cat : Categorie.values()) {
+            // Récupérer le nombre d'occurence de la réponse du joueur
+            String reponse = form.getReponseJoueur(joueur, cat);
+            if (reponse != null && reponseEstValide(cat, reponse)) {
+                // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
+                int occurenceReponse = tableauOccurences.get(cat).get(reponse.toUpperCase());
+                joueur.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
             }
         }
     }

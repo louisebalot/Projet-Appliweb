@@ -132,9 +132,10 @@ public class Serv extends HttpServlet {
                 // Calcul des points
                 // facade.miseAJourScore(id_partie);
 
+                facade.attendreReponses(id_partie, id_round);
                 // Renvoyer soit vers le prochain round, soit vers l'écran des résultats selon
                 // le nombre de rounds restants
-                if (facade.nextRound(id_partie)) {
+                if (facade.nextRound(id_partie, id_joueur) == 0 || facade.nextRound(id_partie, id_joueur) == 1) {
 
                     lettre = facade.getLettreRound(id_partie);
                     temps = facade.getTempsRound(id_partie) * 60;
@@ -145,7 +146,7 @@ public class Serv extends HttpServlet {
                     request.setAttribute("partie", id_partie);
                     request.setAttribute("joueur", id_joueur);
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
-                } else {
+                } else if (facade.nextRound(id_partie, id_joueur) == 2) {
 
                     int id_vainqueur = facade.getVainqueur(id_partie);
                     int score = facade.getScore(id_partie, id_joueur);
