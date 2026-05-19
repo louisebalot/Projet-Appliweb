@@ -15,10 +15,11 @@
         <button id="btnContinuer">Continuer</button>
     </div>
     <script>
-        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws');
+        const idPartie = "<%=partie%>";
+        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws/' + idPartie);
         
         document.getElementById('btnContinuer').onclick = function() {
-            socket.send(JSON.stringify({ action: "CONTINUER" }));
+            socket.send("CONTINUER");
         };
 
         socket.onmessage = function(event) {

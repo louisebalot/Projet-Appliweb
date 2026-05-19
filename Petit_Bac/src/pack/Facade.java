@@ -32,10 +32,6 @@ public interface Facade {
     @Consumes("application/json")
     int creer_partie(@QueryParam("id_admin") int id_admin);
 
-    @POST
-    @Path("/getListePseudos")
-    @Consumes("application/json")
-    List<String> getListePseudos(@QueryParam("id_partie") int id_partie);
 
     /**
      * Mets en place les paramètres de la partie avant son départ.
@@ -185,4 +181,21 @@ public interface Facade {
     @Path("/attendre_reponses")
     @Consumes("application/json")
     void attendreReponses(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
+    
+    @POST
+    @Path("/getListeJoueurs")
+    @Consumes("application/json")
+    List<Integer> getListeJoueurs(@QueryParam("id_partie") int id_partie);
+
+    @POST
+    @Path("/getSurnom")
+    @Consumes("application/json")
+    String getSurnom(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
+
+    @POST
+    @Path("/getScoreJoueur")
+    @Consumes("application/json")
+    int getScoreJoueur(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
+
+
 }

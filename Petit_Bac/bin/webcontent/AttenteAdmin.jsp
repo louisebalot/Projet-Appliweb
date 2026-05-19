@@ -15,10 +15,11 @@
         <button id="btnLancer">Lancer la partie</button>
     </div>
     <script>
-        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws');
+        const idPartie = "<%=partie%>";
+        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws/' + idPartie);
 
         document.getElementById('btnLancer').onclick = function() {
-            socket.send(JSON.stringify({ action: "LANCER_PARTIE" }));
+            socket.send("LANCER_PARTIE");
         };
 
         socket.onmessage = function(event) {

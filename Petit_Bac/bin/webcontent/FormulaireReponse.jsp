@@ -88,7 +88,8 @@
     </div>
 
     <script>
-        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws');
+        const idPartie = "<%=partie%>";
+        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws/' + idPartie);
 
         const overlay = document.getElementById('countdown-overlay');
         const countdownPartie = document.getElementById('countdown-partie');
@@ -164,10 +165,11 @@
             }
         };
 
+
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault(); 
             
-            socket.send(JSON.stringify({ action: "STOP" }));
+            socket.send("STOP");
             console.log("Signal STOP envoyé !");
             
             stopperLaPartie();

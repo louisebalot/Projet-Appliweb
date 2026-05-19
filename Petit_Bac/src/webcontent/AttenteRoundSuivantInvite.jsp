@@ -15,7 +15,8 @@
         <div class="loader"></div>
     </div>
     <script>
-        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws');
+        const idPartie = "<%=partie%>";
+        const socket = new WebSocket('ws://' + window.location.host + '/Petit_Bac/ws/' + idPartie);
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);

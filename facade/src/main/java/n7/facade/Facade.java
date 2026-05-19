@@ -68,19 +68,6 @@ public class Facade {
         return id_partie;
     }
 
-    @PostMapping("/getListePseudos")
-    public List<String> getListePseudos(@RequestParam int id_partie) {
-        Partie partie = parties.get(id_partie - 1);
-        List<Joueur> joueurs = partie.getJoueurs();
-        List<String> pseudos = new ArrayList<>();
-
-        for (int i = 0; i < joueurs.size(); i++) {
-            Joueur j = joueurs.get(i);
-            pseudos.add(j.getSurnom());
-        }
-        return pseudos;
-    }
-
     @PostMapping("/setParametres")
     public int setParametres(@RequestParam int id_partie, @RequestParam int temps, @RequestParam int nb_tours) {
         Partie partie = parties.get(id_partie - 1);
@@ -248,5 +235,46 @@ public class Facade {
             latch.await();
             latchs.remove(key);
         }
+    }
+
+    @PostMapping("/getListeJoueurs")
+    public List<Integer> getListeJoueurs(@RequestParam int id_partie) {
+        Partie partie = parties.get(id_partie - 1);
+        List<Joueur> joueurs = partie.getJoueurs();
+        List<Integer> id_joueurs = new ArrayList<>();
+
+        for (int i = 0; i < joueurs.size(); i++) {
+            Joueur j = joueurs.get(i);
+            id_joueurs.add(j.getId());
+        }
+        return id_joueurs;
+    }
+
+    @PostMapping("/getSurnom")
+    public String getSurnom(@RequestParam int id_partie, @RequestParam int id_joueur) {
+        Partie partie = parties.get(id_partie - 1);
+        List<Joueur> joueurs = partie.getJoueurs();
+
+        for (int i = 0; i < joueurs.size(); i++) {
+            Joueur j = joueurs.get(i);
+            if (j.getId() == id_joueur){
+                return j.getSurnom();
+            }
+        }
+        return "";
+    }
+
+    @PostMapping("/getScoreJoueur")
+    public int getScoreJoueur(@RequestParam int id_partie, @RequestParam int id_joueur) {
+        Partie partie = parties.get(id_partie - 1);
+        List<Joueur> joueurs = partie.getJoueurs();
+
+        for (int i = 0; i < joueurs.size(); i++) {
+            Joueur j = joueurs.get(i);
+            if (j.getId() == id_joueur){
+                return j.getScore();
+            }
+        }
+        return 0;
     }
 }

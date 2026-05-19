@@ -23,17 +23,44 @@ public class Serv extends HttpServlet {
         this.facade = RestClientManager.getProxy();
     }
 
-    private String transformerEnJson(List<String> pseudos) {
+    private String transformerEnJson(int id_partie) {
+
+        List<Integer> joueurs = facade.getListeJoueurs(id_partie);
         String json = "{\"status\": \"UPDATE_PLAYERS\", \"joueurs\": [";
-        for (int i = 0; i < pseudos.size(); i++) {
-            json += "\"" + pseudos.get(i) + "\"";
-            if (i < pseudos.size() - 1) {
+        for (int i = 0; i < joueurs.size(); i++) {
+            String surnom = facade.getSurnom(id_partie, joueurs.get(i));
+            json += "\"" + surnom + "\"";
+            if (i < joueurs.size() - 1) {
                 json += ",";
             }
         }
         json += "]}";
         return json;
     }
+
+    private String transformerEnJsonScore(int id_partie) {
+        List<Integer> joueurs = facade.getListeJoueurs(id_partie);
+        
+        StringBuilder json = new StringBuilder();
+        json.append("{\"status\": \"END_GAME\", \"scores\": [");
+        
+        for (int i = 0; i < joueurs.size(); i++) {
+            int id_joueur = joueurs.get(i);
+            String surnom = facade.getSurnom(id_partie, id_joueur);
+            int scoreJoueur = facade.getScoreJoueur(id_partie, id_joueur); 
+            
+            json.append("{\"pseudo\": \"").append(surnom).append("\", \"score\": ").append(scoreJoueur).append("}");
+            
+            if (i < joueurs.size() - 1) {
+                json.append(",");
+            }
+        }
+        
+        json.append("]}");
+        return json.toString();
+    }
+
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -76,9 +103,8 @@ public class Serv extends HttpServlet {
                 id_partie = Integer.parseInt(request.getParameter("id_partie"));
                 facade.rejoindre_partie(id_invite, id_partie);
 
-                List<String> pseudos = facade.getListePseudos(id_partie);
-                String json = transformerEnJson(pseudos);
-                GameWebSocket.broadcast(json);
+                String json = transformerEnJson(id_partie);
+                GameWebSocket.broadcast(String.valueOf(id_partie), json);
 
                 request.setAttribute("partie", id_partie);
                 request.setAttribute("joueur", id_invite);
@@ -157,8 +183,6 @@ public class Serv extends HttpServlet {
 
                 } else {
                     try { Thread.sleep(400); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-                    
-
                     int maxRounds = facade.getNombreRounds(id_partie);
 
                     if (id_round >= maxRounds - 1) {
@@ -183,16 +207,15 @@ public class Serv extends HttpServlet {
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
 
                 } else if (codeRound == 2) {
-
                     int id_vainqueur = facade.getVainqueur(id_partie);
                     int score = facade.getScore(id_partie, id_joueur);
+
                     request.setAttribute("id_vainqueur", id_vainqueur);
                     request.setAttribute("score", score);
                     request.setAttribute("partie", id_partie);
                     request.setAttribute("joueur", id_joueur);
                     request.getRequestDispatcher("Gagnant.jsp").forward(request, response);
                 }
-
                 break;
 
             case "redemarrer_partie":
