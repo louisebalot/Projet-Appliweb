@@ -23,3 +23,6 @@ Thumbs.db
 *.war
 
 **/out/
+
+# fichier propre a la machine pour déployer le projet
+deployer.sh

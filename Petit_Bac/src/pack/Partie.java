@@ -21,8 +21,9 @@ public class Partie {
             POINTS_REPONSE_UNIQUE = 10,
             POINTS_BONNE_REPONSE = 5;
     public String lettresDisponibles = "";
-    String db_url = "jdbc:hsqldb:hsql://localhost/xdb";
-    String db_user = "sa";
+
+    public static final String DB_URL = "jdbc:hsqldb:hsql://localhost/xdb";
+    public static final String DB_USER = "sa";
     Connection con;
     /**
      * Collection des joueurs de la partie
@@ -78,7 +79,17 @@ public class Partie {
         this.id = 0;
         try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            con = DriverManager.getConnection(db_url, db_user, null);
+            con = DriverManager.getConnection(DB_URL, DB_USER, null);
+
+            Statement stmt = con.createStatement();
+
+            stmt.execute("DROP FUNCTION IF EXISTS REMOVE_ACCENTS CASCADE;\n" +
+                         "    CREATE FUNCTION REMOVE_ACCENTS(str VARCHAR(255))\n" +
+                         "    RETURNS VARCHAR(255)\n" +
+                         "    LANGUAGE JAVA\n" +
+                         "    DETERMINISTIC\n" +
+                         "    NO SQL\n" +
+                         "    EXTERNAL NAME 'CLASSPATH:my.tools.StringNormalizer.normaliserString'\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -262,14 +273,6 @@ public class Partie {
 
         try {
             Statement stmt = con.createStatement();
-
-            stmt.execute("DROP FUNCTION IF EXISTS REMOVE_ACCENTS CASCADE;\n" +
-                         "    CREATE FUNCTION REMOVE_ACCENTS(str VARCHAR(255))\n" +
-                         "    RETURNS VARCHAR(255)\n" +
-                         "    LANGUAGE JAVA\n" +
-                         "    DETERMINISTIC\n" +
-                         "    NO SQL\n" +
-                         "    EXTERNAL NAME 'CLASSPATH:my.tools.StringNormalizer.normaliserString'\n");
 
             String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE REMOVE_ACCENTS(nom) = REMOVE_ACCENTS('" + reponse + "')";
             ResultSet rs = stmt.executeQuery(sql);
