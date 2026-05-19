@@ -196,7 +196,7 @@ public class Partie {
             String reponse = form.getReponseJoueur(joueur, cat);
             if (reponse != null && reponseEstValide(cat, reponse)) {
                 // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
-                int occurenceReponse = tableauOccurences.get(cat).get(reponse.toUpperCase());
+                int occurenceReponse = tableauOccurences.get(cat).get(my.tools.StringNormalizer.normaliserString(reponse));
                 joueur.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
             }
         }
