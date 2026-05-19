@@ -1,13 +1,10 @@
 package pack;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
 
 @Path("/")
 public interface Facade {
@@ -120,7 +117,7 @@ public interface Facade {
                             @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
                             @QueryParam("vegetal") String vegetal, @QueryParam("animal") String animal,
                             @QueryParam("metier") String metier, @QueryParam("sport") String sport,
-                            @QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur, 
+                            @QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur,
                             @QueryParam("id_round") int id_round);
 
     /**
@@ -183,7 +180,7 @@ public interface Facade {
     @Path("/attendre_reponses")
     @Consumes("application/json")
     void attendreReponses(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
-    
+
     @POST
     @Path("/getListeJoueurs")
     @Consumes("application/json")

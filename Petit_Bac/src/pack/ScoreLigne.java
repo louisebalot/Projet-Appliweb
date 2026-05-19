@@ -6,12 +6,17 @@ public class ScoreLigne {
 
     public ScoreLigne() {
     }
-    
+
     public ScoreLigne(String pseudo, int score) {
         this.pseudo = pseudo;
         this.score = score;
     }
 
-    public String getPseudo() { return pseudo; }
-    public int getScore() { return score; }
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }

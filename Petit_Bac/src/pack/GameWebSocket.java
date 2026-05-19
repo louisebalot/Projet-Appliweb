@@ -7,7 +7,6 @@ import jakarta.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,12 +41,12 @@ public class GameWebSocket {
     public void onMessage(String message, Session session, @PathParam("idPartie") String idPartie) throws IOException {
         System.out.println("Partie " + idPartie + " -> Message reçu : " + message);
 
-         if ("LANCER_PARTIE".equals(message)) {
+        if ("LANCER_PARTIE".equals(message)) {
             broadcast(idPartie, "{\"status\": \"START\"}");
 
         } else if ("STOP".equals(message)) {
             broadcast(idPartie, "{\"status\": \"FINI\"}");
-            
+
         } else if ("CONTINUER".equals(message)) {
             broadcast(idPartie, "{\"status\": \"NEXT_ROUND_READY\"}");
         }

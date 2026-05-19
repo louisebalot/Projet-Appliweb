@@ -11,7 +11,7 @@ import java.util.Vector;
  * Classe d'un formulaire de réponse
  */
 public class Formulaire {
-    private List<EntreeFormulaire> form;
+    private final List<EntreeFormulaire> form;
 
     /**
      * Créer un formulaire.

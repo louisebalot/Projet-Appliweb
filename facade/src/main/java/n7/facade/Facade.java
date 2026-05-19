@@ -1,54 +1,30 @@
-
 package n7.facade;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-
-//import pack.Adresse;
 @RestController
 @CrossOrigin(origins = "*")
 public class Facade {
 
-    //java.util.List<Partie> parties = new java.util.ArrayList<>();
-    //java.util.List<Joueur> joueurs = new java.util.ArrayList<>();
-
+    private final Map<String, CountDownLatch> latchs = new ConcurrentHashMap<>();
     List<Partie> parties = new CopyOnWriteArrayList<>();
     List<Joueur> joueurs = new CopyOnWriteArrayList<>();
-
-    private Map<String, CountDownLatch> latchs = new ConcurrentHashMap<>();
 
     // Clé unique par partie+round
     private String latchKey(int id_partie, int id_round) {
         return id_partie + "_" + id_round;
-}
-
-    // String db_url = "jdbc:hsqldb:hsql://localhost/xdb";
-    // String db_user = "sa";
-    // Connection con;
-
-    // HashMap<Integer, String> joueurs = new HashMap<Integer, String>();
-
-    // @Autowired
-    // public Facade() {
-    // try {
-    // Class.forName("org.hsqldb.jdbc.JDBCDriver");
-    // con = DriverManager.getConnection(db_url, db_user, null);
-    // } catch (Exception e) {
-    // e.printStackTrace();;
-    // }
-
-    // }
+    }
 
     @PostMapping("/creer_joueur")
     public int creer_joueur(@RequestParam String surnom) {
@@ -125,9 +101,9 @@ public class Facade {
 
     @PostMapping("/enregistrer_reponse")
     public void enregistrerReponse(@RequestParam String pays, @RequestParam String ville,
-            @RequestParam String prenom, @RequestParam String couleur, @RequestParam String vegetal,
-            @RequestParam String animal, @RequestParam String metier, @RequestParam String sport,
-            @RequestParam int id_partie, @RequestParam int id_joueur, @RequestParam int id_round) {
+                                   @RequestParam String prenom, @RequestParam String couleur, @RequestParam String vegetal,
+                                   @RequestParam String animal, @RequestParam String metier, @RequestParam String sport,
+                                   @RequestParam int id_partie, @RequestParam int id_joueur, @RequestParam int id_round) {
 
         Partie partie_actuelle = parties.get(id_partie - 1);
 
@@ -182,10 +158,10 @@ public class Facade {
         Partie partie = parties.get(id_partie - 1);
         return (partie.getNumeroRoundActuel() >= partie.getNombreRounds());
     }
-    
+
 
     @PostMapping("/isJoueurAdmin")
-    boolean isJoueurAdmin(@RequestParam int id_joueur, @RequestParam int id_partie){
+    boolean isJoueurAdmin(@RequestParam int id_joueur, @RequestParam int id_partie) {
         Partie partie = parties.get(id_partie - 1);
         Joueur admin = partie.getAdmin();
         return (id_joueur == admin.getId());
@@ -257,7 +233,7 @@ public class Facade {
 
         for (int i = 0; i < joueurs.size(); i++) {
             Joueur j = joueurs.get(i);
-            if (j.getId() == id_joueur){
+            if (j.getId() == id_joueur) {
                 return j.getSurnom();
             }
         }
@@ -271,7 +247,7 @@ public class Facade {
 
         for (int i = 0; i < joueurs.size(); i++) {
             Joueur j = joueurs.get(i);
-            if (j.getId() == id_joueur){
+            if (j.getId() == id_joueur) {
                 return j.getScore();
             }
         }

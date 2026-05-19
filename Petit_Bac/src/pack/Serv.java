@@ -39,7 +39,6 @@ public class Serv extends HttpServlet {
     }
 
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -136,8 +135,8 @@ public class Serv extends HttpServlet {
                 request.setAttribute("partie", id_partie);
                 request.setAttribute("joueur", id_joueur);
                 request.setAttribute("round", id_round);
-                
-                boolean isAdmin = facade.isJoueurAdmin(id_joueur, id_partie); 
+
+                boolean isAdmin = facade.isJoueurAdmin(id_joueur, id_partie);
 
                 if (isAdmin) {
                     request.getRequestDispatcher("AttenteRoundSuivantAdmin.jsp").forward(request, response);
@@ -160,11 +159,15 @@ public class Serv extends HttpServlet {
                     codeRound = facade.nextRound(id_partie, id_joueur);
 
                 } else {
-                    try { Thread.sleep(400); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
                     int maxRounds = facade.getNombreRounds(id_partie);
 
                     if (id_round >= maxRounds - 1) {
-                        codeRound = 2; 
+                        codeRound = 2;
                     } else {
                         codeRound = 1;
                     }
@@ -173,8 +176,8 @@ public class Serv extends HttpServlet {
                 if (codeRound == 0 || codeRound == 1) {
                     lettre = facade.getLettreRound(id_partie);
                     temps = facade.getTempsRound(id_partie) * 60;
-                    
-                    int roundActuel = facade.getNumeroRoundActuel(id_partie); 
+
+                    int roundActuel = facade.getNumeroRoundActuel(id_partie);
 
                     request.setAttribute("temps", temps);
                     request.setAttribute("lettre", lettre);
@@ -189,7 +192,11 @@ public class Serv extends HttpServlet {
                     if (joueurEstAdmin) {
                         facade.miseAJourScore(id_partie);
                     } else {
-                        try { Thread.sleep(200); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
                     }
 
                     List<ScoreLigne> classement = facade.getClassementTrie(id_partie);

@@ -84,40 +84,4 @@ public class Round {
     public void setTempsMaxRound(int tempsMaxRound) {
         this.tempsMaxRound = tempsMaxRound;
     }
-
-    /*public LocalTime getRoundStartTime() {
-        return roundStartTime;
-    }
-
-    public void setRoundStartTime(LocalTime roundStartTime) {
-        this.roundStartTime = roundStartTime;
-    }*/
-
-    /**
-     * Commencer le round.
-     */
-    /* 
-    public void start() {
-        roundStartTime = LocalTime.now();
-    }*/
-
-    /**
-     * Obtenir le nombre de secondes restantes du round.
-     * <p>
-     * valeur entre {@code 0} et {@code tempsMaxRound} inclus
-     *
-     * @return le nombre de secondes restantes pour jouer le round
-     */
-    /*public int getSecondesRestantes() {
-        int tempsActuel = LocalTime.now().toSecondOfDay();
-        int tempsDebutRound = roundStartTime.toSecondOfDay();
-
-        // Détecter si le round à débuté le jour d'avant
-        if (tempsActuel < tempsDebutRound) {
-            tempsDebutRound -= SECONDES_DANS_UN_JOUR;
-        }
-
-        // Retourner la différence entre le temps maximum du round et le temps écoulé
-        return max(0, tempsMaxRound - (tempsActuel - tempsDebutRound));
-    }*/
 }

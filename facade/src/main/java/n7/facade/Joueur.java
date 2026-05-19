@@ -24,7 +24,7 @@ public class Joueur {
      */
     private int score;
 
-    private Boolean isAdmin;
+    private boolean isAdmin;
 
     /**
      * Ne pas utiliser
@@ -86,14 +86,6 @@ public class Joueur {
         this.score = score;
     }
 
-    public Boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,5 +97,13 @@ public class Joueur {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public boolean getIsAdmin() {
+        return this.isAdmin;
+    }
+
+    public void setIsAdmin(boolean b) {
+        this.isAdmin = b;
     }
 }

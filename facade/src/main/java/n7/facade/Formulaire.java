@@ -1,18 +1,17 @@
 package n7.facade;
 
+import org.antlr.v4.runtime.misc.Pair;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
-
-import org.antlr.v4.runtime.misc.Pair;
-
 
 
 /**
  * Classe d'un formulaire de réponse
  */
 public class Formulaire {
-    private List<EntreeFormulaire> form;
+    private final List<EntreeFormulaire> form;
 
     /**
      * Créer un formulaire.

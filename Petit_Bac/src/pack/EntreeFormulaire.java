@@ -9,13 +9,13 @@ import java.util.Vector;
  */
 public class EntreeFormulaire {
     /**
+     * Lettre choisie par le joueur.
+     */
+    private final List<String> reponses;
+    /**
      * Id du joueur.
      */
     private int idJoueur;
-    /**
-     * Lettre choisie par le joueur.
-     */
-    private List<String> reponses;
 
     /**
      * Ne pas utiliser (svp).
