@@ -1,10 +1,11 @@
 package pack;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
-import java.util.List;
 
 @Path("/")
 public interface Facade {
@@ -79,6 +80,12 @@ public interface Facade {
 
 
     @POST
+    @Path("/getNumeroRoundActuel")
+    @Consumes("application/json")
+    int getNumeroRoundActuel(@QueryParam("id_partie") int id_partie);
+
+
+    @POST
     @Path("/getNombreRounds")
     @Consumes("application/json")
     int getNombreRounds(@QueryParam("id_partie") int id_partie);
@@ -114,8 +121,9 @@ public interface Facade {
     void enregistrerReponse(@QueryParam("pays") String pays, @QueryParam("ville") String ville,
                             @QueryParam("prenom") String prenom, @QueryParam("couleur") String couleur,
                             @QueryParam("vegetal") String vegetal, @QueryParam("animal") String animal,
-                            @QueryParam("metier") String metier, @QueryParam("id_partie") int id_partie,
-                            @QueryParam("id_joueur") int id_joueur, @QueryParam("id_round") int id_round);
+                            @QueryParam("metier") String metier, @QueryParam("sport") String sport,
+                            @QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur, 
+                            @QueryParam("id_round") int id_round);
 
     /**
      * Passe au prochain round si possible
@@ -126,7 +134,7 @@ public interface Facade {
     @POST
     @Path("/next_round")
     @Consumes("application/json")
-    boolean nextRound(@QueryParam("id_partie") int id_partie);
+    int nextRound(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
 
     /**
      * Incrémente les scores des joueurs de la partie en fonction du formulaire du
@@ -141,6 +149,12 @@ public interface Facade {
     @Consumes("application/json")
     void miseAJourScore(@QueryParam("id_partie") int id_partie);
 
+
+    @POST
+    @Path("/isPartieFinie")
+    @Consumes("application/json")
+    boolean isPartieFinie(@QueryParam("id_partie") int id_partie);
+
     /**
      * Renvoie l'id du joueur ayant le plus grand score
      *
@@ -151,4 +165,24 @@ public interface Facade {
     @Path("/get_vainqueur")
     @Consumes("application/json")
     int getVainqueur(@QueryParam("id_partie") int id_partie);
+
+    @POST
+    @Path("/isJoueurAdmin")
+    @Consumes("application/json")
+    boolean isJoueurAdmin(@QueryParam("id_joueur") int id_joueur, @QueryParam("id_partie") int id_partie);
+
+    @POST
+    @Path("/reset_score")
+    @Consumes("application/json")
+    void resetScore(@QueryParam("id_joueur") int id_joueur);
+
+    @POST
+    @Path("/get_score")
+    @Consumes("application/json")
+    int getScore(@QueryParam("id_partie") int id_partie, @QueryParam("id_joueur") int id_joueur);
+
+    @POST
+    @Path("/attendre_reponses")
+    @Consumes("application/json")
+    void attendreReponses(@QueryParam("id_partie") int id_partie, @QueryParam("id_round") int id_round);
 }

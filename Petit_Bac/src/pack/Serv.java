@@ -20,6 +20,7 @@ public class Serv extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+        this.facade = RestClientManager.getProxy();
     }
 
     private String transformerEnJson(List<String> pseudos) {
@@ -52,8 +53,6 @@ public class Serv extends HttpServlet {
         int id_round;
         String lettre;
         int temps;
-
-        this.facade = RestClientManager.getProxy();
 
         switch (request.getParameter("op")) {
 
@@ -125,34 +124,72 @@ public class Serv extends HttpServlet {
                 String vegetal = request.getParameter("Vegetal");
                 String animal = request.getParameter("Animal");
                 String metier = request.getParameter("Metier");
+                String sport = request.getParameter("Sport");
 
-                facade.enregistrerReponse(pays, ville, prenom, couleur, vegetal, animal, metier, id_partie, id_joueur,
+                facade.enregistrerReponse(pays, ville, prenom, couleur, vegetal, animal, metier, sport, id_partie, id_joueur,
                         id_round);
 
-                // Calcul des points
-                // facade.miseAJourScore(id_partie);
+                request.setAttribute("partie", id_partie);
+                request.setAttribute("joueur", id_joueur);
+                request.setAttribute("round", id_round);
+                
+                boolean isAdmin = facade.isJoueurAdmin(id_joueur, id_partie); 
 
-                // Renvoyer soit vers le prochain round, soit vers l'écran des résultats selon
-                // le nombre de rounds restants
-                if (facade.nextRound(id_partie)) {
+                if (isAdmin) {
+                    request.getRequestDispatcher("AttenteRoundSuivantAdmin.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("AttenteRoundSuivantInvite.jsp").forward(request, response);
+                }
+                break;
 
+
+            case "prochain_round":
+                id_partie = Integer.parseInt(request.getParameter("id_partie"));
+                id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                id_round = Integer.parseInt(request.getParameter("round"));
+
+                boolean joueurEstAdmin = facade.isJoueurAdmin(id_joueur, id_partie);
+
+                int codeRound;
+                if (joueurEstAdmin) {
+                    // facade.miseAJourScore(id_partie);
+                    codeRound = facade.nextRound(id_partie, id_joueur);
+
+                } else {
+                    try { Thread.sleep(400); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+                    
+
+                    int maxRounds = facade.getNombreRounds(id_partie);
+
+                    if (id_round >= maxRounds - 1) {
+                        codeRound = 2; 
+                    } else {
+                        codeRound = 1;
+                    }
+                }
+
+                if (codeRound == 0 || codeRound == 1) {
                     lettre = facade.getLettreRound(id_partie);
                     temps = facade.getTempsRound(id_partie) * 60;
+                    
+                    int roundActuel = facade.getNumeroRoundActuel(id_partie); 
+
                     request.setAttribute("temps", temps);
                     request.setAttribute("lettre", lettre);
-                    request.setAttribute("round", id_round + 1);
+                    request.setAttribute("round", roundActuel);
                     request.setAttribute("nb_rounds", facade.getNombreRounds(id_partie));
                     request.setAttribute("partie", id_partie);
                     request.setAttribute("joueur", id_joueur);
                     request.getRequestDispatcher("FormulaireReponse.jsp").forward(request, response);
-                } else {
+
+                } else if (codeRound == 2) {
 
                     int id_vainqueur = facade.getVainqueur(id_partie);
+                    int score = facade.getScore(id_partie, id_joueur);
                     request.setAttribute("id_vainqueur", id_vainqueur);
+                    request.setAttribute("score", score);
                     request.setAttribute("partie", id_partie);
                     request.setAttribute("joueur", id_joueur);
-                    // TODO Il faut surement mettre à jour des paramètres mais je ne sais pas
-                    // lesquels
                     request.getRequestDispatcher("Gagnant.jsp").forward(request, response);
                 }
 
@@ -160,6 +197,7 @@ public class Serv extends HttpServlet {
 
             case "redemarrer_partie":
                 id_joueur = Integer.parseInt(request.getParameter("joueur"));
+                facade.resetScore(id_joueur);
                 request.setAttribute("joueur", id_joueur);
                 request.getRequestDispatcher("ChoixPartie.jsp").forward(request, response);
                 break;

@@ -132,13 +132,8 @@
             }, 1000);
         }
 
-        socket.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            if (data.status === "FINI") {
-                stopperLaPartie();
-                setTimeout(envoyerReponses, 3000);
-            }
-        };
+
+        let reponsesEnvoyees = false;
 
         function stopperLaPartie() {
             document.querySelectorAll('input[type="text"]').forEach(input => {
@@ -154,15 +149,31 @@
         }
 
         function envoyerReponses() {
-            const formulaire = document.querySelector('form');
-            formulaire.submit(); 
+            if (!reponsesEnvoyees) {
+                reponsesEnvoyees = true;
+                document.querySelector('form').submit(); 
+            }
         }
+
+        // Gestion des messages WebSocket reçus
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            if (data.status === "FINI" || data.status === "STOP") {
+                stopperLaPartie();
+                setTimeout(envoyerReponses, 3000); 
+            }
+        };
 
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault(); 
+            
             socket.send(JSON.stringify({ action: "STOP" }));
             console.log("Signal STOP envoyé !");
+            
+            stopperLaPartie();
+            setTimeout(envoyerReponses, 3000);
         });
+
     </script>
 </body>
 </html>

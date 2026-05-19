@@ -21,8 +21,9 @@ public class Partie {
             POINTS_REPONSE_UNIQUE = 10,
             POINTS_BONNE_REPONSE = 5;
     public String lettresDisponibles = "";
-    String db_url = "jdbc:hsqldb:hsql://localhost/xdb";
-    String db_user = "sa";
+
+    public static final String DB_URL = "jdbc:hsqldb:hsql://localhost/xdb";
+    public static final String DB_USER = "sa";
     Connection con;
     /**
      * Collection des joueurs de la partie
@@ -78,7 +79,17 @@ public class Partie {
         this.id = 0;
         try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            con = DriverManager.getConnection(db_url, db_user, null);
+            con = DriverManager.getConnection(DB_URL, DB_USER, null);
+
+            Statement stmt = con.createStatement();
+
+            stmt.execute("DROP FUNCTION IF EXISTS REMOVE_ACCENTS CASCADE;\n" +
+                         "    CREATE FUNCTION REMOVE_ACCENTS(str VARCHAR(255))\n" +
+                         "    RETURNS VARCHAR(255)\n" +
+                         "    LANGUAGE JAVA\n" +
+                         "    DETERMINISTIC\n" +
+                         "    NO SQL\n" +
+                         "    EXTERNAL NAME 'CLASSPATH:my.tools.StringNormalizer.normaliserString'\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -175,19 +186,18 @@ public class Partie {
      * Mettre à jour le tableau des scores en fonction des réponses données dans un formulaire.
      *
      * @param form formulaire des réponses.
+     * @param joueur joueur pour qui mettre à jour le score.
      */
-    public void miseAJourScore(Formulaire form) {
+    public void miseAJourScore(Formulaire form, Joueur joueur) {
         Map<Categorie, Map<String, Integer>> tableauOccurences = getTableauOccurenceMotsParCategorie(form);
 
-        for (Joueur j : joueurs) {
-            for (Categorie cat : Categorie.values()) {
-                // Récupérer le nombre d'occurence de la réponse du joueur
-                String reponse = form.getReponseJoueur(j, cat);
-                if (reponse != null && reponseEstValide(cat, reponse)) {
-                    // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
-                    int occurenceReponse = tableauOccurences.get(cat).get(reponse.toUpperCase());
-                    j.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
-                }
+        for (Categorie cat : Categorie.values()) {
+            // Récupérer le nombre d'occurence de la réponse du joueur
+            String reponse = form.getReponseJoueur(joueur, cat);
+            if (reponse != null && reponseEstValide(cat, reponse)) {
+                // S'il a répondu on ajoute les points selon si la réponse est unique ou non.
+                int occurenceReponse = tableauOccurences.get(cat).get(my.tools.StringNormalizer.normaliserString(reponse));
+                joueur.ajouterScore(occurenceReponse > 1 ? POINTS_BONNE_REPONSE : POINTS_REPONSE_UNIQUE);
             }
         }
     }
@@ -263,14 +273,6 @@ public class Partie {
 
         try {
             Statement stmt = con.createStatement();
-
-            stmt.execute("DROP FUNCTION IF EXISTS REMOVE_ACCENTS CASCADE;\n" +
-                         "    CREATE FUNCTION REMOVE_ACCENTS(str VARCHAR(255))\n" +
-                         "    RETURNS VARCHAR(255)\n" +
-                         "    LANGUAGE JAVA\n" +
-                         "    DETERMINISTIC\n" +
-                         "    NO SQL\n" +
-                         "    EXTERNAL NAME 'CLASSPATH:my.tools.StringNormalizer.normaliserString'\n");
 
             String sql = "SELECT COUNT(*) FROM " + categorie.getNomTable() + " WHERE REMOVE_ACCENTS(nom) = REMOVE_ACCENTS('" + reponse + "')";
             ResultSet rs = stmt.executeQuery(sql);

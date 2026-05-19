@@ -24,6 +24,8 @@ public class Joueur {
      */
     private int score;
 
+    private Boolean isAdmin;
+
     /**
      * Ne pas utiliser
      */
@@ -38,14 +40,13 @@ public class Joueur {
      */
     public Joueur(String surnom) {
         this.surnom = surnom;
-
+        this.isAdmin = false;
         this.score = 0;
     }
 
     public Joueur(String surnom, int id) {
-        this.surnom = surnom;
+        this(surnom);
         this.id = id;
-        this.score = 0;
     }
 
 
@@ -83,6 +84,14 @@ public class Joueur {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override

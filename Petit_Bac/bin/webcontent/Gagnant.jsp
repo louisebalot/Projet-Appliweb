@@ -1,6 +1,7 @@
 <% int joueur = (Integer) request.getAttribute("joueur");
     int partie = (Integer) request.getAttribute("partie");
     int id_vainqueur = (Integer) request.getAttribute("id_vainqueur");
+    int score = (Integer) request.getAttribute("score");
 %>
 <html>
 <head>
@@ -11,6 +12,8 @@
 <body>
     <div class="box">
         <h1 id="message_victoire">Calcul des scores</h1>
+
+        <p id="message_score">votre score est de <strong><%=score%></strong> points.</p>
         
         <form action="Serv" method="get">
             <input type="hidden" name="joueur" value="<%=joueur%>">
